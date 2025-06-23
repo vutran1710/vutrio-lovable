@@ -1,10 +1,19 @@
-import { Header, Footer, PageMain, PageContainer, PageHeader } from "../../ui";
-import { Avatar, AvatarImage, AvatarFallback } from "../../ui/primitives";
+import { getAboutPage } from "@/lib/notion";
+import {
+  Header,
+  Footer,
+  PageMain,
+  PageContainer,
+  PageHeader,
+  NotionClientRenderer,
+} from "@/ui";
+import { Avatar, AvatarImage, AvatarFallback } from "@/ui/primitives";
+import { ExtendedRecordMap } from "notion-types";
 
 export interface AboutProps {
   avatarSrc: string;
   name: string;
-  content: string;
+  content: ExtendedRecordMap;
   quote: string;
 }
 
@@ -35,7 +44,7 @@ export function About({ avatarSrc, name, content, quote }: AboutProps) {
 
         <div className="prose prose-lg max-w-none animate-fade-in">
           <div className="font-serif text-xl text-muted-foreground leading-relaxed mb-8">
-            <div dangerouslySetInnerHTML={{ __html: content }} />
+            <NotionClientRenderer recordMap={content} />
           </div>
         </div>
 
@@ -51,32 +60,8 @@ export function About({ avatarSrc, name, content, quote }: AboutProps) {
   );
 }
 
-export default function AboutWrapper() {
-  const content = `
-    <p className="mb-6">
-      Welcome to my digital sanctuary—a space where philosophy meets
-      technology, where poetic reflections interweave with analytical
-      thinking, and where the journey of understanding takes precedence
-      over the destination of knowing.
-    </p>
-    <p className="mb-6">
-      I am a seeker of truth in the age of information, a builder of
-      bridges between the abstract and the concrete, the theoretical and
-      the practical. .
-    </p>
-
-    <p className="mb-6">
-      This space serves as both archive and laboratory—a place to
-      document insights, experiment with ideas, and share the ongoing
-      dialogue between mind and world that shapes our understanding of
-      what it means to be human in an increasingly digital age.
-    </p>
-
-    <p>
-      Join me in this exploration, where every question leads to deeper
-      questions, and every answer opens new doorways to wonder.
-    </p>
-    `;
+export default async function AboutWrapper() {
+  const content = await getAboutPage();
 
   const quote = `
     <blockquote className="font-serif text-2xl text-primary text-center italic">
