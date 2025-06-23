@@ -18,6 +18,7 @@ const REPOS: Repository[] = [
   "interactive-consistent-hashing",
   "PyrateLimiter",
   "ETL-Microservices-System-Boilerplate",
+  "KafkaOffShore",
 ];
 
 const POSTS_PER_PAGE = 6;

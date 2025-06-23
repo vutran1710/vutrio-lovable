@@ -10,11 +10,11 @@ interface WorkbenchItemProps {
 export const WorkbenchItem = ({ project }: WorkbenchItemProps) => (
   <div className="group cursor-pointer animate-fade-in border border-transparent hover:border-accent transition-colors rounded-lg p-2">
     <div className="bg-card rounded-lg overflow-hidden border border-border transition-colors">
-      <div className="aspect-video bg-gradient-to-br from-secondary to-muted overflow-hidden">
+      <div className="bg-gradient-to-br from-secondary to-muted overflow-hidden">
         <img
           src={project.coverImage}
           alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
       <div className="p-6">

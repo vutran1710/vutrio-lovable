@@ -44,7 +44,7 @@ export class GitHubClient {
       title: this.formatTitle(data.name),
       description: data.description ?? "",
       coverImage: "/placeholder.svg", // Customize per-repo if needed
-      githubUrl: url!,
+      githubUrl: data.svn_url,
       techStack: data.language ? [data.language] : [],
       tags: data.topics ?? [],
       stars: data.stargazers_count ?? 0,
