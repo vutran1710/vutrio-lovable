@@ -11,20 +11,14 @@ import {
 interface PaginationWrapperProps {
   currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
 }
 
-const PaginationWrapper = ({
+export const PaginationWrapper = ({
   currentPage,
   totalPages,
-  onPageChange,
 }: PaginationWrapperProps) => {
+  console.log("Current page", currentPage);
   if (totalPages <= 1) return null;
-
-  const handlePageChange = (page: number) => {
-    onPageChange(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   const getVisiblePages = () => {
     const delta = 2;
@@ -64,7 +58,7 @@ const PaginationWrapper = ({
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+              href={`?page=${currentPage - 1}`}
               className={
                 currentPage <= 1
                   ? "pointer-events-none opacity-50"
@@ -79,7 +73,7 @@ const PaginationWrapper = ({
                 <PaginationEllipsis />
               ) : (
                 <PaginationLink
-                  onClick={() => handlePageChange(page as number)}
+                  href={`?page=${page}`}
                   isActive={currentPage === page}
                   className="cursor-pointer"
                 >
@@ -91,9 +85,7 @@ const PaginationWrapper = ({
 
           <PaginationItem>
             <PaginationNext
-              onClick={() =>
-                handlePageChange(Math.min(totalPages, currentPage + 1))
-              }
+              href={`?page=${currentPage + 1}`}
               className={
                 currentPage >= totalPages
                   ? "pointer-events-none opacity-50"
@@ -106,5 +98,3 @@ const PaginationWrapper = ({
     </div>
   );
 };
-
-export default PaginationWrapper;

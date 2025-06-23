@@ -3,6 +3,8 @@ import * as React from "react";
 import { ArrowLeft, ArrowRight, DotsThree } from "phosphor-react";
 import { cn } from "../lib/utils";
 import { ButtonProps, buttonVariants } from "./button";
+import Link from "next/link";
+import { URL } from "url";
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -43,9 +45,11 @@ const PaginationLink = ({
   className,
   isActive,
   size = "icon",
+  href,
   ...props
 }: PaginationLinkProps) => (
-  <a
+  <Link
+    href={href || "#"}
     aria-current={isActive ? "page" : undefined}
     className={cn(
       buttonVariants({

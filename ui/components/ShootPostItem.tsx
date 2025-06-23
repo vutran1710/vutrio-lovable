@@ -8,7 +8,7 @@ interface ShootPostItemProps {
   onSelect?: (post: ShootPost) => void;
 }
 
-const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => (
+export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => (
   <div
     className="group cursor-pointer animate-fade-in border border-transparent hover:border-accent transition-colors rounded-lg p-2"
     onClick={() => onSelect?.(post)}
@@ -46,5 +46,3 @@ const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => (
     </div>
   </div>
 );
-
-export default ShootPostItem;

@@ -14,7 +14,7 @@ interface ShootDialogProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-const ShootDialog = ({ post, onOpenChange }: ShootDialogProps) => (
+export const ShootDialog = ({ post, onOpenChange }: ShootDialogProps) => (
   <Dialog open={!!post} onOpenChange={onOpenChange}>
     <DialogContent className="max-w-[min(1000px,80vw)] max-h-[80vh] overflow-hidden flex flex-col">
       {post && (
@@ -70,5 +70,3 @@ const ShootDialog = ({ post, onOpenChange }: ShootDialogProps) => (
     </DialogContent>
   </Dialog>
 );
-
-export default ShootDialog;
