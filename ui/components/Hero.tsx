@@ -1,0 +1,160 @@
+"use client";
+
+import { BookOpen, Camera, Wrench } from "phosphor-react";
+import { logbookPosts, shootsContent, workbenchProjects } from "../lib/mocks";
+import { HomeRecentItem } from "../lib/types";
+import HomeLatestItem from "./HomeLatestItem";
+import RecentUpdate from "./RecentUpdate";
+
+export const Hero = () => {
+  // Get the latest post from each collection
+  const latestLogbook = logbookPosts[0]!;
+  const latestShoot = shootsContent[0]!;
+  const latestWorkbench = workbenchProjects[0]!;
+
+  // Determine which is the most recent overall
+  const allLatest = [
+    { ...latestLogbook, type: "logbook", date: new Date(latestLogbook.date) },
+    { ...latestShoot, type: "shoots", date: new Date(latestShoot.date) },
+    { ...latestWorkbench, type: "workbench", date: new Date("2024-01-15") }, // Mock date
+  ].sort((a, b) => b.date.getTime() - a.date.getTime());
+
+  const mostRecent = allLatest[0];
+
+  // Convert to HomeRecentItem format
+  /* eslint-disable */
+  const getHomeRecentItem = (item: any): HomeRecentItem => {
+    if (item.type === "logbook") {
+      return {
+        type: item.type,
+        title: item.title,
+        description: item.excerpt || "",
+        coverUrl: item.cover,
+        date: item.date,
+        itemUrl: `/logbook/${item.slug}`,
+      };
+    }
+    if (item.type === "shoots") {
+      return {
+        type: item.type,
+        title: item.caption,
+        description: item.caption,
+        coverUrl: item.imageUrl,
+        date: item.date,
+        itemUrl: `/shoots/${item.id}`,
+      };
+    }
+    if (item.type === "workbench") {
+      return {
+        type: item.type,
+        title: item.title,
+        description: item.description,
+        coverUrl: item.coverImage,
+        date: item.date,
+        itemUrl: `/workbench/${item.id}`,
+      };
+    }
+    return {
+      type: item.type,
+      title: "Untitled",
+      description: "",
+      coverUrl: "/placeholder.svg",
+      date: item.date,
+      itemUrl: "#",
+    };
+  };
+
+  const latestItem = getHomeRecentItem(mostRecent);
+
+  // Get recent posts for sidebar (2 from each collection)
+  const recentLogbook = logbookPosts.slice(1, 3).map((post) =>
+    getHomeRecentItem({
+      ...post,
+      type: "logbook",
+      date: new Date(post.date),
+    }),
+  );
+
+  const recentShoots = shootsContent.slice(1, 3).map((post) =>
+    getHomeRecentItem({
+      ...post,
+      type: "shoots",
+      date: new Date(post.date),
+    }),
+  );
+
+  const recentWorkbench = workbenchProjects.slice(1, 3).map((project) =>
+    getHomeRecentItem({
+      ...project,
+      type: "workbench",
+      date: new Date("2024-01-15"),
+    }),
+  );
+
+  return (
+    <section className="pt-32 pb-20 journal-margins paper-background">
+      <div className="max-w-6xl mx-auto">
+        {/* Journal entry header */}
+        <div className="mb-12 animate-sketch-in">
+          <div className="flex items-center mb-4">
+            <span className="font-mono text-sm text-muted-foreground uppercase tracking-widest">
+              Field Notes
+            </span>
+            <div className="flex-1 h-px bg-foreground ml-4 opacity-30"></div>
+            <span className="font-mono text-xs text-muted-foreground ml-4">
+              {new Date().toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </span>
+          </div>
+
+          <h1 className="font-display text-5xl font-bold text-foreground mb-6 drop-cap">
+            Recent Explorations & Reflections
+          </h1>
+
+          <p className="font-serif text-xl text-muted-foreground max-w-3xl leading-relaxed">
+            A curated collection of thoughts, projects, and visual narratives
+            from the intersection of code, philosophy, and creative expression.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-4 gap-12">
+          {/* Latest Content Preview - Journal style */}
+          <div className="lg:col-span-3">
+            <div className="marginalia mb-4">Latest creation ↓</div>
+            <HomeLatestItem item={latestItem} />
+          </div>
+
+          {/* Recent Content List - Marginalia style */}
+          <div className="lg:col-span-1">
+            <div className="marginalia mb-6">Recent updates</div>
+
+            <div className="space-y-8">
+              <RecentUpdate
+                icon={<BookOpen size={16} className="text-accent" />}
+                title="Logbook"
+                items={recentLogbook}
+              />
+
+              <RecentUpdate
+                icon={<Camera size={16} className="text-accent" />}
+                title="Shoots"
+                items={recentShoots}
+              />
+
+              <RecentUpdate
+                icon={<Wrench size={16} className="text-accent" />}
+                title="Workbench"
+                items={recentWorkbench}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;

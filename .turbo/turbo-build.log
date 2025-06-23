@@ -1,0 +1,23 @@
+
+
+> web@0.1.0 build /Users/vutran/Works/vutrio/vutrio-monorepo/apps/web
+> next build
+
+   [1m[38;2;173;127;168m▲ Next.js 15.3.4[39m[22m
+
+ [37m[1m [22m[39m Creating an optimized production build ...
+ [32m[1m✓[22m[39m Compiled successfully in 2000ms
+[?25l [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39mFailed to compile.
+
+./components/pages/Index.tsx:14:8
+Type error: Property 'currentPath' is missing in type '{}' but required in type 'HeaderProps'.
+
+[0m [90m 12 |[39m   [36mreturn[39m ([0m
+[0m [90m 13 |[39m     [33m<[39m[33mPageContainer[39m[33m>[39m[0m
+[0m[31m[1m>[22m[39m[90m 14 |[39m       [33m<[39m[33mHeader[39m [33m/[39m[33m>[39m[0m
+[0m [90m    |[39m        [31m[1m^[22m[39m[0m
+[0m [90m 15 |[39m       [33m<[39m[33mmain[39m[33m>[39m[0m
+[0m [90m 16 |[39m         [33m<[39m[33mHero[39m [33m/[39m[33m>[39m[0m
+[0m [90m 17 |[39m         [33m<[39m[33mContentGrid[39m [33m/[39m[33m>[39m[0m
+[2K[1G[?25hNext.js build worker exited with code: 1 and signal: null
+[?25l [36m.[39m [?25h[41m[30m ELIFECYCLE [39m[49m [31mCommand failed with exit code 1.[39m

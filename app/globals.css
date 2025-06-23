@@ -1,0 +1,359 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* New Yorker + Philosopher's Journal + Vintage Zine Color Palette */
+@layer base {
+  :root {
+    --background: 42 15% 98%; /* soft off-white #fdfaf4 */
+    --foreground: 0 0% 10%; /* black ink #1a1a1a */
+
+    --card: 42 15% 97%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 42 15% 97%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 0 0% 10%; /* black ink */
+    --primary-foreground: 42 15% 98%;
+
+    --secondary: 42 10% 92%; /* subtle paper tone */
+    --secondary-foreground: 0 0% 15%;
+
+    --muted: 42 8% 88%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 8 60% 42%; /* dusty red #a6392e */
+    --accent-foreground: 42 15% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 20%; /* hand-drawn dark lines */
+    --input: 42 8% 90%;
+    --ring: 8 60% 42%;
+
+    --vintage-green: 150 20% 45%; /* faded green #6b8672 */
+    --sketch-line: 0 0% 25%;
+
+    --radius: 0.2rem; /* minimal radius for hand-drawn feel */
+
+    --vintage-blue: 215 30% 55%;
+    --dusty-green: 130 18% 48%;
+    --faded-pink: 350 40% 78%;
+    --sandy-orange: 30 50% 70%; /* #dfc3a1 */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family:
+      "Inter",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+    background-image:
+      radial-gradient(
+        circle at 25% 25%,
+        rgba(166, 57, 46, 0.03) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 75% 75%,
+        rgba(107, 134, 114, 0.03) 0%,
+        transparent 50%
+      ),
+      /* Paper texture simulation */
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.008) 2px,
+          rgba(0, 0, 0, 0.008) 4px
+        ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.008) 2px,
+        rgba(0, 0, 0, 0.008) 4px
+      );
+  }
+
+  /* Typography classes for New Yorker + Journal aesthetic */
+  .font-serif {
+    font-family: "EB Garamond", "Times New Roman", serif;
+  }
+
+  .font-mono {
+    font-family: "IBM Plex Mono", "Courier New", monospace;
+  }
+
+  .font-display {
+    font-family: "EB Garamond", serif;
+  }
+}
+
+/* Sketch-style elements and hand-drawn aesthetics */
+@layer utilities {
+  /* Hand-drawn underlines */
+  .sketch-underline {
+    position: relative;
+  }
+
+  .sketch-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: repeating-linear-gradient(
+      to right,
+      currentColor 0px,
+      currentColor 3px,
+      transparent 3px,
+      transparent 6px
+    );
+    opacity: 0.7;
+    transform: rotate(-0.5deg);
+  }
+
+  /* Rough border effect */
+  .rough-border {
+    border: 2px solid;
+    border-image: repeating-linear-gradient(
+        45deg,
+        currentColor 0px,
+        currentColor 1px,
+        transparent 1px,
+        transparent 3px
+      )
+      2;
+  }
+
+  /* Journal-style margins */
+  .journal-margins {
+    padding-left: 4rem;
+    padding-right: 4rem;
+    border-left: 1px solid hsl(var(--sketch-line));
+    position: relative;
+  }
+
+  .journal-margins::before {
+    content: "";
+    position: absolute;
+    left: 3rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: hsl(8 60% 42% / 0.3);
+  }
+
+  /* Vintage zine effects */
+  .zine-rotation {
+    transform: rotate(-0.5deg);
+  }
+
+  .zine-rotation-alt {
+    transform: rotate(0.7deg);
+  }
+
+  /* Tab-style navigation elements */
+  .sketch-tab {
+    position: relative;
+    background: hsl(var(--background));
+    border: 2px solid hsl(var(--foreground));
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    transform: rotate(-1deg);
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .sketch-tab.active {
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    transform: rotate(0deg);
+    z-index: 10;
+  }
+
+  /* Marginalia style */
+  .marginalia {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    border-left: 2px solid hsl(var(--accent));
+    padding-left: 0.5rem;
+    font-style: italic;
+  }
+
+  /* Pull quote styling */
+  .pull-quote {
+    font-family: "EB Garamond", serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: hsl(var(--accent));
+    border-left: 4px solid hsl(var(--accent));
+    padding-left: 1rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .pull-quote::before {
+    content: "";
+    font-size: 3rem;
+    color: hsl(var(--accent));
+    position: absolute;
+    left: -1rem;
+    top: -0.5rem;
+  }
+
+  /* Hand-drawn card effect */
+  .sketch-card {
+    background-color: hsl(var(--card));
+    border: 2px solid hsl(var(--foreground));
+    border-radius: 0;
+    box-shadow:
+      6px 6px 0 hsl(var(--foreground)),
+      12px 12px 0 hsl(var(--muted));
+    transition: all 0.2s ease;
+  }
+
+  .sketch-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow:
+      5px 5px 0 hsl(var(--foreground)),
+      10px 10px 0 hsl(var(--muted));
+  }
+
+  /* Vintage button styling */
+  .vintage-button {
+    background: hsl(var(--background));
+    border: 2px solid hsl(var(--foreground));
+    color: hsl(var(--foreground));
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vintage-button:hover {
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 hsl(var(--foreground));
+  }
+
+  .vintage-button:active {
+    transform: translate(0, 0);
+    box-shadow: none;
+  }
+}
+
+/* Animation utilities for journal-like interactions */
+@keyframes sketch-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) rotate(-0.5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes write-in {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.animate-sketch-in {
+  animation: sketch-in 0.6s ease-out;
+}
+
+.animate-write-in {
+  animation: write-in 0.8s ease-out;
+}
+
+/* Prose styling for journal entries */
+.prose-journal {
+  max-width: none;
+  color: hsl(var(--foreground));
+  line-height: 1.7;
+}
+
+.prose-journal h1,
+.prose-journal h2,
+.prose-journal h3 {
+  font-family: "EB Garamond", serif;
+  color: hsl(var(--foreground));
+  margin-bottom: 1rem;
+}
+
+.prose-journal h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+.prose-journal h2 {
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+.prose-journal p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.prose-journal blockquote {
+  @apply pull-quote;
+}
+
+.prose-journal a {
+  color: hsl(var(--accent));
+  text-decoration: none;
+  border-bottom: 1px dotted hsl(var(--accent));
+}
+
+.prose-journal a:hover {
+  @apply sketch-underline;
+}
+
+/* Drop cap styling */
+.drop-cap::first-letter {
+  font-family: "EB Garamond", serif;
+  font-size: 4rem;
+  line-height: 1;
+  float: left;
+  margin: 0.1rem 0.5rem 0 0;
+  color: hsl(var(--accent));
+  font-weight: 700;
+}
+
+.paper-background {
+  background-color: #ffffff;
+  background-image: url("https://www.transparenttextures.com/patterns/tiny-grid.png");
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.footer-card {
+  background-color: #5f5f5f;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%238b8b8b' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
