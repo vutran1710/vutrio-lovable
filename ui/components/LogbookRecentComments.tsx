@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../primitives/card";
 import { ScrollArea } from "../primitives/scroll-area";
-import type { RecentComment } from "../lib/types";
+import type { RecentComment } from "@/lib/types";
 
 interface LogbookRecentCommentsProps {
   comments: RecentComment[];

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Link } from "../primitives";
+import Link from "next/link";
 import { House, Camera, BookOpen, User, Wrench, List, X } from "phosphor-react";
 import {
   Breadcrumb,
@@ -37,7 +37,7 @@ export const MobileNav = ({ currentPath }: { currentPath: string }) => {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/">Home</Link>
+                  <Link href="/">Home</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {currentPath !== "/" && (
@@ -69,7 +69,7 @@ export const MobileNav = ({ currentPath }: { currentPath: string }) => {
               return (
                 <Link
                   key={item.id}
-                  to={item.id}
+                  href={item.id}
                   onClick={() => setIsMenuOpen(false)}
                   className={`flex items-center space-x-3 px-6 py-3 transition-all duration-200 ${
                     currentPath === item.id

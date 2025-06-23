@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { PageMain } from "@/ui";
 import { ArrowLeft, Calendar, Eye, Heart } from "phosphor-react";
-import type { LogbookPost } from "@/ui/lib/types";
-import { sampleLogbookPost } from "@/ui/lib/mocks";
+import type { LogbookPost } from "@/lib/types";
+import { sampleLogbookPost } from "@/lib/mocks";
 import { usePathname } from "next/navigation";
 
 export function LogbookPostBody() {

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../primitives/card";
-import type { LogbookTag } from "../lib/types";
-import { Link } from "../primitives";
+import type { LogbookTag } from "@/lib/types";
+import Link from "next/link";
 
 interface LogbookTagsProps {
   tags: LogbookTag[];
@@ -16,7 +16,7 @@ export const LogbookTags = ({ tags }: LogbookTagsProps) => (
         {tags.map((tag) => (
           <Link
             key={tag.name}
-            to={`/search?tag=${tag.name}&collection=logbook`}
+            href={`/search?tag=${tag.name}&collection=logbook`}
             className="px-3 py-1 bg-secondary hover:bg-primary hover:text-primary-foreground rounded-full text-sm cursor-pointer transition-all duration-300 border border-border hover:shadow-md"
           >
             #{tag.name} ({tag.count})

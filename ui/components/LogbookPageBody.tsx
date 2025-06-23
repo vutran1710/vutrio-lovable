@@ -11,7 +11,7 @@ import type {
   LogbookStats,
   LogbookTag,
   RecentComment,
-} from "@/ui/lib/types";
+} from "@/lib/types";
 
 export interface LogbookProps {
   posts: LogbookPost[];

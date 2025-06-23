@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "../primitives/dialog";
 import { InstagramLogo, TiktokLogo, Heart, Calendar } from "phosphor-react";
-import type { ShootPost } from "../lib/types";
+import type { ShootPost } from "@/lib/types";
 
 interface ShootDialogProps {
   post: ShootPost | null;

@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../primitives/card";
-import type { LogbookStats as Stats } from "../lib/types";
+import type { LogbookStats as Stats } from "@/lib/types";
 
 interface LogbookStatsProps {
   stats: Stats;

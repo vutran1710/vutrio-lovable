@@ -1,4 +1,4 @@
-import { Link } from "../primitives";
+import Link from "next/link";
 
 interface ResultItem {
   id: number | string;
@@ -13,9 +13,9 @@ interface SearchResultItemProps {
   type: string;
 }
 
-const SearchResultItem = ({ item, type }: SearchResultItemProps) => (
+export const SearchResultItem = ({ item, type }: SearchResultItemProps) => (
   <Link
-    to={`/${type}/${item.id}`}
+    href={`/${type}/${item.id}`}
     className="block bg-card rounded-lg p-6 cursor-pointer border border-border hover:border-accent transition-colors"
   >
     <div className="flex items-center justify-between mb-3">
@@ -48,5 +48,3 @@ const SearchResultItem = ({ item, type }: SearchResultItemProps) => (
     </div>
   </Link>
 );
-
-export default SearchResultItem;

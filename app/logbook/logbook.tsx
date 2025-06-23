@@ -7,7 +7,7 @@ import {
   logbookTags,
   recentComments,
   datesWithPosts,
-} from "@/ui/lib/mocks";
+} from "@/lib/mocks";
 import { notFound, useSearchParams } from "next/navigation";
 
 const POSTS_PER_PAGE = 5;

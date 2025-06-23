@@ -1,4 +1,4 @@
-import type { LogbookStats, LogbookTag, RecentComment } from "../lib/types";
+import type { LogbookStats, LogbookTag, RecentComment } from "@/lib/types";
 import { LogbookStatsView } from "./LogbookStatsView";
 import { LogbookRecentComments } from "./LogbookRecentComments";
 import LogbookCalendar from "./LogbookCalendar";

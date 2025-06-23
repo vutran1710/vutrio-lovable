@@ -1,8 +1,8 @@
 "use client";
 
 import { BookOpen, Camera, Wrench } from "phosphor-react";
-import { logbookPosts, shootsContent, workbenchProjects } from "../lib/mocks";
-import { HomeRecentItem } from "../lib/types";
+import { logbookPosts, shootsContent, workbenchProjects } from "@/lib/mocks";
+import { HomeRecentItem } from "@/lib/types";
 import HomeLatestItem from "./HomeLatestItem";
 import RecentUpdate from "./RecentUpdate";
 

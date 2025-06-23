@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Link } from "../primitives";
-import type { CollectionPreviewItem } from "../lib/types";
+import Link from "next/link";
+import type { CollectionPreviewItem } from "@/lib/types";
 
 interface CollectionProps {
   item: CollectionPreviewItem;
@@ -40,7 +40,7 @@ export const Collection = ({ item, index = 0 }: CollectionProps) => {
       <div className="space-y-3">
         {item.posts.map((post, postIndex) => (
           <Link
-            to={post.url}
+            href={post.url}
             key={post.title}
             className="block font-mono text-sm text-foreground hover:text-accent cursor-pointer transition-colors duration-200 border-l-2 border-transparent hover:border-accent pl-4 relative"
           >
@@ -54,7 +54,7 @@ export const Collection = ({ item, index = 0 }: CollectionProps) => {
       <div className="mt-6 pt-4 border-t border-dashed border-muted-foreground/30">
         <Link
           className="font-mono text-xs text-accent uppercase tracking-widest"
-          to={item.url}
+          href={item.url}
         >
           View All →
         </Link>

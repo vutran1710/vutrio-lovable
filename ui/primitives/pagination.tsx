@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { ArrowLeft, ArrowRight, DotsThree } from "phosphor-react";
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 import { ButtonProps, buttonVariants } from "./button";
 import Link from "next/link";
 import { URL } from "url";

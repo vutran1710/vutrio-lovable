@@ -1,7 +1,7 @@
 "use client";
 
 import { InstagramLogo, TiktokLogo } from "phosphor-react";
-import type { ShootPost } from "../lib/types";
+import type { ShootPost } from "@/lib/types";
 
 interface ShootPostItemProps {
   post: ShootPost;

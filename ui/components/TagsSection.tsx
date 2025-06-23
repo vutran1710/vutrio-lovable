@@ -1,7 +1,7 @@
 "use client";
 
-import { Link } from "../primitives";
-import { tagsSectionTags } from "../lib/mocks";
+import Link from "next/link";
+import { tagsSectionTags } from "@/lib/mocks";
 
 export const TagsSection = () => {
   const tags = tagsSectionTags;
@@ -21,7 +21,7 @@ export const TagsSection = () => {
           {tags.map((tag) => (
             <Link
               key={tag}
-              to={`/search?tag=${tag}`}
+              href={`/search?tag=${tag}`}
               className="px-4 py-2 bg-secondary hover:bg-primary hover:text-primary-foreground rounded-full text-sm font-medium cursor-pointer transition-all duration-300 border border-border hover:shadow-md"
             >
               #{tag}

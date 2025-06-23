@@ -5,5 +5,4 @@ export * from "./breadcrumb";
 export * from "./scroll-area";
 export * from "./pagination";
 export * from "./dialog";
-export * from "./link";
 export * from "./avatar";

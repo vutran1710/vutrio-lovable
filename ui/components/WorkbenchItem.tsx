@@ -1,7 +1,7 @@
 "use client";
 
 import { GithubLogo, Star } from "phosphor-react";
-import type { WorkbenchPost } from "../lib/types";
+import type { WorkbenchPost } from "@/lib/types";
 
 interface WorkbenchItemProps {
   project: WorkbenchPost;

@@ -1,7 +1,7 @@
 "use client";
 
 import { PaginationWrapper, ShootsPageBody } from "@/ui";
-import type { ShootPost } from "@/ui/lib/types";
+import type { ShootPost } from "@/lib/types";
 import { notFound, useSearchParams } from "next/navigation";
 
 const shootsContent: ShootPost[] = [

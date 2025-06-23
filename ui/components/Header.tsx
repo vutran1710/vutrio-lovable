@@ -1,7 +1,7 @@
 "use client";
 
 import { House, Camera, BookOpen, User, Wrench } from "phosphor-react";
-import { Link } from "../primitives";
+import Link from "next/link";
 import { MobileNav } from "./MobileNav";
 
 type HeaderProps = {
@@ -23,7 +23,7 @@ export const Header = ({ currentPath }: HeaderProps) => {
         <div className="flex items-center justify-between">
           {/* Logo/Name - Hand-lettered style */}
           <Link
-            to="/"
+            href="/"
             className="font-display text-4xl font-bold text-accent sketch-underline transform -rotate-3 hover:rotate-0 transition-transform duration-300"
           >
             Vũ Trần
@@ -37,7 +37,7 @@ export const Header = ({ currentPath }: HeaderProps) => {
               return (
                 <Link
                   key={item.id}
-                  to={item.id}
+                  href={item.id}
                   className={`sketch-tab px-4 py-3 font-mono text-sm font-medium transition-all duration-300 ${
                     isActive ? "active" : "hover:-translate-y-1"
                   }`}

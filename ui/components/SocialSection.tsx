@@ -1,6 +1,6 @@
 "use client";
 
-import { socialSectionPosts } from "../lib/mocks";
+import { socialSectionPosts } from "@/lib/mocks";
 
 export const SocialSection = () => {
   const socialPosts = socialSectionPosts;

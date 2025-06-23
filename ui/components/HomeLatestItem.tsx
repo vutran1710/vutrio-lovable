@@ -1,7 +1,7 @@
 "use client";
-import { Link } from "../primitives";
+import Link from "next/link";
 import { Clock, BookOpen, Camera, Wrench } from "phosphor-react";
-import { HomeRecentItem } from "../lib/types";
+import { HomeRecentItem } from "@/lib/types";
 
 interface HomeLatestItemProps {
   item: HomeRecentItem;
@@ -36,7 +36,7 @@ const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
 
   return (
     <Link
-      to={item.itemUrl}
+      href={item.itemUrl}
       className="group block sketch-card zine-rotation hover:zine-rotation-alt transition-all duration-300"
     >
       <div className="aspect-[16/9] relative overflow-hidden">

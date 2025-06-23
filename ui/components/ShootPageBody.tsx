@@ -1,6 +1,6 @@
 "use client";
 
-import { ShootPost } from "../lib/types";
+import { ShootPost } from "@/lib/types";
 import { PageMain } from "./PageMain";
 import { PageHeader } from "./PageHeader";
 import { ShootPostItem } from "./ShootPostItem";

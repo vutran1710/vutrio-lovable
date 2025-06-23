@@ -1,6 +1,6 @@
 "use client";
 
-import { contentGridSections } from "../lib/mocks";
+import { contentGridSections } from "@/lib/mocks";
 import { Collection } from "./Collection";
 
 export const ContentGrid = () => {

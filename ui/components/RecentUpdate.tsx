@@ -1,6 +1,6 @@
-import { Link } from "../primitives";
+import Link from "next/link";
 import { ReactNode } from "react";
-import { HomeRecentItem } from "../lib/types";
+import { HomeRecentItem } from "@/lib/types";
 
 interface RecentUpdateProps {
   icon: ReactNode;
@@ -23,7 +23,7 @@ const RecentUpdate = ({ icon, title, items }: RecentUpdateProps) => {
         {items.map((item, index) => (
           <Link
             key={`${item.type}-${index}`}
-            to={item.itemUrl}
+            href={item.itemUrl}
             className="block text-sm text-muted-foreground hover:text-accent transition-colors py-2 border-l-2 border-transparent hover:border-accent pl-4 font-serif leading-relaxed group"
           >
             <span className="font-mono text-xs text-muted-foreground mr-2 group-hover:text-accent">

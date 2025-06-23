@@ -1,4 +1,4 @@
-import type { LogbookStats } from "../lib/types";
+import type { LogbookStats } from "@/lib/types";
 
 interface LogbookMobileStatsProps {
   stats: LogbookStats;
