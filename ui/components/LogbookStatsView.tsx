@@ -5,7 +5,7 @@ interface LogbookStatsProps {
   stats: Stats;
 }
 
-const LogbookStatsView = ({ stats }: LogbookStatsProps) => (
+export const LogbookStatsView = ({ stats }: LogbookStatsProps) => (
   <Card className="animate-fade-in shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-foreground">
     <CardHeader>
       <CardTitle className="font-display text-lg">Statistics</CardTitle>
@@ -30,5 +30,3 @@ const LogbookStatsView = ({ stats }: LogbookStatsProps) => (
     </CardContent>
   </Card>
 );
-
-export default LogbookStatsView;

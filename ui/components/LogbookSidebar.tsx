@@ -1,8 +1,8 @@
 import type { LogbookStats, LogbookTag, RecentComment } from "../lib/types";
-import LogbookStatsView from "./LogbookStatsView";
-import LogbookRecentComments from "./LogbookRecentComments";
+import { LogbookStatsView } from "./LogbookStatsView";
+import { LogbookRecentComments } from "./LogbookRecentComments";
 import LogbookCalendar from "./LogbookCalendar";
-import LogbookTags from "./LogbookTags";
+import { LogbookTags } from "./LogbookTags";
 
 interface LogbookSidebarProps {
   stats: LogbookStats;
@@ -11,7 +11,7 @@ interface LogbookSidebarProps {
   datesWithPosts: Date[];
 }
 
-const LogbookSidebar = ({
+export const LogbookSidebar = ({
   stats,
   tags,
   recentComments,
@@ -26,5 +26,3 @@ const LogbookSidebar = ({
     </div>
   );
 };
-
-export default LogbookSidebar;

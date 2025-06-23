@@ -6,7 +6,7 @@ interface LogbookTagsProps {
   tags: LogbookTag[];
 }
 
-const LogbookTags = ({ tags }: LogbookTagsProps) => (
+export const LogbookTags = ({ tags }: LogbookTagsProps) => (
   <Card className="animate-fade-in shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-foreground">
     <CardHeader>
       <CardTitle className="font-display text-lg">Tags</CardTitle>
@@ -26,5 +26,3 @@ const LogbookTags = ({ tags }: LogbookTagsProps) => (
     </CardContent>
   </Card>
 );
-
-export default LogbookTags;

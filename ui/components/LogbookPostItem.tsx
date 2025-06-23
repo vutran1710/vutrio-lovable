@@ -5,7 +5,7 @@ interface LogbookPostItemProps {
   post: LogbookPost;
 }
 
-const LogbookPostItem = ({ post }: LogbookPostItemProps) => (
+export const LogbookPostItem = ({ post }: LogbookPostItemProps) => (
   <Link key={post.id} to={`/logbook/${post.slug}`} className="block">
     <article className="animate-fade-in cursor-pointer border border-transparent hover:border-accent transition-colors rounded-lg p-2">
       <div className="md:flex">
@@ -51,5 +51,3 @@ const LogbookPostItem = ({ post }: LogbookPostItemProps) => (
     </article>
   </Link>
 );
-
-export default LogbookPostItem;

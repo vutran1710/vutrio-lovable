@@ -6,7 +6,9 @@ interface LogbookRecentCommentsProps {
   comments: RecentComment[];
 }
 
-const LogbookRecentComments = ({ comments }: LogbookRecentCommentsProps) => (
+export const LogbookRecentComments = ({
+  comments,
+}: LogbookRecentCommentsProps) => (
   <Card className="animate-fade-in shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-foreground">
     <CardHeader>
       <CardTitle className="font-display text-lg">Recent Comments</CardTitle>
@@ -36,5 +38,3 @@ const LogbookRecentComments = ({ comments }: LogbookRecentCommentsProps) => (
     </CardContent>
   </Card>
 );
-
-export default LogbookRecentComments;

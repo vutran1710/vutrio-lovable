@@ -4,7 +4,7 @@ interface LogbookMobileStatsProps {
   stats: LogbookStats;
 }
 
-const LogbookMobileStats = ({ stats }: LogbookMobileStatsProps) => (
+export const LogbookMobileStats = ({ stats }: LogbookMobileStatsProps) => (
   <div className="bg-card rounded-lg p-4">
     <h3 className="font-display text-lg font-semibold mb-3">Statistics</h3>
     <div className="flex justify-between text-sm">
@@ -25,5 +25,3 @@ const LogbookMobileStats = ({ stats }: LogbookMobileStatsProps) => (
     </div>
   </div>
 );
-
-export default LogbookMobileStats;

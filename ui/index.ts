@@ -24,3 +24,5 @@ export * from "./components/SocialSection";
 export * from "./components/TagsSection";
 export * from "./components/WorkbenchItem";
 export * from "./components/ShootPageBody";
+export * from "./components/LogbookPageBody";
+export * from "./components/LogbookPostBody";
