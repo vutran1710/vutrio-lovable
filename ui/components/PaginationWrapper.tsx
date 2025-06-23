@@ -11,46 +11,39 @@ import {
 interface PaginationWrapperProps {
   currentPage: number;
   totalPages: number;
+  basePath: string; // required now
 }
 
 export const PaginationWrapper = ({
   currentPage,
   totalPages,
+  basePath,
 }: PaginationWrapperProps) => {
-  console.log("Current page", currentPage);
   if (totalPages <= 1) return null;
 
-  const getVisiblePages = () => {
+  const getVisiblePages = (): (number | "...")[] => {
     const delta = 2;
-    const range = [];
-    const rangeWithDots = [];
+    const range: (number | "...")[] = [];
 
-    for (
-      let i = Math.max(2, currentPage - delta);
-      i <= Math.min(totalPages - 1, currentPage + delta);
-      i++
-    ) {
+    const rangeStart = Math.max(2, currentPage - delta);
+    const rangeEnd = Math.min(totalPages - 1, currentPage + delta);
+
+    if (rangeStart > 2) range.push(1, "...");
+    else range.push(1);
+
+    for (let i = rangeStart; i <= rangeEnd; i++) {
       range.push(i);
     }
 
-    if (currentPage - delta > 2) {
-      rangeWithDots.push(1, "...");
-    } else {
-      rangeWithDots.push(1);
-    }
+    if (rangeEnd < totalPages - 1) range.push("...", totalPages);
+    else if (totalPages > 1) range.push(totalPages);
 
-    rangeWithDots.push(...range);
-
-    if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push("...", totalPages);
-    } else {
-      rangeWithDots.push(totalPages);
-    }
-
-    return rangeWithDots;
+    return range;
   };
 
   const visiblePages = getVisiblePages();
+
+  const makeHref = (page: number) => `${basePath}/${page}`;
 
   return (
     <div className="mt-12 mb-8">
@@ -58,7 +51,7 @@ export const PaginationWrapper = ({
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
-              href={`?page=${currentPage - 1}`}
+              href={makeHref(currentPage - 1)}
               className={
                 currentPage <= 1
                   ? "pointer-events-none opacity-50"
@@ -73,7 +66,7 @@ export const PaginationWrapper = ({
                 <PaginationEllipsis />
               ) : (
                 <PaginationLink
-                  href={`?page=${page}`}
+                  href={makeHref(page as number)}
                   isActive={currentPage === page}
                   className="cursor-pointer"
                 >
@@ -85,7 +78,7 @@ export const PaginationWrapper = ({
 
           <PaginationItem>
             <PaginationNext
-              href={`?page=${currentPage + 1}`}
+              href={makeHref(currentPage + 1)}
               className={
                 currentPage >= totalPages
                   ? "pointer-events-none opacity-50"

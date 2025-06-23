@@ -1,0 +1,6 @@
+// app/workbench/page.tsx
+import { redirect } from "next/navigation";
+
+export default function Page() {
+  redirect("/workbench/page/1");
+}
