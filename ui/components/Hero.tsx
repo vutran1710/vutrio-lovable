@@ -1,25 +1,45 @@
 "use client";
 
 import { BookOpen, Camera, Wrench } from "phosphor-react";
-import { logbookPosts, shootsContent, workbenchProjects } from "@/lib/mocks";
-import { HomeRecentItem } from "@/lib/types";
+import { shootsContent, workbenchProjects } from "@/lib/mocks";
+import {
+  HomeRecentItem,
+  LogbookPost,
+  ShootPost,
+  WorkbenchPost,
+} from "@/lib/types";
 import HomeLatestItem from "./HomeLatestItem";
 import RecentUpdate from "./RecentUpdate";
 
-export const Hero = () => {
-  // Get the latest post from each collection
-  const latestLogbook = logbookPosts[0]!;
-  const latestShoot = shootsContent[0]!;
-  const latestWorkbench = workbenchProjects[0]!;
+type HeroProps = {
+  logbookPosts: LogbookPost[];
+  shootPosts: ShootPost[];
+  workbenchPost: WorkbenchPost[];
+};
 
-  // Determine which is the most recent overall
-  const allLatest = [
-    { ...latestLogbook, type: "logbook", date: new Date(latestLogbook.date) },
-    { ...latestShoot, type: "shoots", date: new Date(latestShoot.date) },
-    { ...latestWorkbench, type: "workbench", date: new Date("2024-01-15") }, // Mock date
-  ].sort((a, b) => b.date.getTime() - a.date.getTime());
+export const Hero = (props: HeroProps) => {
+  const sortedByTime = [...props.logbookPosts, ...props.shootPosts].sort(
+    (a, b) => {
+      // sort by time, get the latest
+      return b.date.getTime() - a.date.getTime();
+    },
+  );
+  const mostRecent = sortedByTime[0];
 
-  const mostRecent = allLatest[0];
+  if (!mostRecent) {
+    return (
+      <section className="pt-32 pb-20 journal-margins paper-background">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="font-display text-5xl font-bold text-foreground mb-6">
+            No recent content available
+          </h1>
+          <p className="font-serif text-xl text-muted-foreground max-w-3xl leading-relaxed">
+            Check back later for updates.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   // Convert to HomeRecentItem format
   /* eslint-disable */
@@ -67,19 +87,17 @@ export const Hero = () => {
   const latestItem = getHomeRecentItem(mostRecent);
 
   // Get recent posts for sidebar (2 from each collection)
-  const recentLogbook = logbookPosts.slice(1, 3).map((post) =>
+  const recentLogbook = props.logbookPosts.map((post) =>
     getHomeRecentItem({
       ...post,
       type: "logbook",
-      date: new Date(post.date),
     }),
   );
 
-  const recentShoots = shootsContent.slice(1, 3).map((post) =>
+  const recentShoots = props.shootPosts.map((post) =>
     getHomeRecentItem({
       ...post,
       type: "shoots",
-      date: new Date(post.date),
     }),
   );
 
@@ -87,6 +105,7 @@ export const Hero = () => {
     getHomeRecentItem({
       ...project,
       type: "workbench",
+      // FIXME: add last updated date to WorkbenchPost type
       date: new Date("2024-01-15"),
     }),
   );

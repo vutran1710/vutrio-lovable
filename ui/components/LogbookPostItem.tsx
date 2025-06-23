@@ -44,7 +44,6 @@ export const LogbookPostItem = ({ post }: LogbookPostItemProps) => (
                 key={tag}
                 href={`/tags/${tag}`}
                 className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
-                onClick={(e) => e.stopPropagation()}
               >
                 #{tag}
               </Link>

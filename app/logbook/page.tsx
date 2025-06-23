@@ -1,12 +1,5 @@
-import { PageContainer, Header, Footer } from "@/ui";
-import Logbook from "./logbook";
+import { redirect } from "next/navigation";
 
-export default function LogbookPage() {
-  return (
-    <PageContainer>
-      <Header currentPath="/logbook" />
-      <Logbook />
-      <Footer />
-    </PageContainer>
-  );
+export default function Page() {
+  redirect("/logbook/page/1");
 }

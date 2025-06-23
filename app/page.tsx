@@ -13,7 +13,7 @@ export default function Home() {
     <PageContainer>
       <Header currentPath="/" />
       <main>
-        <Hero />
+        <Hero logbookPosts={[]} shootPosts={[]} workbenchPost={[]} />
         <ContentGrid />
         <TagsSection />
         <SocialSection />

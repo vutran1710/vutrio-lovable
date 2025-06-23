@@ -2,7 +2,7 @@ export interface LogbookPost {
   id: string;
   slug: string;
   title: string;
-  date: string;
+  date: Date;
   cover: string;
   excerpt?: string;
   content?: string;
@@ -13,7 +13,6 @@ export interface LogbookPost {
 }
 
 export interface LogbookStats {
-  totalPosts: number;
   totalViews: number;
   totalComments: number;
 }
@@ -36,7 +35,7 @@ export interface ShootPost {
   imageUrl: string;
   caption: string;
   likes: number;
-  date: string;
+  date: Date;
   type: ShootType;
   sourceUrl: string;
 }

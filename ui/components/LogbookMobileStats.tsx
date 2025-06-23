@@ -9,10 +9,6 @@ export const LogbookMobileStats = ({ stats }: LogbookMobileStatsProps) => (
     <h3 className="font-display text-lg font-semibold mb-3">Statistics</h3>
     <div className="flex justify-between text-sm">
       <div className="text-center">
-        <div className="font-semibold text-primary">{stats.totalPosts}</div>
-        <div className="text-muted-foreground">Posts</div>
-      </div>
-      <div className="text-center">
         <div className="font-semibold text-primary">
           {stats.totalViews.toLocaleString()}
         </div>

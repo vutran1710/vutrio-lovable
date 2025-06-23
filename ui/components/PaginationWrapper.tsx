@@ -10,18 +10,21 @@ import {
 
 interface PaginationWrapperProps {
   currentPage: number;
-  totalPages: number;
-  basePath: string; // required now
+  totalPages?: number;
+  basePath: string;
+  hasNext?: boolean; // only used if totalPages is undefined
 }
 
 export const PaginationWrapper = ({
   currentPage,
   totalPages,
   basePath,
+  hasNext = true,
 }: PaginationWrapperProps) => {
-  if (totalPages <= 1) return null;
+  const makeHref = (page: number) => `${basePath}/${page}`;
 
   const getVisiblePages = (): (number | "...")[] => {
+    if (!totalPages) return [];
     const delta = 2;
     const range: (number | "...")[] = [];
 
@@ -43,7 +46,8 @@ export const PaginationWrapper = ({
 
   const visiblePages = getVisiblePages();
 
-  const makeHref = (page: number) => `${basePath}/${page}`;
+  // If totalPages is known and only 1 page, skip entirely
+  if (totalPages === 1) return null;
 
   return (
     <div className="mt-12 mb-8">
@@ -60,29 +64,34 @@ export const PaginationWrapper = ({
             />
           </PaginationItem>
 
-          {visiblePages.map((page, index) => (
-            <PaginationItem key={index}>
-              {page === "..." ? (
-                <PaginationEllipsis />
-              ) : (
-                <PaginationLink
-                  href={makeHref(page as number)}
-                  isActive={currentPage === page}
-                  className="cursor-pointer"
-                >
-                  {page}
-                </PaginationLink>
-              )}
-            </PaginationItem>
-          ))}
+          {visiblePages.length > 0 &&
+            visiblePages.map((page, index) => (
+              <PaginationItem key={index}>
+                {page === "..." ? (
+                  <PaginationEllipsis />
+                ) : (
+                  <PaginationLink
+                    href={makeHref(page as number)}
+                    isActive={currentPage === page}
+                    className="cursor-pointer"
+                  >
+                    {page}
+                  </PaginationLink>
+                )}
+              </PaginationItem>
+            ))}
 
           <PaginationItem>
             <PaginationNext
               href={makeHref(currentPage + 1)}
               className={
-                currentPage >= totalPages
-                  ? "pointer-events-none opacity-50"
-                  : "cursor-pointer"
+                totalPages
+                  ? currentPage >= totalPages
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                  : hasNext
+                    ? "cursor-pointer"
+                    : "pointer-events-none opacity-50"
               }
             />
           </PaginationItem>

@@ -11,26 +11,6 @@ const notion = new Client({
 const LOGBOOK_DB_ID = process.env.LOGBOOK_DB_ID!;
 const ABOUT_PAGE_ID = process.env.ABOUT_PAGE_ID!;
 
-export async function getLogbookEntries(): Promise<
-  QueryDatabaseResponse["results"]
-> {
-  const response = await notion.databases.query({
-    database_id: LOGBOOK_DB_ID,
-    filter: {
-      property: "Published",
-      checkbox: { equals: true },
-    },
-    sorts: [
-      {
-        property: "Date",
-        direction: "descending",
-      },
-    ],
-  });
-
-  return response.results;
-}
-
 export async function getLogbookEntryBySlug(slug: string) {
   const response = await notion.databases.query({
     database_id: LOGBOOK_DB_ID,
@@ -41,8 +21,6 @@ export async function getLogbookEntryBySlug(slug: string) {
       },
     },
   });
-
-  console.log("getLogbookEntryBySlug response:", response);
 
   return response.results[0]; // first match
 }
@@ -75,6 +53,66 @@ export async function getAllLogbookEntries(): Promise<LogbookPost[]> {
   });
 
   return response.results as unknown as LogbookPost[];
+}
+
+export async function getLogbookEntries(
+  page: number,
+  perPage: number = 6,
+): Promise<LogbookPost[]> {
+  const collected = [];
+  let cursor: string | undefined = undefined;
+  let skipped = 0;
+  const offset = (page - 1) * perPage;
+
+  while (collected.length < perPage) {
+    const response = await notion.databases.query({
+      database_id: LOGBOOK_DB_ID,
+      filter: {
+        property: "Published",
+        checkbox: { equals: true },
+      },
+      sorts: [
+        {
+          property: "Date",
+          direction: "descending",
+        },
+      ],
+      page_size: 8, // Notion real-world page size
+      start_cursor: cursor,
+    });
+
+    const pageItems = response.results;
+
+    for (const item of pageItems) {
+      if (skipped < offset) {
+        skipped++;
+        continue;
+      }
+
+      collected.push(item);
+      if (collected.length >= perPage) break;
+    }
+
+    if (!response.has_more || !response.next_cursor) break;
+    cursor = response.next_cursor;
+  }
+
+  return collected.map((item) => {
+    // @ts-ignore
+    const properties = item.properties!;
+    return {
+      id: item.id,
+      slug: properties.Slug.rich_text[0]?.plain_text || "",
+      title: properties.Logbook.title[0]?.plain_text || "Untitled",
+      date: new Date(properties.Date.date?.start!),
+      // @ts-ignore
+      cover: item.cover?.external?.url || "",
+      // @ts-ignore
+      content: item.content || [],
+      // @ts-ignore
+      tags: item.properties.Tags.multi_select.map((tag) => tag.name),
+    } as LogbookPost;
+  });
 }
 
 export async function getAboutPage() {

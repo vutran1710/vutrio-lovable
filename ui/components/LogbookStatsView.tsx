@@ -12,10 +12,6 @@ export const LogbookStatsView = ({ stats }: LogbookStatsProps) => (
     </CardHeader>
     <CardContent className="space-y-4">
       <div className="flex justify-between items-center">
-        <span className="text-muted-foreground">Total Posts</span>
-        <span className="font-semibold text-primary">{stats.totalPosts}</span>
-      </div>
-      <div className="flex justify-between items-center">
         <span className="text-muted-foreground">Total Views</span>
         <span className="font-semibold text-primary">
           {stats.totalViews.toLocaleString()}
