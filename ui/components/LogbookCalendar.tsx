@@ -18,8 +18,8 @@ export const LogbookCalendar = ({ datesWithPosts }: LogbookCalendarProps) => {
           }}
           modifiersStyles={{
             hasPost: {
-              backgroundColor: "hsl(var(--accent))",
-              color: "hsl(var(--accent-foreground))",
+              backgroundColor: "hsl(var(--background))",
+              color: "hsl(var(--accent))",
               fontWeight: "bold",
             },
           }}
