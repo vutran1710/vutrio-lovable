@@ -63,7 +63,7 @@ export const Hero = (props: HeroProps) => {
       return {
         type: item.type,
         title: item.caption,
-        description: item.caption,
+        description: item.description || item.caption,
         coverUrl: item.imageUrl,
         date: item.date,
         itemUrl: `/shoots/${item.id}`,

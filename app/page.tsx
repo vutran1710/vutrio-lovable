@@ -9,12 +9,13 @@ import {
   Footer,
 } from "../ui";
 import { GitHubClient, PUBLIC_REPOS } from "@/lib/github";
+import { fetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
 
 export default async function Home() {
   const latestLogbookPosts = await getLogbookEntries(1, 1);
   const client = new GitHubClient(process.env.GITHUB_TOKEN);
   const workbenchProjects = await client.fetchRepos(PUBLIC_REPOS.slice(0, 2));
-  console.log("Workbench Projects:", workbenchProjects);
+  const shootPosts = await fetchPhotosByPage(1, 2, PHOTO_FOLDER_NAME);
 
   return (
     <PageContainer>
@@ -22,7 +23,7 @@ export default async function Home() {
       <main>
         <Hero
           logbookPosts={latestLogbookPosts}
-          shootPosts={[]}
+          shootPosts={shootPosts}
           workbenchPost={workbenchProjects}
         />
         <ContentGrid />

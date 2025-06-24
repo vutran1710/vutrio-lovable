@@ -1,5 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
-import type { ShootPost, ShootType } from "@/lib/types"; // or wherever you define them
+import type { ShootPost } from "@/lib/types"; // or wherever you define them
+
+export const PHOTO_FOLDER_NAME = "vutrio-shoots--photos";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,

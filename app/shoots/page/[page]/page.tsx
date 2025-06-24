@@ -1,6 +1,5 @@
-import { fetchPhotosByPage } from "@/lib/cloudinary";
+import { fetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
 import { TiktokCollections } from "@/lib/collections";
-import { ShootPost } from "@/lib/types";
 import {
   Footer,
   Header,
@@ -27,7 +26,7 @@ export default async function ShootPage({
   const photos = await fetchPhotosByPage(
     currentPage,
     PHOTO_POSTS_PER_PAGE,
-    "vutrio-shoots--photos",
+    PHOTO_FOLDER_NAME,
   );
 
   const videos = TiktokCollections.slice(
