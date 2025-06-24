@@ -1,7 +1,7 @@
 "use client";
 
 import { BookOpen, Camera, Wrench } from "phosphor-react";
-import { shootsContent, workbenchProjects } from "@/lib/mocks";
+import { shootsContent } from "@/lib/mocks";
 import {
   HomeRecentItem,
   LogbookPost,
@@ -18,12 +18,17 @@ type HeroProps = {
 };
 
 export const Hero = (props: HeroProps) => {
-  const sortedByTime = [...props.logbookPosts, ...props.shootPosts].sort(
-    (a, b) => {
-      // sort by time, get the latest
-      return b.date.getTime() - a.date.getTime();
-    },
-  );
+  const sortedByTime = [
+    ...props.logbookPosts.map((post) => ({ ...post, type: "logbook" })),
+    ...props.shootPosts.map((post) => ({ ...post, type: "shoots" })),
+    ...props.workbenchPost.map((project) => ({
+      ...project,
+      type: "workbench",
+    })),
+  ].sort((a, b) => {
+    // sort by time, get the latest
+    return b.date.getTime() - a.date.getTime();
+  });
   const mostRecent = sortedByTime[0];
 
   if (!mostRecent) {
@@ -101,12 +106,10 @@ export const Hero = (props: HeroProps) => {
     }),
   );
 
-  const recentWorkbench = workbenchProjects.slice(1, 3).map((project) =>
+  const recentWorkbench = props.workbenchPost.map((project) =>
     getHomeRecentItem({
       ...project,
       type: "workbench",
-      // FIXME: add last updated date to WorkbenchPost type
-      date: new Date("2024-01-15"),
     }),
   );
 

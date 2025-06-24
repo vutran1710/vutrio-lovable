@@ -1,4 +1,4 @@
-import { GitHubClient, Repository } from "@/lib/github";
+import { GitHubClient, PUBLIC_REPOS } from "@/lib/github";
 import { WorkbenchPost } from "@/lib/types";
 import {
   Footer,
@@ -9,18 +9,6 @@ import {
 } from "@/ui";
 import { notFound } from "next/navigation";
 
-const REPOS: Repository[] = [
-  {
-    name: "on-chain indexing runtime",
-    username: "datafast-network",
-    repoName: "datafast-runtime",
-  },
-  "interactive-consistent-hashing",
-  "PyrateLimiter",
-  "ETL-Microservices-System-Boilerplate",
-  "KafkaOffShore",
-];
-
 const POSTS_PER_PAGE = 6;
 
 export default async function WorkbenchPage({
@@ -28,19 +16,20 @@ export default async function WorkbenchPage({
 }: {
   params: { page: string };
 }) {
-  const currentPage = parseInt(params.page, 10);
+  const { page } = await params;
+  const currentPage = parseInt(page, 10);
   if (isNaN(currentPage) || currentPage < 1) notFound();
 
   const start = (currentPage - 1) * POSTS_PER_PAGE;
   const end = start + POSTS_PER_PAGE;
-  const pageRepos = REPOS.slice(start, end);
+  const pageRepos = PUBLIC_REPOS.slice(start, end);
 
   if (pageRepos.length === 0) notFound();
 
   const client = new GitHubClient(process.env.GITHUB_TOKEN);
   const projects: WorkbenchPost[] = await client.fetchRepos(pageRepos);
 
-  const totalPages = Math.ceil(REPOS.length / POSTS_PER_PAGE);
+  const totalPages = Math.ceil(PUBLIC_REPOS.length / POSTS_PER_PAGE);
 
   return (
     <PageContainer>

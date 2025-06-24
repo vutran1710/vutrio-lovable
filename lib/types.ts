@@ -49,6 +49,7 @@ export interface WorkbenchPost {
   techStack: string[];
   tags: string[];
   stars: number;
+  date: Date;
 }
 
 export interface HomeRecentItem {

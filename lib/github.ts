@@ -3,6 +3,18 @@ import { WorkbenchPost } from "./types";
 const GITHUB_USERNAME = "vutran1710";
 const GITHUB_API = "https://api.github.com";
 
+export const PUBLIC_REPOS: Repository[] = [
+  {
+    name: "on-chain indexing runtime",
+    username: "datafast-network",
+    repoName: "datafast-runtime",
+  },
+  "interactive-consistent-hashing",
+  "PyrateLimiter",
+  "ETL-Microservices-System-Boilerplate",
+  "KafkaOffShore",
+];
+
 export type Repository =
   | string
   | { name: string; username: string; repoName: string };
@@ -48,6 +60,7 @@ export class GitHubClient {
       techStack: data.language ? [data.language] : [],
       tags: data.topics ?? [],
       stars: data.stargazers_count ?? 0,
+      date: new Date(data.pushed_at),
     };
   }
 
