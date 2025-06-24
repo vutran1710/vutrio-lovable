@@ -25,7 +25,11 @@ export function ShootsPageBody({ content }: ShootsPageBodyProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {content.map((item) => (
-            <ShootPostItem key={item.id} post={item} onSelect={onPostClick} />
+            <ShootPostItem
+              key={`${item.type}-${item.id}`}
+              post={item}
+              onSelect={onPostClick}
+            />
           ))}
         </div>
       </PageMain>

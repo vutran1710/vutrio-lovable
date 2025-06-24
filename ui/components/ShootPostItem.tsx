@@ -59,9 +59,14 @@ export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
       </div>
 
       <div className="mt-4">
-        <p className="font-serif text-sm text-foreground mb-2 line-clamp-2">
+        <p className="font-serif text-foreground mb-2 line-clamp-2">
           {post.caption}
         </p>
+        {post.description && (
+          <p className="text-sm text-muted-foreground line-clamp-2 h-16">
+            {post.description}
+          </p>
+        )}
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <span>{post.likes} likes</span>
           <span>{post.date.toLocaleDateString()}</span>

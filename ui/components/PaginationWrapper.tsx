@@ -21,7 +21,7 @@ export const PaginationWrapper = ({
   basePath,
   hasNext = true,
 }: PaginationWrapperProps) => {
-  const makeHref = (page: number) => `${basePath}/${page}`;
+  const makeHref = (page: number) => `${basePath}/page/${page}`;
 
   const getVisiblePages = (): (number | "...")[] => {
     if (!totalPages) return [];

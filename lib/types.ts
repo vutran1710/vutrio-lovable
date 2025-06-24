@@ -34,6 +34,7 @@ export interface ShootPost {
   id: number;
   imageUrl: string;
   caption: string;
+  description?: string;
   likes: number;
   date: Date;
   type: ShootType;

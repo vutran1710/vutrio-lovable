@@ -1,12 +1,5 @@
-import { Header, Footer, PageContainer } from "@/ui";
-import Shoots from "./shoots";
+import { redirect } from "next/navigation";
 
-export default function ShootsPage() {
-  return (
-    <PageContainer>
-      <Header currentPath="/shoots" />
-      <Shoots />
-      <Footer />
-    </PageContainer>
-  );
+export default function Page() {
+  redirect("/shoots/page/1");
 }
