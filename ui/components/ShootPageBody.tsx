@@ -13,7 +13,6 @@ export interface ShootsPageBodyProps {
 
 export function ShootsPageBody({ content }: ShootsPageBodyProps) {
   const [selectedPost, setSelectedPost] = useState<ShootPost | null>(null);
-  const onPostClick = (post: ShootPost) => setSelectedPost(post);
 
   return (
     <>
@@ -28,12 +27,15 @@ export function ShootsPageBody({ content }: ShootsPageBodyProps) {
             <ShootPostItem
               key={`${item.type}-${item.id}`}
               post={item}
-              onSelect={onPostClick}
+              onSelect={setSelectedPost}
             />
           ))}
         </div>
       </PageMain>
-      <ShootDialog post={selectedPost} />
+      <ShootDialog
+        post={selectedPost}
+        onOpenChange={() => setSelectedPost(null)}
+      />
     </>
   );
 }
