@@ -1,4 +1,4 @@
-import { fetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
+import { cachedFetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
 import { TiktokCollections } from "@/lib/collections";
 import {
   Footer,
@@ -23,7 +23,7 @@ export default async function ShootPage({
 
   if (isNaN(currentPage) || currentPage < 1) return notFound();
 
-  const photos = await fetchPhotosByPage(
+  const photos = await cachedFetchPhotosByPage(
     currentPage,
     PHOTO_POSTS_PER_PAGE,
     PHOTO_FOLDER_NAME,

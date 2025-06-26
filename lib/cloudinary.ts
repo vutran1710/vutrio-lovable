@@ -63,3 +63,30 @@ export async function fetchPhotosByPage(
     } satisfies ShootPost;
   });
 }
+
+type CacheEntry = {
+  data: ShootPost[];
+  timestamp: number;
+};
+
+const photoCache = new Map<string, CacheEntry>();
+const TTL = 60 * 20 * 1000; // 20 minutes in milliseconds
+
+export async function cachedFetchPhotosByPage(
+  page: number,
+  limit: number,
+  folder: string,
+): Promise<ShootPost[]> {
+  const key = `${folder}::${page}::${limit}`;
+  const now = Date.now();
+
+  const cached = photoCache.get(key);
+  if (cached && now - cached.timestamp < TTL) {
+    return cached.data;
+  }
+
+  const data = await fetchPhotosByPage(page, limit, folder);
+  photoCache.set(key, { data, timestamp: now });
+
+  return data;
+}
