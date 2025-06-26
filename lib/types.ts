@@ -1,3 +1,5 @@
+import { ExtendedRecordMap, RecordMap } from "notion-types";
+
 export interface LogbookPost {
   id: string;
   slug: string;
@@ -5,7 +7,7 @@ export interface LogbookPost {
   date: Date;
   cover: string;
   excerpt?: string;
-  content?: string;
+  content?: string | RecordMap | ExtendedRecordMap;
   tags: string[];
   views?: number;
   likes?: number;

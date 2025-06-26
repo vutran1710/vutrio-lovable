@@ -1,5 +1,4 @@
 import { Client } from "@notionhq/client";
-import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
 import { NotionAPI } from "notion-client";
 import { LogbookPost } from "./types";
 import { withCache } from "./cache";
@@ -12,7 +11,9 @@ const notion = new Client({
 const LOGBOOK_DB_ID = process.env.LOGBOOK_DB_ID!;
 const ABOUT_PAGE_ID = process.env.ABOUT_PAGE_ID!;
 
-export async function getLogbookEntryBySlug(slug: string) {
+export async function getLogbookEntryBySlug(
+  slug: string,
+): Promise<LogbookPost | undefined> {
   return withCache(`notion:logbook:slug:${slug}`, async () => {
     const response = await notion.databases.query({
       database_id: LOGBOOK_DB_ID,
@@ -24,7 +25,27 @@ export async function getLogbookEntryBySlug(slug: string) {
       },
     });
 
-    return response.results[0];
+    const item = response.results[0];
+    if (!item || !("properties" in item)) return undefined;
+
+    const properties = item.properties as any;
+    const pageId = item.id.replace(/-/g, ""); // NotionX requires unformatted page IDs
+    const recordMap = await getNotionRecordMap(pageId);
+
+    return {
+      id: item.id,
+      slug: properties.Slug?.rich_text?.[0]?.plain_text || "",
+      title: properties.Logbook?.title?.[0]?.plain_text || "Untitled",
+      date: new Date(properties.Date?.date?.start || Date.now()),
+      // @ts-ignore
+      cover: item.cover?.external?.url || "",
+      excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text ?? "",
+      content: recordMap,
+      tags: properties.Tags?.multi_select?.map((tag: any) => tag.name) ?? [],
+      views: parseInt(properties.Views?.number ?? "0"),
+      likes: parseInt(properties.Likes?.number ?? "0"),
+      comments: parseInt(properties.Comments?.number ?? "0"),
+    };
   });
 }
 
