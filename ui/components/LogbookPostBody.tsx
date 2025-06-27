@@ -14,6 +14,7 @@ type LogbookPostBodyProps = {
 
 export function LogbookPostBody(props: LogbookPostBodyProps) {
   const { mainPost: post, relatedPosts } = props;
+  console.log(">>>>>>>>", post);
   return (
     <PageMain>
       {/* Back Button */}

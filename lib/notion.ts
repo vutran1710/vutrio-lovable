@@ -38,7 +38,7 @@ export async function getLogbookEntryBySlug(
       title: properties.Logbook?.title?.[0]?.plain_text || "Untitled",
       date: new Date(properties.Date?.date?.start || Date.now()),
       // @ts-ignore
-      cover: item.cover?.external?.url || "",
+      cover: item.cover[item.cover.type]?.url || "",
       excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text ?? "",
       content: recordMap,
       tags: properties.Tags?.multi_select?.map((tag: any) => tag.name) ?? [],
@@ -106,13 +106,14 @@ export async function getLogbookEntries(
     return collected.map((item) => {
       // @ts-ignore
       const properties = item.properties!;
+      console.log("-------- item", item);
       return {
         id: item.id,
         slug: properties.Slug.rich_text[0]?.plain_text || "",
         title: properties.Logbook.title[0]?.plain_text || "Untitled",
         date: new Date(properties.Date.date?.start!),
         // @ts-ignore
-        cover: item.cover?.external?.url || "",
+        cover: item.cover[item.cover.type]?.url || "",
         // @ts-ignore
         content: item.content || [],
 

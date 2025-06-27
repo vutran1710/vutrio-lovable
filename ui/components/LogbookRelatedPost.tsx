@@ -11,8 +11,10 @@ interface LogbookRelatedPostsProps {
 const LogbookRelatedPosts = ({ relatedPosts }: LogbookRelatedPostsProps) => {
   return (
     <div className="animate-fade-in">
-      <h3 className="font-display text-lg font-semibold mb-4">Similar posts</h3>
-      <div className="space-y-3">
+      <h3 className="font-display text-xl text-accent font-semibold mb-6">
+        Similar posts
+      </h3>
+      <div className="space-y-6">
         {relatedPosts.map((post) => (
           <Link
             key={post.id}
