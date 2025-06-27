@@ -1,6 +1,7 @@
 import { Client } from "@notionhq/client";
 import { NotionAPI } from "notion-client";
 import { LogbookPost, LogbookTag } from "./types";
+import { ExtendedRecordMap } from "notion-types";
 
 const LOGBOOK_DB_ID = process.env.LOGBOOK_DB_ID!;
 const ABOUT_PAGE_ID = process.env.ABOUT_PAGE_ID!;
@@ -12,6 +13,9 @@ class NotionClient {
   private fetchedPosts: LogbookPost[] | null = null;
   private fetchedAt: number = 0;
   private ttl = 1000 * 60 * 60; // 1 hour
+
+  private aboutPage: ExtendedRecordMap | null = null;
+  private ttlAboutPage = 1000 * 60 * 10; // 1 hour
 
   private constructor() {}
 
@@ -152,7 +156,10 @@ class NotionClient {
   }
 
   public async getAboutPage() {
-    return this.notionApi.getPage(ABOUT_PAGE_ID);
+    if (!this.aboutPage || Date.now() - this.ttlAboutPage > 1000 * 60 * 10) {
+      this.aboutPage = await this.notionApi.getPage(ABOUT_PAGE_ID);
+    }
+    return this.aboutPage;
   }
 }
 
