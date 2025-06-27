@@ -1,6 +1,6 @@
 import { Client } from "@notionhq/client";
 import { NotionAPI } from "notion-client";
-import { LogbookPost } from "./types";
+import { LogbookPost, LogbookTag } from "./types";
 
 const LOGBOOK_DB_ID = process.env.LOGBOOK_DB_ID!;
 const ABOUT_PAGE_ID = process.env.ABOUT_PAGE_ID!;
@@ -117,7 +117,7 @@ class NotionClient {
       .slice(0, limit);
   }
 
-  public async countPostsByTags(): Promise<Record<string, number>> {
+  public async countPostsByTags(): Promise<LogbookTag[]> {
     const posts = await this.fetchAllPosts();
     const tagMap: Record<string, number> = {};
     for (const post of posts) {
@@ -125,7 +125,23 @@ class NotionClient {
         tagMap[tag] = (tagMap[tag] || 0) + 1;
       }
     }
-    return tagMap;
+    const result = [];
+    for (const tag in tagMap) {
+      result.push({
+        name: tag,
+        count: tagMap[tag],
+      });
+    }
+    return result.sort((a, b) => b.count - a.count);
+  }
+
+  public async getDatesWithPosts(): Promise<Date[]> {
+    const posts = await this.fetchAllPosts();
+    const dates = new Set<Date>();
+    for (const post of posts) {
+      dates.add(new Date(post.date));
+    }
+    return Array.from(dates).sort((a, b) => b.getTime() - a.getTime());
   }
 
   public async getPageContentBlocks(pageId: string) {

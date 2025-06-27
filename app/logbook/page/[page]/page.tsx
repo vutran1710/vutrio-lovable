@@ -7,7 +7,6 @@ import {
 } from "@/ui";
 import { notionClient } from "@/lib/notion";
 import { getPageViews } from "@/lib/pageViews";
-import { LogbookTag } from "@/lib/types";
 
 const POSTS_PER_PAGE = 8;
 
@@ -25,21 +24,8 @@ export default async function LogbookPage({
   );
   const hasNextPage = posts.length === POSTS_PER_PAGE;
   const views = await getPageViews("logbook");
-  const tags: Record<string, LogbookTag> = {};
-  const dateWithPosts: Set<Date> = new Set();
-
-  for (const post of posts) {
-    for (const tag of post.tags) {
-      if (!tags[tag]) {
-        tags[tag] = { name: tag, count: 0 };
-      }
-      tags[tag].count += 1;
-    }
-
-    if (post.date) {
-      dateWithPosts.add(post.date);
-    }
-  }
+  const tags = await notionClient.countPostsByTags();
+  const dateWithPosts = await notionClient.getDatesWithPosts();
 
   return (
     <PageContainer>
@@ -50,9 +36,9 @@ export default async function LogbookPage({
           totalComments: 0,
           totalViews: views || 0, // Fallback to 0 if views are not available
         }}
-        tags={Object.values(tags)}
+        tags={tags}
         recentComments={[]}
-        datesWithPosts={Array.from(dateWithPosts)}
+        datesWithPosts={dateWithPosts}
       />
       <PaginationWrapper
         currentPage={currentPage}
