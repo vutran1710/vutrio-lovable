@@ -374,3 +374,27 @@ details.notion-toggle {
 .notion-callout {
     margin: 1rem 0 !important;
 }
+
+.collection-bg-blue {
+    background-color: #beeeff;
+}
+
+.collection-bg-green {
+    background-color: #d0f0c0;
+}
+
+.collection-bg-yellow {
+    background-color: #ffffb1;
+}
+
+.collection-bg-red {
+    background-color: #ffd5d5;
+}
+
+.collection-bg-purple {
+    background-color: #efdeff;
+}
+
+.collection-bg-orange {
+    background-color: #ffdab9;
+}

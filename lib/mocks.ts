@@ -70,108 +70,6 @@ export const datesWithPosts = [
   new Date(2024, 0, 8),
 ];
 
-export const workbenchProjects: WorkbenchPost[] = [
-  {
-    id: 1,
-    title: "Portfolio Analytics Dashboard",
-    description:
-      "A comprehensive analytics dashboard built with React and D3.js for visualizing portfolio performance metrics.",
-    coverImage: "/placeholder.svg",
-    githubUrl: "https://github.com/example/portfolio-analytics",
-    techStack: ["React", "TypeScript", "D3.js", "Node.js"],
-    tags: ["Analytics", "Dashboard", "Data Visualization"],
-    stars: 42,
-  },
-  {
-    id: 2,
-    title: "AI Content Generator",
-    description:
-      "An intelligent content generation tool leveraging OpenAI API for creating blog posts and marketing copy.",
-    coverImage: "/placeholder.svg",
-    githubUrl: "https://github.com/example/ai-content-gen",
-    techStack: ["Next.js", "Python", "OpenAI API", "PostgreSQL"],
-    tags: ["AI", "Content", "Automation"],
-    stars: 128,
-  },
-  {
-    id: 3,
-    title: "Minimalist Note Taking",
-    description:
-      "A clean, distraction-free note-taking application with markdown support and local storage.",
-    coverImage: "/placeholder.svg",
-    githubUrl: "https://github.com/example/minimal-notes",
-    techStack: ["Vue.js", "JavaScript", "Markdown"],
-    tags: ["Productivity", "Notes", "Minimalist"],
-    stars: 87,
-  },
-  {
-    id: 4,
-    title: "Weather Forecast API",
-    description:
-      "RESTful API service providing detailed weather forecasts with machine learning predictions.",
-    coverImage: "/placeholder.svg",
-    githubUrl: "https://github.com/example/weather-api",
-    techStack: ["Python", "FastAPI", "ML", "Docker"],
-    tags: ["API", "Weather", "Machine Learning"],
-    stars: 203,
-  },
-  {
-    id: 5,
-    title: "Real-Time Chat Mesh",
-    description:
-      "A peer-to-peer real-time chat application using WebRTC and a lightweight mesh overlay network.",
-    coverImage: "/placeholder.svg",
-    githubUrl: "https://github.com/example/real-time-chat-mesh",
-    techStack: ["React", "WebRTC", "Socket.IO", "TypeScript"],
-    tags: ["Real-Time", "Chat", "P2P"],
-    stars: 96,
-  },
-  {
-    id: 6,
-    title: "Markdown Journal Compiler",
-    description:
-      "CLI tool that compiles a directory of markdown entries into a beautifully styled PDF journal.",
-    coverImage: "/placeholder.svg",
-    githubUrl: "https://github.com/example/md-journal-compiler",
-    techStack: ["Node.js", "Marked", "Puppeteer"],
-    tags: ["CLI", "Markdown", "PDF"],
-    stars: 54,
-  },
-  {
-    id: 7,
-    title: "Blockchain Voting Demo",
-    description:
-      "A transparent voting system built on Ethereum smart contracts with a React admin interface.",
-    coverImage: "/placeholder.svg",
-    githubUrl: "https://github.com/example/blockchain-voting",
-    techStack: ["Solidity", "React", "Hardhat", "Ethers.js"],
-    tags: ["Blockchain", "Voting", "Demo"],
-    stars: 78,
-  },
-  {
-    id: 8,
-    title: "SVG Animation Playground",
-    description:
-      "An interactive playground for animating SVGs using GSAP and real-time code preview.",
-    coverImage: "/placeholder.svg",
-    githubUrl: "https://github.com/example/svg-animation-playground",
-    techStack: ["Vanilla JS", "GSAP", "HTML/CSS"],
-    tags: ["Animation", "SVG", "Playground"],
-    stars: 34,
-  },
-  {
-    id: 9,
-    title: "Personal Finance Tracker",
-    description:
-      "Track expenses and visualize financial habits over time with dynamic charts and monthly summaries.",
-    coverImage: "/placeholder.svg",
-    githubUrl: "https://github.com/example/finance-tracker",
-    techStack: ["Svelte", "Chart.js", "IndexedDB"],
-    tags: ["Finance", "Tracker", "Visualization"],
-    stars: 112,
-  },
-];
-
 export const shootsContent: ShootPost[] = [
   {
     id: 1,
@@ -398,7 +296,7 @@ export const contentGridSections: CollectionPreviewItem[] = [
         url: "/logbook/the-art-of-slow-thinking",
       },
     ],
-    color: "from-sandy-orange/30 to-sandy-orange/10",
+    color: "orange",
     url: "/logbook?tag=philosophy",
   },
   {
@@ -411,7 +309,7 @@ export const contentGridSections: CollectionPreviewItem[] = [
       },
       { title: "AI Content Generator", url: "/workbench/ai-content-generator" },
     ],
-    color: "from-vintage-blue/20 to-vintage-blue/10",
+    color: "blue",
     url: "/workbench?tag=AI",
   },
   {
@@ -424,7 +322,7 @@ export const contentGridSections: CollectionPreviewItem[] = [
         url: "/shoots/saigon-street-photography",
       },
     ],
-    color: "from-dusty-green/20 to-dusty-green/10",
+    color: "green",
     url: "/shoots?tag=vietnam",
   },
 ];

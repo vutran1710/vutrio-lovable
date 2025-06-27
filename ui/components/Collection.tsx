@@ -22,7 +22,7 @@ export const Collection = ({ item, index = 0 }: CollectionProps) => {
 
   return (
     <div
-      className={`${item.color} bg-gradient-to-br p-6`}
+      className={`collection-bg-${item.color} p-6`}
       style={{
         animationDelay: `${index * 0.2}s`,
         transform,
