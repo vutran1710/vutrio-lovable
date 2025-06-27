@@ -89,7 +89,7 @@
 
     /* Typography classes for New Yorker + Journal aesthetic */
     .font-serif {
-        font-family: "EB Garamond", "Times New Roman", serif;
+        font-family: "Inter", "Times New Roman", serif;
     }
 
     .font-mono {
@@ -362,4 +362,15 @@ main.notion-page {
     max-width: calc(100vw - 4rem);
     padding-left: 0px;
     padding-right: 0px;
+    font-family: "EB Garamond", serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+details.notion-toggle {
+    margin-bottom: 1rem;
+}
+
+.notion-callout {
+    margin: 1rem 0 !important;
 }
