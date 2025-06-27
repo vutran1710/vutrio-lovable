@@ -375,6 +375,10 @@ details.notion-toggle {
     margin: 1rem 0 !important;
 }
 
+div.notion-text {
+    margin-bottom: 1rem;
+}
+
 .collection-bg-blue {
     background-color: #beeeff;
 }

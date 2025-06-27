@@ -1,4 +1,4 @@
-import { getAboutPage } from "@/lib/notion";
+import { notionClient } from "@/lib/notion";
 import {
   Header,
   Footer,
@@ -42,11 +42,7 @@ export function About({ avatarSrc, name, content, quote }: AboutProps) {
           }
         />
 
-        <div className="prose prose-lg max-w-none animate-fade-in">
-          <div className="font-serif text-xl text-muted-foreground leading-relaxed mb-8">
-            <NotionClientRenderer recordMap={content} />
-          </div>
-        </div>
+        <NotionClientRenderer recordMap={content} />
 
         <div className="mt-12 p-8 bg-secondary rounded-2xl animate-fade-in">
           <div
@@ -61,7 +57,7 @@ export function About({ avatarSrc, name, content, quote }: AboutProps) {
 }
 
 export default async function AboutWrapper() {
-  const content = await getAboutPage();
+  const content = await notionClient.getAboutPage();
 
   const quote = `
     <blockquote className="font-serif text-2xl text-primary text-center italic">

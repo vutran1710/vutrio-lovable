@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import {
   Root as Accordion,
