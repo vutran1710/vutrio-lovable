@@ -9,7 +9,5 @@ export function NotionClientRenderer({
 }: {
   recordMap: ExtendedRecordMap;
 }) {
-  return (
-    <NotionRenderer recordMap={recordMap} fullPage={false} darkMode={false} />
-  );
+  return <NotionRenderer recordMap={recordMap} fullPage={false} />;
 }

@@ -1,6 +1,7 @@
 import { getLogbookEntryBySlug } from "@/lib/notion";
 import { Footer, Header, PageContainer, LogbookPostBody } from "@/ui";
 import { notFound } from "next/navigation";
+import "react-notion-x/src/styles.css";
 
 export default async function LogbookPostPage({
   params,
@@ -17,7 +18,7 @@ export default async function LogbookPostPage({
   return (
     <PageContainer>
       <Header currentPath="/logbook" />
-      <LogbookPostBody post={post} />
+      <LogbookPostBody mainPost={post} relatedPosts={[]} />
       <Footer />
     </PageContainer>
   );

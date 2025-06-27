@@ -1,20 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { PageMain } from "@/ui";
+import { NotionClientRenderer, PageMain } from "@/ui";
 import { ArrowLeft, Calendar, Eye, Heart } from "phosphor-react";
 import type { LogbookPost } from "@/lib/types";
-import { sampleLogbookPost } from "@/lib/mocks";
-import { usePathname } from "next/navigation";
+import { ExtendedRecordMap } from "notion-types";
+import LogbookRelatedPosts from "./LogbookRelatedPost";
 
-export function LogbookPostBody() {
-  const slug = usePathname().split("/").slice(-1)[0] || "";
+type LogbookPostBodyProps = {
+  mainPost: LogbookPost;
+  relatedPosts: LogbookPost[];
+};
 
-  const post: LogbookPost = {
-    ...sampleLogbookPost,
-    slug: slug || sampleLogbookPost.slug,
-  };
-
+export function LogbookPostBody(props: LogbookPostBodyProps) {
+  const { mainPost: post, relatedPosts } = props;
   return (
     <PageMain>
       {/* Back Button */}
@@ -77,10 +76,23 @@ export function LogbookPostBody() {
         </div>
 
         {/* Post Content */}
-        <div
-          className="prose prose-lg max-w-none font-serif text-foreground prose-headings:font-display prose-headings:text-primary prose-blockquote:border-l-accent prose-blockquote:text-muted-foreground prose-a:text-accent prose-a:no-underline hover:prose-a:underline"
-          dangerouslySetInnerHTML={{ __html: post.content || "" }}
-        />
+        <div className="flex gap-8">
+          {/* Sidebar - 25% width */}
+          <aside className="w-1/4 flex-shrink-0">
+            <div className="sticky top-24">
+              <LogbookRelatedPosts relatedPosts={relatedPosts} />
+            </div>
+          </aside>
+
+          {/* Main content - 75% width */}
+          <div className="flex-1">
+            <article className="animate-fade-in">
+              <NotionClientRenderer
+                recordMap={post.content! as ExtendedRecordMap}
+              />
+            </article>
+          </div>
+        </div>
       </article>
     </PageMain>
   );
