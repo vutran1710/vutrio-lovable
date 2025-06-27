@@ -6,6 +6,20 @@ import {
   TiktokLogo,
 } from "phosphor-react";
 
+const OrnamentalDivider = () => (
+  <div className="flex items-center justify-center mb-16 px-8 max-w-[100vw]">
+    <div className="flex items-center space-x-6 text-muted-foreground max-w-[100vw]">
+      <div className="w-20 h-px bg-foreground opacity-30"></div>
+      <span className="font-display text-3xl text-accent">※</span>
+      <div className="w-12 h-px bg-foreground opacity-30"></div>
+      <span className="font-display text-xl text-muted-foreground">◊</span>
+      <div className="w-12 h-px bg-foreground opacity-30"></div>
+      <span className="font-display text-3xl text-accent">※</span>
+      <div className="w-20 h-px bg-foreground opacity-30"></div>
+    </div>
+  </div>
+);
+
 export const Footer = () => {
   const socialLinks = [
     { name: "Facebook", icon: FacebookLogo, url: "#" },
@@ -18,17 +32,7 @@ export const Footer = () => {
   return (
     <div className="mt-32">
       {/* Hand-drawn ornamental divider */}
-      <div className="flex items-center justify-center mb-16 px-8">
-        <div className="flex items-center space-x-6 text-muted-foreground">
-          <div className="w-20 h-px bg-foreground opacity-30"></div>
-          <span className="font-display text-3xl text-accent">※</span>
-          <div className="w-12 h-px bg-foreground opacity-30"></div>
-          <span className="font-display text-xl text-muted-foreground">◊</span>
-          <div className="w-12 h-px bg-foreground opacity-30"></div>
-          <span className="font-display text-3xl text-accent">※</span>
-          <div className="w-20 h-px bg-foreground opacity-30"></div>
-        </div>
-      </div>
+      <OrnamentalDivider />
 
       <footer className="sketch-card bg-background border-foreground mx-8 mb-8 p-12 zine-rotation footer-card">
         <div className="max-w-4xl mx-auto text-center">

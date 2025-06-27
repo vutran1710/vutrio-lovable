@@ -18,7 +18,7 @@ export const Header = ({ currentPath }: HeaderProps) => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b-2 border-foreground">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b-2 border-foreground max-w-[100vw]">
       <div className="max-w-7xl mx-auto px-8 py-3">
         <div className="flex items-center justify-between">
           {/* Logo/Name - Hand-lettered style */}
