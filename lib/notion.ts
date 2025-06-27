@@ -141,3 +141,64 @@ export async function getAboutPage() {
     notionApi.getPage(ABOUT_PAGE_ID),
   );
 }
+
+export async function getLogbookEntriesByTags(
+  tags: string[],
+  limit: number,
+  excludeSlug?: string,
+): Promise<LogbookPost[]> {
+  if (!tags || tags.length === 0) {
+    return [];
+  }
+
+  return withCache(
+    `notion:logbook:tags:${tags.join(",")}:limit:${limit}:exclude:${excludeSlug ?? "none"}`,
+    async () => {
+      const filterConditions: any[] = [
+        {
+          property: "Published",
+          checkbox: { equals: true },
+        },
+        {
+          or: tags.map((tag) => ({
+            property: "Tags",
+            multi_select: { contains: tag },
+          })),
+        },
+      ];
+
+      if (excludeSlug) {
+        filterConditions.push({
+          property: "Slug",
+          rich_text: {
+            does_not_equal: excludeSlug,
+          },
+        });
+      }
+
+      const response = await notion.databases.query({
+        database_id: LOGBOOK_DB_ID,
+        filter: { and: filterConditions },
+        sorts: [{ property: "Date", direction: "descending" }],
+        page_size: limit,
+      });
+
+      return response.results.map((item) => {
+        // @ts-ignore
+        const properties = item.properties!;
+        return {
+          id: item.id,
+          slug: properties.Slug.rich_text[0]?.plain_text || "",
+          title: properties.Logbook.title[0]?.plain_text || "Untitled",
+          date: new Date(properties.Date.date?.start!),
+          // @ts-ignore
+          cover: item.cover?.external?.url || "",
+          // @ts-ignore
+          content: item.content || [],
+          // @ts-ignore
+          tags: properties.Tags.multi_select.map((tag) => tag.name),
+        } as LogbookPost;
+      });
+    },
+  );
+}
