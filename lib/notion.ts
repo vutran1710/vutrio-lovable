@@ -15,7 +15,8 @@ class NotionClient {
   private ttl = 1000 * 60 * 60; // 1 hour
 
   private aboutPage: ExtendedRecordMap | null = null;
-  private ttlAboutPage = 1000 * 60 * 10; // 1 hour
+  private fetchedAboutAt: number = 0;
+  private ttlAboutPage = 1000 * 60 * 60 * 24; // 24 hours
 
   private constructor() {}
 
@@ -156,7 +157,10 @@ class NotionClient {
   }
 
   public async getAboutPage() {
-    if (!this.aboutPage || Date.now() - this.ttlAboutPage > 1000 * 60 * 10) {
+    if (
+      !this.aboutPage ||
+      Date.now() - this.fetchedAboutAt > this.ttlAboutPage
+    ) {
       this.aboutPage = await this.notionApi.getPage(ABOUT_PAGE_ID);
     }
     return this.aboutPage;
