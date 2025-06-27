@@ -3,6 +3,12 @@
 import Link from "next/link";
 import { NotionClientRenderer, PageMain } from "@/ui";
 import { ArrowLeft, Calendar, Eye, Heart } from "phosphor-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/ui/primitives";
 import type { LogbookPost } from "@/lib/types";
 import { ExtendedRecordMap } from "notion-types";
 import LogbookRelatedPosts from "./LogbookRelatedPost";
@@ -76,18 +82,33 @@ export function LogbookPostBody(props: LogbookPostBodyProps) {
           </div>
         </div>
 
+        {/* Mobile Related Posts Accordion - Only visible on mobile */}
+        <div className="md:hidden mb-6">
+          <Accordion type="single" collapsible>
+            <AccordionItem value="related-posts">
+              <AccordionTrigger>Similar posts</AccordionTrigger>
+              <AccordionContent>
+                <LogbookRelatedPosts relatedPosts={relatedPosts} />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+
         {/* Post Content */}
         <div className="flex gap-8">
           {/* Sidebar - 25% width */}
-          <aside className="w-1/4 flex-shrink-0">
+          <aside className="hidden md:block w-1/4 flex-shrink-0">
             <div className="sticky top-24">
-              <LogbookRelatedPosts relatedPosts={relatedPosts} />
+              <LogbookRelatedPosts
+                showTitle={true}
+                relatedPosts={relatedPosts}
+              />
             </div>
           </aside>
 
           {/* Main content - 75% width */}
           <div className="flex-1">
-            <article className="animate-fade-in">
+            <article className="animate-fade-in max-w-full">
               <NotionClientRenderer
                 recordMap={post.content! as ExtendedRecordMap}
               />

@@ -6,14 +6,20 @@ import type { LogbookPost } from "@/lib/types";
 
 interface LogbookRelatedPostsProps {
   relatedPosts: LogbookPost[];
+  showTitle?: boolean;
 }
 
-const LogbookRelatedPosts = ({ relatedPosts }: LogbookRelatedPostsProps) => {
+const LogbookRelatedPosts = ({
+  relatedPosts,
+  showTitle,
+}: LogbookRelatedPostsProps) => {
   return (
     <div className="animate-fade-in">
-      <h3 className="font-display text-xl text-accent font-semibold mb-6">
-        Similar posts
-      </h3>
+      {showTitle && (
+        <h3 className="font-display text-xl text-accent font-semibold mb-6">
+          Similar posts
+        </h3>
+      )}
       <div className="space-y-6">
         {relatedPosts.map((post) => (
           <Link

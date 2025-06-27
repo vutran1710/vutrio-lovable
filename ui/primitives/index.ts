@@ -6,3 +6,4 @@ export * from "./scroll-area";
 export * from "./pagination";
 export * from "./dialog";
 export * from "./avatar";
+export * from "./accordion";
