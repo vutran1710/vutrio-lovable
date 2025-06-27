@@ -5,7 +5,7 @@ import {
   Header,
   Footer,
 } from "@/ui";
-import { getLogbookEntries } from "@/lib/notion";
+import { notionClient } from "@/lib/notion";
 import { getPageViews } from "@/lib/pageViews";
 import { LogbookTag } from "@/lib/types";
 
@@ -19,7 +19,10 @@ export default async function LogbookPage({
   const { page } = await params;
 
   const currentPage = parseInt(page, 10);
-  const posts = await getLogbookEntries(currentPage, POSTS_PER_PAGE);
+  const posts = await notionClient.getPaginatedPosts(
+    currentPage,
+    POSTS_PER_PAGE,
+  );
   const hasNextPage = posts.length === POSTS_PER_PAGE;
   const views = await getPageViews("logbook");
   const tags: Record<string, LogbookTag> = {};
