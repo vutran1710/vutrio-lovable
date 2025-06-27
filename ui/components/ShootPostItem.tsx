@@ -38,6 +38,7 @@ export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
             src={post.imageUrl}
             alt={post.caption}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
           />
         )}
 

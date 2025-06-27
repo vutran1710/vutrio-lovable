@@ -13,7 +13,21 @@ export const SocialSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-secondary/30 border-t-2 border-b-2 border-foreground border-dashed">
+    <section className="py-20 bg-secondary/30 border-t-2 border-b-2 border-foreground border-dashed relative">
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: "url(/social-bg.png)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.05,
+        }}
+      />
       <div className="max-w-6xl mx-auto px-8">
         {/* Zine-style header */}
         <div className="text-center mb-16">
