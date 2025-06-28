@@ -6,9 +6,24 @@ import { Collection } from "./Collection";
 export const ContentGrid = () => {
   const sections = contentGridSections;
 
+  const graphicDiv = (
+    <div
+      className="absolute pointer-events-none"
+      style={{
+        backgroundImage: "url(/lightbulb-2.png)",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "contain",
+        top: -80,
+        right: 0,
+        height: 300,
+        width: 300,
+      }}
+    />
+  );
+
   return (
-    <section className="py-20 journal-margins paper-background">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-10 journal-margins paper-background">
+      <div className="max-w-6xl mx-auto relative">
         {/* Section header - journal style */}
         <div className="mb-16 animate-sketch-in">
           <div className="marginalia mb-4">Collections ↓</div>
@@ -19,6 +34,7 @@ export const ContentGrid = () => {
             Three distinct collections documenting the journey through code,
             thought, and image.
           </p>
+          {graphicDiv}
         </div>
 
         <div className="grid md:grid-cols-3 gap-12">

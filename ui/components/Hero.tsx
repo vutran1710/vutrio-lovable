@@ -1,7 +1,6 @@
 "use client";
 
 import { BookOpen, Camera, Wrench } from "phosphor-react";
-import { shootsContent } from "@/lib/mocks";
 import {
   HomeRecentItem,
   LogbookPost,
@@ -132,7 +131,7 @@ export const Hero = (props: HeroProps) => {
             </span>
           </div>
 
-          <h1 className="font-display text-5xl font-bold text-foreground mb-6 drop-cap">
+          <h1 className="font-display text-5xl font-bold text-foreground mb-4 drop-cap">
             Recent Explorations & Reflections
           </h1>
 

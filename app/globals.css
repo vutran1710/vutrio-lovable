@@ -1,12 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap"); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+html {
+    font-size: 13pt;
+}
+
 /* New Yorker + Philosopher's Journal + Vintage Zine Color Palette */
 @layer base {
     :root {
-        --background: 42 15% 98%; /* soft off-white #fdfaf4 */
+        --background: 22 80% 98%; /* soft off-white #fdfaf4 */
         --foreground: 0 0% 10%; /* black ink #1a1a1a */
 
         --card: 42 15% 97%;
@@ -339,18 +343,32 @@
 /* Drop cap styling */
 .drop-cap::first-letter {
     font-family: "EB Garamond", serif;
-    font-size: 4rem;
+    font-size: 10rem;
     line-height: 1;
     float: left;
-    margin: 0.1rem 0.5rem 0 0;
+    margin: -1.2rem 0.5rem 0 0;
     color: hsl(var(--accent));
     font-weight: 700;
 }
 
 .paper-background {
-    background-color: #ffffff;
-    background-image: url("https://www.transparenttextures.com/patterns/tiny-grid.png");
-    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+    background-color: hsl(var(--background));
+    opacity: 0.8;
+    background-image:
+        linear-gradient(#f4f4f4 2px, transparent 2px),
+        linear-gradient(90deg, #f4f4f4 2px, transparent 2px),
+        linear-gradient(#f4f4f4 1px, transparent 1px),
+        linear-gradient(90deg, #f4f4f4 1px, #f9f8f3 1px);
+    background-size:
+        50px 50px,
+        50px 50px,
+        10px 10px,
+        10px 10px;
+    background-position:
+        -2px -2px,
+        -2px -2px,
+        -1px -1px,
+        -1px -1px;
 }
 
 .footer-card {

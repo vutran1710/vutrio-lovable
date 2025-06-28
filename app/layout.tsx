@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { EB_Garamond, IBM_Plex_Mono } from "next/font/google";
+import { EB_Garamond, IBM_Plex_Mono, Pangolin } from "next/font/google";
 import "./globals.css";
 
 const ebgaramon = EB_Garamond({
   variable: "--font-sans",
   subsets: ["latin", "vietnamese"],
   weight: ["400", "700"],
+});
+
+const pangolin = Pangolin({
+  variable: "--font-display",
+  subsets: ["latin", "vietnamese"],
+  weight: "400",
 });
 
 const ibmplexmono = IBM_Plex_Mono({
@@ -27,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${ebgaramon.variable} ${ibmplexmono.variable} antialiased`}
+        className={`${ebgaramon.variable} ${ibmplexmono.variable} ${pangolin.variable} antialiased`}
       >
         <div id="root">{children}</div>
       </body>

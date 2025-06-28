@@ -25,7 +25,7 @@ export const SocialSection = () => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          opacity: 0.05,
+          opacity: 0.08,
         }}
       />
       <div className="max-w-6xl mx-auto px-8">
