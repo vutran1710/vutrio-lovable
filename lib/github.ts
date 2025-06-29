@@ -21,14 +21,46 @@ export type Repository =
 
 export class GitHubClient {
   private token?: string;
+  private fetchedRepos: Map<string, WorkbenchPost> = new Map();
 
   constructor(token?: string) {
     this.token = token;
   }
 
   public async fetchRepos(repos: Repository[]): Promise<WorkbenchPost[]> {
-    const results = await Promise.all(repos.map((r) => this.fetchRepo(r)));
-    return results.filter(Boolean) as WorkbenchPost[];
+    const cachedRepos = [];
+    const repoKey = (repo: Repository) =>
+      typeof repo === "string"
+        ? `${GITHUB_USERNAME}/${repo}`
+        : `${repo.username}/${repo.repoName}`;
+
+    const notCachedRepos: Repository[] = [];
+
+    for (const repo of repos) {
+      const currentKey = repoKey(repo);
+      if (this.fetchedRepos.has(currentKey)) {
+        cachedRepos.push(this.fetchedRepos.get(currentKey)!);
+      } else {
+        notCachedRepos.push(repo);
+      }
+    }
+
+    if (cachedRepos.length === repos.length) {
+      // All repos are cached
+      return cachedRepos as WorkbenchPost[];
+    }
+
+    const results = await Promise.all(
+      notCachedRepos.map((r) => this.fetchRepo(r)),
+    );
+    const fetchedRepos = results.filter(Boolean) as WorkbenchPost[];
+    fetchedRepos.forEach((post) => {
+      if (post) {
+        this.fetchedRepos.set(post.githubUrl, post);
+      }
+    });
+
+    return [...cachedRepos, ...fetchedRepos];
   }
 
   private async fetchRepo(repo: Repository): Promise<WorkbenchPost | null> {

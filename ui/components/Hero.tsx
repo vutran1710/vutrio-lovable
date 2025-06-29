@@ -9,11 +9,55 @@ import {
 } from "@/lib/types";
 import HomeLatestItem from "./HomeLatestItem";
 import RecentUpdate from "./RecentUpdate";
+import { useState } from "react";
 
 type HeroProps = {
   logbookPosts: LogbookPost[];
   shootPosts: ShootPost[];
   workbenchPost: WorkbenchPost[];
+};
+
+// Convert to HomeRecentItem format
+/* eslint-disable */
+const getHomeRecentItem = (item: any): HomeRecentItem => {
+  if (item.type === "logbook") {
+    return {
+      type: item.type,
+      title: item.title,
+      description: item.excerpt || "",
+      coverUrl: item.cover,
+      date: item.date,
+      itemUrl: `/logbook/${item.slug}`,
+    };
+  }
+  if (item.type === "shoots") {
+    return {
+      type: item.type,
+      title: item.caption,
+      description: item.description || item.caption,
+      coverUrl: item.imageUrl,
+      date: item.date,
+      itemUrl: `/shoots/${item.id}`,
+    };
+  }
+  if (item.type === "workbench") {
+    return {
+      type: item.type,
+      title: item.title,
+      description: item.description,
+      coverUrl: item.coverImage,
+      date: item.date,
+      itemUrl: `/workbench/${item.id}`,
+    };
+  }
+  return {
+    type: item.type,
+    title: "Untitled",
+    description: "",
+    coverUrl: "/placeholder.svg",
+    date: item.date,
+    itemUrl: "#",
+  };
 };
 
 export const Hero = (props: HeroProps) => {
@@ -45,50 +89,8 @@ export const Hero = (props: HeroProps) => {
     );
   }
 
-  // Convert to HomeRecentItem format
-  /* eslint-disable */
-  const getHomeRecentItem = (item: any): HomeRecentItem => {
-    if (item.type === "logbook") {
-      return {
-        type: item.type,
-        title: item.title,
-        description: item.excerpt || "",
-        coverUrl: item.cover,
-        date: item.date,
-        itemUrl: `/logbook/${item.slug}`,
-      };
-    }
-    if (item.type === "shoots") {
-      return {
-        type: item.type,
-        title: item.caption,
-        description: item.description || item.caption,
-        coverUrl: item.imageUrl,
-        date: item.date,
-        itemUrl: `/shoots/${item.id}`,
-      };
-    }
-    if (item.type === "workbench") {
-      return {
-        type: item.type,
-        title: item.title,
-        description: item.description,
-        coverUrl: item.coverImage,
-        date: item.date,
-        itemUrl: `/workbench/${item.id}`,
-      };
-    }
-    return {
-      type: item.type,
-      title: "Untitled",
-      description: "",
-      coverUrl: "/placeholder.svg",
-      date: item.date,
-      itemUrl: "#",
-    };
-  };
-
   const latestItem = getHomeRecentItem(mostRecent);
+  const [activeHomeRecentItem, setActiveHomeRecentItem] = useState(latestItem);
 
   // Get recent posts for sidebar (2 from each collection)
   const recentLogbook = props.logbookPosts.map((post) =>
@@ -145,7 +147,7 @@ export const Hero = (props: HeroProps) => {
           {/* Latest Content Preview - Journal style */}
           <div className="lg:col-span-3">
             <div className="marginalia mb-4">Latest creation ↓</div>
-            <HomeLatestItem item={latestItem} />
+            <HomeLatestItem item={activeHomeRecentItem} />
           </div>
 
           {/* Recent Content List - Marginalia style */}
@@ -157,18 +159,21 @@ export const Hero = (props: HeroProps) => {
                 icon={<BookOpen size={16} className="text-accent" />}
                 title="Logbook"
                 items={recentLogbook}
+                onHover={setActiveHomeRecentItem}
               />
 
               <RecentUpdate
                 icon={<Camera size={16} className="text-accent" />}
                 title="Shoots"
                 items={recentShoots}
+                onHover={(item) => setActiveHomeRecentItem(item)}
               />
 
               <RecentUpdate
                 icon={<Wrench size={16} className="text-accent" />}
                 title="Workbench"
                 items={recentWorkbench}
+                onHover={(item) => setActiveHomeRecentItem(item)}
               />
             </div>
           </div>

@@ -6,9 +6,10 @@ interface RecentUpdateProps {
   icon: ReactNode;
   title: string;
   items: HomeRecentItem[];
+  onHover?: (item: HomeRecentItem) => void;
 }
 
-const RecentUpdate = ({ icon, title, items }: RecentUpdateProps) => {
+const RecentUpdate = ({ icon, title, items, onHover }: RecentUpdateProps) => {
   return (
     <div className="animate-sketch-in">
       <div className="flex items-center gap-3 mb-3">
@@ -25,6 +26,7 @@ const RecentUpdate = ({ icon, title, items }: RecentUpdateProps) => {
             key={`${item.type}-${index}`}
             href={item.itemUrl}
             className="block text-sm text-muted-foreground hover:text-accent transition-colors py-2 border-l-2 border-transparent hover:border-accent pl-4 font-serif leading-relaxed group"
+            onMouseEnter={() => onHover?.(item)}
           >
             <span className="font-mono text-xs text-muted-foreground mr-2 group-hover:text-accent">
               {String(index + 1).padStart(2, "0")}.
