@@ -47,7 +47,7 @@ export const SocialSection = () => {
           {socialPosts.map((post, index) => (
             <div
               key={post.platform}
-              className={`sketch-card ${cardColors[index % cardColors.length]} p-6 cursor-pointer ${
+              className={`sketch-card paper-background p-6 cursor-pointer ${
                 index % 2 === 0 ? "zine-rotation" : "zine-rotation-alt"
               }`}
               style={{ animationDelay: `${index * 0.1}s` }}

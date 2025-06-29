@@ -347,19 +347,19 @@ export const socialSectionPosts = [
     platform: "Instagram",
     title: "Visual Reflections",
     description: "Photo from Saigon, captured last week.",
-    gradient: "from-pink-500/10 to-purple-500/10",
+    type: "instagram",
   },
   {
     platform: "LinkedIn",
     title: "Professional Thoughts",
     description: "My recent post on digital identity and narrative.",
-    gradient: "from-blue-500/10 to-cyan-500/10",
+    type: "linkedin",
   },
   {
     platform: "Facebook",
     title: "Memory Lane",
     description: "Throwback to the early days of building VuGPT.",
-    gradient: "from-blue-600/10 to-blue-400/10",
+    type: "facebook",
   },
 ];
 

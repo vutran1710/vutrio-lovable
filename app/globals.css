@@ -368,6 +368,10 @@ html {
 }
 
 .paper-background {
+    background-color: #f1f1f1;
+    opacity: 1;
+    background-image: radial-gradient(#e0e4e9 0.5px, #f1f1f1 0.5px);
+    background-size: 10px 10px;
 }
 
 .footer-card {
