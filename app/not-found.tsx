@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Header, Footer, PageContainer, PageMain } from "@/ui";
+import Image from "next/image";
 
 export default function NotFound() {
   return (
@@ -8,19 +9,15 @@ export default function NotFound() {
       <PageMain>
         <div className="text-center max-w-md mx-auto">
           <div className="mb-8">
-            <img
-              src="/placeholder.svg"
+            <Image
+              src="/not-found.png"
               alt="Page not found"
-              className="mx-auto w-64 h-64 opacity-50"
+              width={400}
+              height={400}
+              className="mx-auto opacity-90"
             />
           </div>
 
-          <h1 className="font-display text-6xl font-bold text-primary mb-4">
-            404
-          </h1>
-          <h2 className="font-display text-2xl font-semibold text-muted-foreground mb-4">
-            Page Not Found
-          </h2>
           <p className="font-serif text-muted-foreground mb-8 leading-relaxed">
             The page you're looking for doesn't exist. It might have been moved,
             deleted, or you entered the wrong URL.
@@ -33,12 +30,6 @@ export default function NotFound() {
             >
               Return to Home
             </Link>
-            <div className="text-sm text-muted-foreground">
-              or{" "}
-              <Link href="/logbook" className="text-primary hover:underline">
-                browse the logbook
-              </Link>
-            </div>
           </div>
         </div>
       </PageMain>

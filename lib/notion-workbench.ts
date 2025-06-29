@@ -51,7 +51,7 @@ class NotionWorkbenchClient {
           id: page.id,
           title: props.Title?.title?.[0]?.plain_text || "Untitled",
           url: props.url?.url || "",
-          // @ts-ignore
+          // @ts-expect-error type arbitrary
           cover: props.cover?.[props.cover.type][0]?.file?.url || "",
         });
       }

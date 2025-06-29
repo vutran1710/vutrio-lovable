@@ -6,12 +6,7 @@ import {
   LinkedinLogo,
   TiktokLogo,
 } from "phosphor-react";
-import type {
-  LogbookPost,
-  WorkbenchPost,
-  ShootPost,
-  CollectionPreviewItem,
-} from "./types";
+import type { LogbookPost, ShootPost, CollectionPreviewItem } from "./types";
 
 export const logbookStats = {
   totalPosts: 24,

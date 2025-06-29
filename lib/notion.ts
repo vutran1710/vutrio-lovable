@@ -54,7 +54,7 @@ class NotionClient {
           slug: properties.Slug.rich_text[0]?.plain_text || "",
           title: properties.Logbook.title[0]?.plain_text || "Untitled",
           date: new Date(properties.Date.date?.start || Date.now()),
-          // @ts-ignore
+          // @ts-expect-error type arbitrary
           cover: item.cover?.[item.cover?.type]?.url || "",
           excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text ?? "",
           content: undefined,
