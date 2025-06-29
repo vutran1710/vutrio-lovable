@@ -29,3 +29,4 @@ export * from "./components/LogbookPostBody";
 export * from "./components/NotionClientRenderer";
 export * from "./components/WorkbenchPageBody";
 export * from "./components/LogbookRelatedPost";
+export * from "./components/AboutPageBody";

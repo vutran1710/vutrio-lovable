@@ -1,19 +1,20 @@
-// app/api/views/[slug]/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { incrementPageView, getPageViews } from "@/lib/pageViews";
+import { getPageViews, incrementPageView } from "@/lib/pageViews";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } },
+  context: any, // ✅ let Next.js handle this internally
 ) {
-  const views = await getPageViews(params.slug);
+  const slug = context.params.slug;
+  const views = await getPageViews(slug);
   return NextResponse.json({ views });
 }
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { slug: string } },
+  context: any, // ✅ same here
 ) {
-  const views = await incrementPageView(params.slug);
+  const slug = context.params.slug;
+  const views = await incrementPageView(slug);
   return NextResponse.json({ views });
 }

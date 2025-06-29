@@ -13,7 +13,7 @@ const POSTS_PER_PAGE = 8;
 export default async function LogbookPage({
   params,
 }: {
-  params: { page: string };
+  params: Promise<{ page: string }>;
 }) {
   const { page } = await params;
 

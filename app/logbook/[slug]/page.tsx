@@ -6,7 +6,7 @@ import "react-notion-x/src/styles.css";
 export default async function LogbookPostPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
   const post = await notionClient.getPostBySlug(slug);

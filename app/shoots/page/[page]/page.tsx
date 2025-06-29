@@ -16,7 +16,7 @@ const TOTAL_POSTS_PER_PAGE = PHOTO_POSTS_PER_PAGE + VIDEO_POSTS_PER_PAGE;
 export default async function ShootPage({
   params,
 }: {
-  params: { page: string };
+  params: Promise<{ page: string }>;
 }) {
   const { page } = await params;
   const currentPage = parseInt(page, 10);
