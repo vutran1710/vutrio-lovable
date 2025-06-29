@@ -263,6 +263,13 @@ html {
         transform: translate(0, 0);
         box-shadow: none;
     }
+
+    @media (max-width: 640px) {
+        .vintage-button {
+            padding: 0.3rem 0.1rem;
+            text-align: center;
+        }
+    }
 }
 
 /* Animation utilities for journal-like interactions */
