@@ -19,8 +19,8 @@ export default function NotFound() {
           </div>
 
           <p className="font-serif text-muted-foreground mb-8 leading-relaxed">
-            The page you're looking for doesn't exist. It might have been moved,
-            deleted, or you entered the wrong URL.
+            The page you are looking for does not exist. It might have been
+            moved, deleted, or you entered the wrong URL.
           </p>
 
           <div className="space-y-4">
