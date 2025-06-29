@@ -10,7 +10,7 @@ html {
 /* New Yorker + Philosopher's Journal + Vintage Zine Color Palette */
 @layer base {
     :root {
-        --background: 22 80% 98%; /* soft off-white #fdfaf4 */
+        --background: 217, 13%, 97%;
         --foreground: 0 0% 10%; /* black ink #1a1a1a */
 
         --card: 42 15% 97%;
@@ -351,24 +351,16 @@ html {
     font-weight: 700;
 }
 
+.drop-cap-sm::first-letter {
+    font-family: "EB Garamond", serif;
+    font-size: 4rem;
+    margin-right: 0.5rem;
+    float: left;
+    color: hsl(var(--accent));
+    font-weight: 700;
+}
+
 .paper-background {
-    background-color: hsl(var(--background));
-    opacity: 0.8;
-    background-image:
-        linear-gradient(#f4f4f4 2px, transparent 2px),
-        linear-gradient(90deg, #f4f4f4 2px, transparent 2px),
-        linear-gradient(#f4f4f4 1px, transparent 1px),
-        linear-gradient(90deg, #f4f4f4 1px, #f9f8f3 1px);
-    background-size:
-        50px 50px,
-        50px 50px,
-        10px 10px,
-        10px 10px;
-    background-position:
-        -2px -2px,
-        -2px -2px,
-        -1px -1px,
-        -1px -1px;
 }
 
 .footer-card {

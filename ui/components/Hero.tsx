@@ -133,7 +133,11 @@ export const Hero = (props: HeroProps) => {
             </span>
           </div>
 
-          <h1 className="font-display text-5xl font-bold text-foreground mb-4 drop-cap">
+          <h1 className="font-display text-5xl font-bold text-foreground mb-4 drop-cap hidden md:block">
+            Recent Explorations & Reflections
+          </h1>
+
+          <h1 className="font-display text-4xl font-bold text-foreground mb-4 md:hidden drop-cap-sm">
             Recent Explorations & Reflections
           </h1>
 
