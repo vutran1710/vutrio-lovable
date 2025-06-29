@@ -51,12 +51,6 @@ export const Footer = () => {
 
       <footer className="sketch-card bg-background border-foreground mx-8 mb-8 p-12 zine-rotation footer-card">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Quote - pull quote style */}
-          <div className="font-serif text-lg italic text-background border-l-4 border-accent pl-4 max-w-3xl mx-auto mb-12">
-            "In every word written, in every thought shared, we weave the
-            tapestry of human understanding."
-          </div>
-
           {/* Social Links - vintage buttons */}
           <div className="flex justify-center space-x-4 mb-12">
             {socialLinks.map((platform) => {

@@ -14,7 +14,7 @@ export const WorkbenchItem = ({ project }: WorkbenchItemProps) => (
         <img
           src={project.coverImage}
           alt={project.title}
-          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full aspect-video object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
       <div className="p-6">
@@ -27,7 +27,7 @@ export const WorkbenchItem = ({ project }: WorkbenchItemProps) => (
             <span className="text-sm">{project.stars}</span>
           </div>
         </div>
-        <p className="font-serif text-muted-foreground mb-4 leading-relaxed">
+        <p className="font-serif text-muted-foreground mb-4 leading-relaxed h-[80px]">
           {project.description}
         </p>
         <div className="mb-4">

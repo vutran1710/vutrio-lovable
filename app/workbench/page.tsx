@@ -1,5 +1,14 @@
-import { redirect } from "next/navigation";
+import { notionWorkbenchClient } from "@/lib/notion-workbench";
+import { Footer, Header, PageContainer, WorkbenchPageBody } from "@/ui";
 
-export default function Page() {
-  redirect("/workbench/page/1");
+export default async function Page() {
+  const projects = await notionWorkbenchClient.getWorkbenchPosts();
+
+  return (
+    <PageContainer>
+      <Header currentPath="/workbench" />
+      <WorkbenchPageBody projects={projects} />
+      <Footer />
+    </PageContainer>
+  );
 }

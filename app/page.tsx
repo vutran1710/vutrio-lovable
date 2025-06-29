@@ -8,13 +8,12 @@ import {
   SocialSection,
   Footer,
 } from "../ui";
-import { GitHubClient, PUBLIC_REPOS } from "@/lib/github";
+import { notionWorkbenchClient } from "@/lib/notion-workbench";
 import { cachedFetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
 
 export default async function Home() {
   const latestLogbookPosts = await notionClient.getLatestPosts(2);
-  const client = new GitHubClient(process.env.GITHUB_TOKEN);
-  const workbenchProjects = await client.fetchRepos(PUBLIC_REPOS.slice(0, 2));
+  const workbenchProjects = await notionWorkbenchClient.getWorkbenchPosts();
   const shootPosts = await cachedFetchPhotosByPage(1, 2, PHOTO_FOLDER_NAME);
 
   return (
@@ -24,7 +23,7 @@ export default async function Home() {
         <Hero
           logbookPosts={latestLogbookPosts}
           shootPosts={shootPosts}
-          workbenchPost={workbenchProjects}
+          workbenchPost={workbenchProjects.slice(0, 2)}
         />
         <ContentGrid />
         <TagsSection />
