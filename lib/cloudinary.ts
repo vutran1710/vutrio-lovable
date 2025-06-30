@@ -41,8 +41,8 @@ export async function fetchPhotosByPage(
   return (pageResult.resources || []).map((resource: any, index: number) => {
     const config = {
       transformation: [
-        { width: 400, height: 400, crop: "fill", gravity: "auto" },
-        { fetch_format: "auto" },
+        { width: 500, height: 500, crop: "fill" },
+        { fetch_format: "jpg" },
       ],
       secure: true,
     };

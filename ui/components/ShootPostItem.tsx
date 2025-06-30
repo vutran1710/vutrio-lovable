@@ -2,6 +2,7 @@
 
 import { InstagramLogo, TiktokLogo } from "phosphor-react";
 import type { ShootPost } from "@/lib/types";
+import Image from "next/image";
 
 interface ShootPostItemProps {
   post: ShootPost;
@@ -34,9 +35,11 @@ export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
             />
           </div>
         ) : (
-          <img
+          <Image
             src={post.imageUrl}
             alt={post.caption}
+            width={500}
+            height={500}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
