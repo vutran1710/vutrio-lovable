@@ -1,10 +1,11 @@
 import { notionClient } from "@/lib/notion";
+import { incrementPageView } from "@/lib/pageViews";
 import { AboutPageBody, Footer, Header, PageContainer } from "@/ui";
 
 export default async function AboutWrapper() {
   const content = await notionClient.getAboutPage();
 
-  console.log(content);
+  await incrementPageView("/about");
 
   const quote = `
     <blockquote className="font-serif text-2xl text-primary text-center italic">

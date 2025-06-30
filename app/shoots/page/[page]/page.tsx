@@ -1,5 +1,6 @@
 import { cachedFetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
 import { TiktokCollections } from "@/lib/collections";
+import { incrementPageView } from "@/lib/pageViews";
 import {
   Footer,
   Header,
@@ -39,6 +40,7 @@ export default async function ShootPage({
   if (contents.length === 0) return notFound();
 
   const hasNext = contents.length === TOTAL_POSTS_PER_PAGE;
+  await incrementPageView("/shoots");
 
   return (
     <PageContainer>
