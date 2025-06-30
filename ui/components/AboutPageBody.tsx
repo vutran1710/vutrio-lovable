@@ -1,11 +1,4 @@
-import {
-  Header,
-  Footer,
-  PageMain,
-  PageContainer,
-  PageHeader,
-  NotionClientRenderer,
-} from "@/ui";
+import { PageMain, PageHeader, NotionClientRenderer } from "@/ui";
 import { Avatar, AvatarImage, AvatarFallback } from "@/ui/primitives";
 import { ExtendedRecordMap } from "notion-types";
 
@@ -25,32 +18,28 @@ export function AboutPageBody({ avatarSrc, name, content, quote }: AboutProps) {
     .toUpperCase();
 
   return (
-    <PageContainer>
-      <Header currentPath="/about" />
-      <PageMain>
-        <PageHeader
-          title="About"
-          summary="Through code, I create; through words, I explore; through reflection, I grow"
-          logo={
-            <Avatar className="w-24 h-24 md:w-32 md:h-32">
-              <AvatarImage src={avatarSrc} alt={name} />
-              <AvatarFallback className="text-3xl font-semibold">
-                {fallback}
-              </AvatarFallback>
-            </Avatar>
-          }
+    <PageMain>
+      <PageHeader
+        title="About"
+        summary="Through code, I create; through words, I explore; through reflection, I grow"
+        logo={
+          <Avatar className="w-24 h-24 md:w-32 md:h-32">
+            <AvatarImage src={avatarSrc} alt={name} />
+            <AvatarFallback className="text-3xl font-semibold">
+              {fallback}
+            </AvatarFallback>
+          </Avatar>
+        }
+      />
+
+      <NotionClientRenderer recordMap={content} />
+
+      <div className="mt-12 p-8 bg-secondary rounded-2xl animate-fade-in">
+        <div
+          className="font-serif text-2xl text-primary text-center italic"
+          dangerouslySetInnerHTML={{ __html: quote }}
         />
-
-        <NotionClientRenderer recordMap={content} />
-
-        <div className="mt-12 p-8 bg-secondary rounded-2xl animate-fade-in">
-          <div
-            className="font-serif text-2xl text-primary text-center italic"
-            dangerouslySetInnerHTML={{ __html: quote }}
-          />
-        </div>
-      </PageMain>
-      <Footer />
-    </PageContainer>
+      </div>
+    </PageMain>
   );
 }

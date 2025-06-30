@@ -10,7 +10,7 @@ html {
 /* New Yorker + Philosopher's Journal + Vintage Zine Color Palette */
 @layer base {
     :root {
-        --background: 217, 13%, 97%;
+        --background: 64, 100%, 100%;
         --foreground: 0 0% 10%; /* black ink #1a1a1a */
 
         --card: 42 15% 97%;
@@ -174,11 +174,11 @@ html {
     .sketch-tab {
         position: relative;
         background: hsl(var(--background));
-        border: 2px solid hsl(var(--foreground));
+        border: 1px solid hsl(var(--foreground));
         border-bottom: none;
         border-radius: 8px 8px 0 0;
         transform: rotate(-1deg);
-        box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 2px 0 4px rgba(0, 0, 0, 0.2);
     }
 
     .sketch-tab.active {
@@ -222,7 +222,7 @@ html {
     /* Hand-drawn card effect */
     .sketch-card {
         background-color: hsl(var(--card));
-        border: 2px solid hsl(var(--foreground));
+        border: 1px solid hsl(var(--foreground));
         border-radius: 0;
         box-shadow:
             6px 6px 0 hsl(var(--foreground)),
@@ -368,10 +368,6 @@ html {
 }
 
 .paper-background {
-    background-color: #f1f1f1;
-    opacity: 1;
-    background-image: radial-gradient(#e0e4e9 0.5px, #f1f1f1 0.5px);
-    background-size: 10px 10px;
 }
 
 .footer-card {

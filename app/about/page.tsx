@@ -1,8 +1,10 @@
 import { notionClient } from "@/lib/notion";
-import { AboutPageBody } from "@/ui";
+import { AboutPageBody, Footer, Header, PageContainer } from "@/ui";
 
 export default async function AboutWrapper() {
   const content = await notionClient.getAboutPage();
+
+  console.log(content);
 
   const quote = `
     <blockquote className="font-serif text-2xl text-primary text-center italic">
@@ -15,11 +17,15 @@ export default async function AboutWrapper() {
     `;
 
   return (
-    <AboutPageBody
-      avatarSrc="/placeholder.svg"
-      name="Vũ Trần"
-      content={content}
-      quote={quote}
-    />
+    <PageContainer>
+      <Header currentPath="/about" />
+      <AboutPageBody
+        avatarSrc="/avatar.jpg"
+        name="John Doe"
+        content={content}
+        quote={quote}
+      />
+      <Footer />
+    </PageContainer>
   );
 }

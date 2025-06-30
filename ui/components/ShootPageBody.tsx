@@ -19,7 +19,7 @@ export function ShootsPageBody({ content }: ShootsPageBodyProps) {
       <PageMain>
         <PageHeader
           title="Visual Narratives"
-          summary="Moments captured through the lens, where light meets meaning and stories unfold in silence."
+          summary="A mixtape of pixels: part wandering, part wondering, part wailing guitar solo on life’s weird stage"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

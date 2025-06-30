@@ -31,8 +31,8 @@ export function LogbookPageBody({
   return (
     <PageMain>
       <PageHeader
-        title="Philosophical Logbook"
-        summary="A collection of thoughts, reflections, and explorations into the depths of human experience and understanding."
+        title="Logbook"
+        summary="Mental spaghetti on digital paper, tangled thoughts sauced in curiosity, served cold with occasional existential meatballs"
       />
 
       {/* Mobile Stats and Tags - Only visible on mobile */}
