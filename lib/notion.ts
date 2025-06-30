@@ -2,7 +2,6 @@ import { Client } from "@notionhq/client";
 import { NotionAPI } from "notion-client";
 import { LogbookPost, LogbookTag } from "./types";
 import { ExtendedRecordMap } from "notion-types";
-import retry from "async-retry";
 
 const LOGBOOK_DB_ID = process.env.LOGBOOK_DB_ID!;
 const ABOUT_PAGE_ID = process.env.ABOUT_PAGE_ID!;
@@ -103,22 +102,11 @@ class NotionClient {
       return post;
     }
 
-    const pageId = post.id.replace(/-/g, "");
-    const recordMap = await retry(
-      async () => {
-        return await this.notionApi.getPage(pageId);
-      },
-      {
-        retries: 3,
-        onRetry: (err, attempt) => {
-          console.warn(`Retrying fetch (attempt ${attempt}) due to:`, err);
-        },
-      },
-    ).catch((error) => {
-      console.error(`Failed to fetch content for post ${post.slug}:`, error);
+    const recordMap = await this.notionApi.getPage(post.id).catch((e) => {
+      console.error(e);
       return undefined;
     });
-    post.content = recordMap;
+    post.content = recordMap as unknown as ExtendedRecordMap;
     return post;
   }
 
