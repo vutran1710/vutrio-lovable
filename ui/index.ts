@@ -1,7 +1,7 @@
 export * from "./components/Collection";
 export * from "./components/ContentGrid";
 export * from "./components/Footer";
-export * from "./components/Header";
+export * from "./components/TopNav";
 export * from "./components/Hero";
 export * from "./components/HomeLatestItem";
 export * from "./components/LogbookCalendar";
@@ -30,3 +30,4 @@ export * from "./components/NotionClientRenderer";
 export * from "./components/WorkbenchPageBody";
 export * from "./components/LogbookRelatedPost";
 export * from "./components/AboutPageBody";
+export * from "./components/LogbookRelatedPost";

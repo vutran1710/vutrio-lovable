@@ -1,6 +1,6 @@
 import { notionClient } from "@/lib/notion";
 import {
-  Header,
+  TopNav,
   PageContainer,
   Hero,
   ContentGrid,
@@ -10,15 +10,17 @@ import {
 } from "../ui";
 import { notionWorkbenchClient } from "@/lib/notion-workbench";
 import { cachedFetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
+import { incrementPageView } from "@/lib/pageViews";
 
 export default async function Home() {
   const latestLogbookPosts = await notionClient.getLatestPosts(2);
   const workbenchProjects = await notionWorkbenchClient.getWorkbenchPosts();
   const shootPosts = await cachedFetchPhotosByPage(1, 2, PHOTO_FOLDER_NAME);
+  await incrementPageView("/");
 
   return (
     <PageContainer>
-      <Header currentPath="/" />
+      <TopNav currentPath="/" />
       <main>
         <Hero
           logbookPosts={latestLogbookPosts}
@@ -29,7 +31,7 @@ export default async function Home() {
         <TagsSection />
         <SocialSection />
       </main>
-      <Footer />
+      <Footer currentPath="/" />
     </PageContainer>
   );
 }

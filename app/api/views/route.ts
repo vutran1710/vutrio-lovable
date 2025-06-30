@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getPageViews, incrementPageView } from "@/lib/pageViews";
+import { getPageViews } from "@/lib/pageViews";
 
 export async function GET(
   req: NextRequest,
@@ -7,14 +7,5 @@ export async function GET(
 ) {
   const slug = context.params.slug;
   const views = await getPageViews(slug);
-  return NextResponse.json({ views });
-}
-
-export async function POST(
-  req: NextRequest,
-  context: any, // ✅ same here
-) {
-  const slug = context.params.slug;
-  const views = await incrementPageView(slug);
   return NextResponse.json({ views });
 }

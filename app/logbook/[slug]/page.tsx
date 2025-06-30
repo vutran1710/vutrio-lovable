@@ -1,5 +1,6 @@
 import { notionClient } from "@/lib/notion";
-import { Footer, Header, PageContainer, LogbookPostBody } from "@/ui";
+import { incrementPageView } from "@/lib/pageViews";
+import { Footer, TopNav, PageContainer, LogbookPostBody } from "@/ui";
 import { notFound } from "next/navigation";
 import "react-notion-x/src/styles.css";
 
@@ -20,11 +21,13 @@ export default async function LogbookPostPage({
     return notFound();
   }
 
+  await incrementPageView(`/logbook/${slug}`);
+
   return (
     <PageContainer>
-      <Header currentPath="/logbook" />
+      <TopNav currentPath="/logbook" />
       <LogbookPostBody mainPost={post} relatedPosts={relatedPosts} />
-      <Footer />
+      <Footer currentPath={`/logbook/${slug}`} />
     </PageContainer>
   );
 }

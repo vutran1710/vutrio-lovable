@@ -1,20 +1,11 @@
-// components/PageViewCounter.tsx
-"use client";
+import { getPageViews } from "@/lib/pageViews";
 
-import { useEffect, useState } from "react";
-
-export function PageViewCounter({ slug }: { slug: string }) {
-  const [views, setViews] = useState<number | null>(null);
-
-  useEffect(() => {
-    fetch(`/api/views/${slug}`, { method: "POST" })
-      .then((res) => res.json())
-      .then((data) => setViews(data.views));
-  }, [slug]);
+export async function PageViewCounter({ slug }: { slug: string }) {
+  const views = await getPageViews(slug); // Read-only
 
   return (
-    <span className="text-sm text-gray-500">
-      {views === null ? "—" : `${views.toLocaleString()} views`}
+    <span className="text-sm text-background">
+      {views === null ? "—" : `${views.toLocaleString()} visits`}
     </span>
   );
 }

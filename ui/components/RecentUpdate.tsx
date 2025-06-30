@@ -9,7 +9,12 @@ interface RecentUpdateProps {
   onHover?: (item: HomeRecentItem) => void;
 }
 
-const RecentUpdate = ({ icon, title, items, onHover }: RecentUpdateProps) => {
+export const RecentUpdate = ({
+  icon,
+  title,
+  items,
+  onHover,
+}: RecentUpdateProps) => {
   return (
     <div className="animate-sketch-in">
       <div className="flex items-center gap-3 mb-3">
@@ -40,5 +45,3 @@ const RecentUpdate = ({ icon, title, items, onHover }: RecentUpdateProps) => {
     </div>
   );
 };
-
-export default RecentUpdate;

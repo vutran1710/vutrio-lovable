@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 html {
-    font-size: 13pt;
+    font-size: 12pt;
 }
 
 /* New Yorker + Philosopher's Journal + Vintage Zine Color Palette */
@@ -389,11 +389,11 @@ details.notion-toggle {
 }
 
 .notion-callout {
-    margin: 1rem 0 !important;
+    margin: 0.7rem 0 !important;
 }
 
 div.notion-text {
-    margin-bottom: 1rem;
+    margin-bottom: 0.7rem;
 }
 
 .collection-bg-blue {

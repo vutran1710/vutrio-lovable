@@ -102,12 +102,11 @@ class NotionClient {
       return post;
     }
 
-    const pageId = post.id.replace(/-/g, "");
-    const recordMap = await this.notionApi.getPage(pageId).catch((error) => {
-      console.error(`Failed to fetch content for post ${post.slug}:`, error);
+    const recordMap = await this.notionApi.getPage(post.id).catch((e) => {
+      console.error(e);
       return undefined;
     });
-    post.content = recordMap;
+    post.content = recordMap as unknown as ExtendedRecordMap;
     return post;
   }
 

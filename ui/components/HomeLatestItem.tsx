@@ -7,7 +7,7 @@ interface HomeLatestItemProps {
   item: HomeRecentItem;
 }
 
-const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
+export const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
   const getCollectionIcon = (type: string) => {
     switch (type) {
       case "logbook":
@@ -108,5 +108,3 @@ const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
     </Link>
   );
 };
-
-export default HomeLatestItem;

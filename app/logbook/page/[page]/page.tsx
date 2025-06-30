@@ -2,11 +2,11 @@ import {
   PaginationWrapper,
   LogbookPageBody,
   PageContainer,
-  Header,
+  TopNav,
   Footer,
 } from "@/ui";
 import { notionClient } from "@/lib/notion";
-import { getPageViews } from "@/lib/pageViews";
+import { getPageViews, incrementPageView } from "@/lib/pageViews";
 
 const POSTS_PER_PAGE = 8;
 
@@ -26,10 +26,11 @@ export default async function LogbookPage({
   const views = await getPageViews("logbook");
   const tags = await notionClient.countPostsByTags();
   const dateWithPosts = await notionClient.getDatesWithPosts();
+  await incrementPageView("/logbook");
 
   return (
     <PageContainer>
-      <Header currentPath="/logbook" />
+      <TopNav currentPath="/logbook" />
       <LogbookPageBody
         posts={posts}
         stats={{
@@ -45,7 +46,7 @@ export default async function LogbookPage({
         basePath="/logbook"
         hasNext={hasNextPage}
       />
-      <Footer />
+      <Footer currentPath="/logbook" />
     </PageContainer>
   );
 }

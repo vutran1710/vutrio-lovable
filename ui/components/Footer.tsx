@@ -1,10 +1,5 @@
-"use client";
-import {
-  FacebookLogo,
-  InstagramLogo,
-  LinkedinLogo,
-  TiktokLogo,
-} from "phosphor-react";
+import { PageViewCounter } from "./PageViewCounter";
+import { FooterSocialGroup } from "./FooterSocialGroup";
 
 const OrnamentalDivider = () => (
   <div className="flex items-center justify-center mb-16 px-8 max-w-[100vw]">
@@ -20,30 +15,7 @@ const OrnamentalDivider = () => (
   </div>
 );
 
-export const Footer = () => {
-  const socialLinks = [
-    {
-      name: "Facebook",
-      icon: FacebookLogo,
-      url: "https://www.facebook.com/vutran1087",
-    },
-    {
-      name: "Instagram",
-      icon: InstagramLogo,
-      url: "https://www.instagram.com/vutran1087",
-    },
-    {
-      name: "LinkedIn",
-      icon: LinkedinLogo,
-      url: "https://www.linkedin.com/in/vutr",
-    },
-    {
-      name: "TikTok",
-      icon: TiktokLogo,
-      url: "https://www.tiktok.com/@vutr_engineer",
-    },
-  ];
-
+export function Footer({ currentPath }: { currentPath?: string }) {
   return (
     <div className="mt-32">
       {/* Hand-drawn ornamental divider */}
@@ -53,21 +25,7 @@ export const Footer = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Social Links - vintage buttons */}
           <div className="flex justify-center space-x-4 mb-12">
-            {socialLinks.map((platform) => {
-              const Icon = platform.icon;
-              return (
-                <a
-                  key={platform.name}
-                  href={platform.url}
-                  className="vintage-button flex items-center space-x-2"
-                >
-                  <Icon className="w-5 h-5 min-w-[20px] min-h-[20px]" />
-                  <span className="font-mono text-xs hidden xs:hidden sm:hidden md:block lg:block xl:block">
-                    {platform.name}
-                  </span>
-                </a>
-              );
-            })}
+            <FooterSocialGroup />
           </div>
 
           {/* Copyright - marginalia style */}
@@ -79,8 +37,14 @@ export const Footer = () => {
               Crafted with contemplation & a touch of rebellion
             </p>
           </div>
+
+          {currentPath && (
+            <div className="my-4">
+              <PageViewCounter slug={currentPath} />
+            </div>
+          )}
         </div>
       </footer>
     </div>
   );
-};
+}

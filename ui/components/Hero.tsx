@@ -7,8 +7,7 @@ import {
   ShootPost,
   WorkbenchPost,
 } from "@/lib/types";
-import HomeLatestItem from "./HomeLatestItem";
-import RecentUpdate from "./RecentUpdate";
+import { HomeLatestItem, RecentUpdate } from "@/ui";
 import { useState } from "react";
 
 type HeroProps = {
@@ -186,5 +185,3 @@ export const Hero = (props: HeroProps) => {
     </section>
   );
 };
-
-export default Hero;
