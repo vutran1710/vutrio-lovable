@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { NotionClientRenderer, PageMain } from "@/ui";
+import { NotionClientRenderer, PageMain, LogbookRelatedPosts } from "@/ui";
 import { ArrowLeft, Calendar, Eye, Heart } from "phosphor-react";
 import {
   Accordion,
@@ -11,7 +11,6 @@ import {
 } from "@/ui/primitives";
 import type { LogbookPost } from "@/lib/types";
 import { ExtendedRecordMap } from "notion-types";
-import LogbookRelatedPosts from "./LogbookRelatedPost";
 
 type LogbookPostBodyProps = {
   mainPost: LogbookPost;

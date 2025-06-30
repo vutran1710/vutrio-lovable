@@ -2,7 +2,7 @@ import { notionClient } from "@/lib/notion";
 import { incrementPageView } from "@/lib/pageViews";
 import { AboutPageBody, Footer, Header, PageContainer } from "@/ui";
 
-export default async function AboutWrapper() {
+export default async function About() {
   const content = await notionClient.getAboutPage();
 
   await incrementPageView("/about");

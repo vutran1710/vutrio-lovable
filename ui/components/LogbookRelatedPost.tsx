@@ -9,7 +9,7 @@ interface LogbookRelatedPostsProps {
   showTitle?: boolean;
 }
 
-const LogbookRelatedPosts = ({
+export const LogbookRelatedPosts = ({
   relatedPosts,
   showTitle,
 }: LogbookRelatedPostsProps) => {
@@ -37,5 +37,3 @@ const LogbookRelatedPosts = ({
     </div>
   );
 };
-
-export default LogbookRelatedPosts;
