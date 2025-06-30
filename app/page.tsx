@@ -1,6 +1,6 @@
 import { notionClient } from "@/lib/notion";
 import {
-  Header,
+  TopNav,
   PageContainer,
   Hero,
   ContentGrid,
@@ -20,7 +20,7 @@ export default async function Home() {
 
   return (
     <PageContainer>
-      <Header currentPath="/" />
+      <TopNav currentPath="/" />
       <main>
         <Hero
           logbookPosts={latestLogbookPosts}

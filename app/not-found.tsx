@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Header, Footer, PageContainer, PageMain } from "@/ui";
+import { TopNav, Footer, PageContainer, PageMain } from "@/ui";
 import Image from "next/image";
 
 export default function NotFound() {
   return (
     <PageContainer>
-      <Header currentPath="/not-found" />
+      <TopNav currentPath="/not-found" />
       <PageMain>
         <div className="text-center max-w-md mx-auto">
           <div className="mb-8">

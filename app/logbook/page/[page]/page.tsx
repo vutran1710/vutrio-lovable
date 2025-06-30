@@ -2,7 +2,7 @@ import {
   PaginationWrapper,
   LogbookPageBody,
   PageContainer,
-  Header,
+  TopNav,
   Footer,
 } from "@/ui";
 import { notionClient } from "@/lib/notion";
@@ -30,7 +30,7 @@ export default async function LogbookPage({
 
   return (
     <PageContainer>
-      <Header currentPath="/logbook" />
+      <TopNav currentPath="/logbook" />
       <LogbookPageBody
         posts={posts}
         stats={{

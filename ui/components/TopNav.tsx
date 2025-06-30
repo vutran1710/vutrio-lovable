@@ -8,7 +8,7 @@ type HeaderProps = {
   currentPath: string;
 };
 
-export const Header = ({ currentPath }: HeaderProps) => {
+export const TopNav = ({ currentPath }: HeaderProps) => {
   const navItems = [
     { id: "/", label: "Home", icon: House },
     { id: "/workbench", label: "Workbench", icon: Wrench },

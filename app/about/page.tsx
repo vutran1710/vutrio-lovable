@@ -1,6 +1,6 @@
 import { notionClient } from "@/lib/notion";
 import { incrementPageView } from "@/lib/pageViews";
-import { AboutPageBody, Footer, Header, PageContainer } from "@/ui";
+import { AboutPageBody, Footer, TopNav, PageContainer } from "@/ui";
 
 export default async function About() {
   const content = await notionClient.getAboutPage();
@@ -19,7 +19,7 @@ export default async function About() {
 
   return (
     <PageContainer>
-      <Header currentPath="/about" />
+      <TopNav currentPath="/about" />
       <AboutPageBody
         avatarSrc="/avatar.jpg"
         name="John Doe"

@@ -3,7 +3,7 @@ import { TiktokCollections } from "@/lib/collections";
 import { incrementPageView } from "@/lib/pageViews";
 import {
   Footer,
-  Header,
+  TopNav,
   PageContainer,
   PaginationWrapper,
   ShootsPageBody,
@@ -44,7 +44,7 @@ export default async function ShootPage({
 
   return (
     <PageContainer>
-      <Header currentPath="/shoots" />
+      <TopNav currentPath="/shoots" />
       <ShootsPageBody content={contents} />
       <PaginationWrapper
         currentPage={currentPage}

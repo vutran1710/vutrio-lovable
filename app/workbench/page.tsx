@@ -1,6 +1,6 @@
 import { notionWorkbenchClient } from "@/lib/notion-workbench";
 import { incrementPageView } from "@/lib/pageViews";
-import { Footer, Header, PageContainer, WorkbenchPageBody } from "@/ui";
+import { Footer, TopNav, PageContainer, WorkbenchPageBody } from "@/ui";
 
 export default async function Page() {
   const projects = await notionWorkbenchClient.getWorkbenchPosts();
@@ -8,7 +8,7 @@ export default async function Page() {
 
   return (
     <PageContainer>
-      <Header currentPath="/workbench" />
+      <TopNav currentPath="/workbench" />
       <WorkbenchPageBody projects={projects} />
       <Footer currentPath="/workbench" />
     </PageContainer>
