@@ -5,6 +5,7 @@ import {
   LinkedinLogo,
   TiktokLogo,
 } from "phosphor-react";
+import { PageViewCounter } from "./PageViewCounter";
 
 const OrnamentalDivider = () => (
   <div className="flex items-center justify-center mb-16 px-8 max-w-[100vw]">
@@ -20,7 +21,7 @@ const OrnamentalDivider = () => (
   </div>
 );
 
-export const Footer = () => {
+export function Footer({ currentPath }: { currentPath?: string }) {
   const socialLinks = [
     {
       name: "Facebook",
@@ -79,8 +80,14 @@ export const Footer = () => {
               Crafted with contemplation & a touch of rebellion
             </p>
           </div>
+
+          {currentPath && (
+            <div className="my-4">
+              <PageViewCounter slug={currentPath} />
+            </div>
+          )}
         </div>
       </footer>
     </div>
   );
-};
+}

@@ -24,7 +24,7 @@ export default async function LogbookPostPage({
     <PageContainer>
       <Header currentPath="/logbook" />
       <LogbookPostBody mainPost={post} relatedPosts={relatedPosts} />
-      <Footer />
+      <Footer currentPath={`/logbook/${slug}`} />
     </PageContainer>
   );
 }

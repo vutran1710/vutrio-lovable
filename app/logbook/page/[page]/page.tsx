@@ -45,7 +45,7 @@ export default async function LogbookPage({
         basePath="/logbook"
         hasNext={hasNextPage}
       />
-      <Footer />
+      <Footer currentPath="/logbook" />
     </PageContainer>
   );
 }

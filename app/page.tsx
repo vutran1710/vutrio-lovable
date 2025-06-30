@@ -29,7 +29,7 @@ export default async function Home() {
         <TagsSection />
         <SocialSection />
       </main>
-      <Footer />
+      <Footer currentPath="/" />
     </PageContainer>
   );
 }

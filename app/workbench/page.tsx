@@ -8,7 +8,7 @@ export default async function Page() {
     <PageContainer>
       <Header currentPath="/workbench" />
       <WorkbenchPageBody projects={projects} />
-      <Footer />
+      <Footer currentPath="/workbench" />
     </PageContainer>
   );
 }

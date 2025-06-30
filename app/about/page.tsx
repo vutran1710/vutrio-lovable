@@ -25,7 +25,7 @@ export default async function AboutWrapper() {
         content={content}
         quote={quote}
       />
-      <Footer />
+      <Footer currentPath="/about" />
     </PageContainer>
   );
 }

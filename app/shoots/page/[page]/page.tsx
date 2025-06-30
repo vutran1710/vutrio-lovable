@@ -49,7 +49,7 @@ export default async function ShootPage({
         basePath="/shoots"
         hasNext={hasNext}
       />
-      <Footer />
+      <Footer currentPath="/shoots" />
     </PageContainer>
   );
 }
