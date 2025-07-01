@@ -34,7 +34,7 @@ export function AboutPageBody({ avatarSrc, name, content, quote }: AboutProps) {
         }
       />
 
-      <NotionClientRenderer recordMap={content} />
+      <NotionClientRenderer recordMap={content} className="max-w-full" />
 
       <div className="mt-12 p-8 bg-secondary rounded-2xl animate-fade-in">
         <div
