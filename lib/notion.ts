@@ -174,10 +174,8 @@ class NotionClient {
       !this.aboutPage ||
       Date.now() - this.fetchedAboutAt > this.ttlAboutPage
     ) {
-      console.info("Fetching about page content from Notion", ABOUT_PAGE_ID);
       this.aboutPage = await this.getPageBlocks(ABOUT_PAGE_ID);
       this.fetchedAboutAt = Date.now();
-      console.info("Fetched about page content successfully");
     }
     return this.aboutPage;
   }
