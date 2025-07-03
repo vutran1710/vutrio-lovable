@@ -389,7 +389,8 @@ details.notion-toggle {
 }
 
 .notion-callout {
-    margin: 0.7rem 0 !important;
+    margin: 0.7rem 0;
+    margin-bottom: 2rem !important;
 }
 
 div.notion-text {

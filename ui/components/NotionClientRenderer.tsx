@@ -17,8 +17,8 @@ export function NotionClientRenderer({ blocks, className }: Props) {
             return (
               <p
                 key={id}
-                className="text-justify font-serif"
-                style={{ marginBottom: "1rem" }}
+                className="font-serif"
+                style={{ marginBottom: "1.2rem" }}
               >
                 {renderRichText(value.rich_text)}
               </p>
@@ -69,7 +69,7 @@ export function NotionClientRenderer({ blocks, className }: Props) {
             return (
               <div
                 key={id}
-                className="notion-callout my-4 p-4 border-l-4 border-accent bg-secondary rounded-md flex items-start gap-3"
+                className="notion-callout p-4 border-l-4 border-accent bg-secondary rounded-md flex items-start gap-3 mb-4"
               >
                 {value.icon?.emoji && (
                   <div className="text-2xl select-none">{value.icon.emoji}</div>
