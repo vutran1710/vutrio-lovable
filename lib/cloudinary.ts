@@ -42,7 +42,7 @@ export async function fetchPhotosByPage(
     const config = {
       transformation: [
         { width: 500, height: 500, crop: "fill" },
-        { fetch_format: "jpg" },
+        { fetch_format: "auto", quality: "auto" },
       ],
       secure: true,
     };
@@ -70,7 +70,7 @@ type CacheEntry = {
 };
 
 const photoCache = new Map<string, CacheEntry>();
-const TTL = 60 * 20 * 1000; // 20 minutes in milliseconds
+const TTL = 60 * 60 * 1000; // 20 minutes in milliseconds
 
 export async function cachedFetchPhotosByPage(
   page: number,

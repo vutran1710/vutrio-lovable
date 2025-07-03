@@ -1,5 +1,6 @@
 import { PageViewCounter } from "./PageViewCounter";
 import { FooterSocialGroup } from "./FooterSocialGroup";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const OrnamentalDivider = () => (
   <div className="flex items-center justify-center mb-16 px-8 max-w-[100vw]">
@@ -45,6 +46,7 @@ export function Footer({ currentPath }: { currentPath?: string }) {
           )}
         </div>
       </footer>
+      <SpeedInsights />
     </div>
   );
 }
