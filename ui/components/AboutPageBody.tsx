@@ -1,13 +1,11 @@
-"use client";
-
 import { PageMain, PageHeader, NotionClientRenderer } from "@/ui";
 import { Avatar, AvatarImage, AvatarFallback } from "@/ui/primitives";
-import { ExtendedRecordMap } from "notion-types";
+import { BlockObjectResponse } from "@notionhq/client";
 
 export interface AboutProps {
   avatarSrc: string;
   name: string;
-  content: ExtendedRecordMap;
+  content: BlockObjectResponse[];
   quote: string;
 }
 
@@ -34,7 +32,7 @@ export function AboutPageBody({ avatarSrc, name, content, quote }: AboutProps) {
         }
       />
 
-      <NotionClientRenderer recordMap={content} className="max-w-full" />
+      <NotionClientRenderer blocks={content} className="max-w-full" />
 
       <div className="mt-12 p-8 bg-secondary rounded-2xl animate-fade-in">
         <div

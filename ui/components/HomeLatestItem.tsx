@@ -39,7 +39,7 @@ export const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
       href={item.itemUrl}
       className="group block sketch-card zine-rotation hover:zine-rotation-alt transition-all duration-300"
     >
-      <div className="aspect-[16/8] relative overflow-hidden hidden md:block">
+      <div className="aspect-[16/9] relative overflow-hidden hidden md:block">
         <img
           src={item.coverUrl}
           alt={item.title}

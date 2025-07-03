@@ -1,7 +1,5 @@
-import { Client } from "@notionhq/client";
-import { NotionAPI } from "notion-client";
+import { BlockObjectResponse, Client, GetPageResponse } from "@notionhq/client";
 import { LogbookPost, LogbookTag } from "./types";
-import { ExtendedRecordMap } from "notion-types";
 
 const LOGBOOK_DB_ID = process.env.LOGBOOK_DB_ID!;
 const ABOUT_PAGE_ID = process.env.ABOUT_PAGE_ID!;
@@ -9,12 +7,11 @@ const ABOUT_PAGE_ID = process.env.ABOUT_PAGE_ID!;
 class NotionClient {
   private static instance: NotionClient;
   private notion = new Client({ auth: process.env.NOTION_TOKEN });
-  private notionApi = new NotionAPI();
   private fetchedPosts: LogbookPost[] | null = null;
   private fetchedAt: number = 0;
   private ttl = 1000 * 60 * 60; // 1 hour
 
-  private aboutPage: ExtendedRecordMap | null = null;
+  private aboutPage: BlockObjectResponse[] | null = null;
   private fetchedAboutAt: number = 0;
   private ttlAboutPage = 1000 * 60 * 60 * 24; // 24 hours
 
@@ -25,6 +22,23 @@ class NotionClient {
       NotionClient.instance = new NotionClient();
     }
     return NotionClient.instance;
+  }
+
+  async getPageBlocks(pageId: string): Promise<BlockObjectResponse[]> {
+    const blocks: BlockObjectResponse[] = [];
+    let cursor: string | undefined = undefined;
+
+    do {
+      const response = await this.notion.blocks.children.list({
+        block_id: pageId,
+        start_cursor: cursor,
+      });
+
+      blocks.push(...(response.results as BlockObjectResponse[]));
+      cursor = response.has_more ? response.next_cursor! : undefined;
+    } while (cursor);
+
+    return blocks;
   }
 
   private async fetchAllPosts(): Promise<LogbookPost[]> {
@@ -102,11 +116,8 @@ class NotionClient {
       return post;
     }
 
-    const recordMap = await this.notionApi.getPage(post.id).catch((e) => {
-      console.error(e);
-      return undefined;
-    });
-    post.content = recordMap as unknown as ExtendedRecordMap;
+    const blocks = await this.getPageBlocks(post.id);
+    post.content = blocks;
     return post;
   }
 
@@ -163,10 +174,19 @@ class NotionClient {
       !this.aboutPage ||
       Date.now() - this.fetchedAboutAt > this.ttlAboutPage
     ) {
-      this.aboutPage = await this.notionApi.getPage(ABOUT_PAGE_ID);
+      console.info("Fetching about page content from Notion", ABOUT_PAGE_ID);
+      this.aboutPage = await this.getPageBlocks(ABOUT_PAGE_ID);
+      this.fetchedAboutAt = Date.now();
+      console.info("Fetched about page content successfully");
     }
     return this.aboutPage;
   }
 }
 
 export const notionClient = NotionClient.getInstance();
+
+/*
+curl https://api.notion.com/v1/pages/2149f991bd5880b29e65d35ac6ca3e31 \
+  -H "Authorization: Bearer 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" \
+  -H "Notion-Version: 2022-06-28"
+*/

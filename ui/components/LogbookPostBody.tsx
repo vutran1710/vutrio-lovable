@@ -10,7 +10,6 @@ import {
   AccordionTrigger,
 } from "@/ui/primitives";
 import type { LogbookPost } from "@/lib/types";
-import { ExtendedRecordMap } from "notion-types";
 
 type LogbookPostBodyProps = {
   mainPost: LogbookPost;
@@ -108,9 +107,7 @@ export function LogbookPostBody(props: LogbookPostBodyProps) {
           {/* Main content - 75% width */}
           <div className="flex-1">
             <article className="animate-fade-in max-w-full">
-              <NotionClientRenderer
-                recordMap={post.content! as ExtendedRecordMap}
-              />
+              <NotionClientRenderer blocks={post.content || []} />
             </article>
           </div>
         </div>

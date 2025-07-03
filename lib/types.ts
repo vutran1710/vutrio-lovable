@@ -1,4 +1,4 @@
-import { ExtendedRecordMap, RecordMap } from "notion-types";
+import { BlockObjectResponse } from "@notionhq/client";
 
 export interface LogbookPost {
   id: string;
@@ -7,7 +7,7 @@ export interface LogbookPost {
   date: Date;
   cover: string;
   excerpt?: string;
-  content?: string | RecordMap | ExtendedRecordMap;
+  content?: BlockObjectResponse[];
   tags: string[];
   views?: number;
   likes?: number;

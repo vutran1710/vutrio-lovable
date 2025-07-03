@@ -1,6 +1,7 @@
 import { redis } from "./upstash";
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev =
+  process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test";
 
 export async function incrementPageView(slug: string): Promise<number> {
   if (isDev) return 0;

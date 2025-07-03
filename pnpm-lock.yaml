@@ -44,12 +44,6 @@ importers:
       next:
         specifier: 15.3.4
         version: 15.3.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      notion-client:
-        specifier: ^7.4.2
-        version: 7.4.2
-      notion-types:
-        specifier: ^7.4.2
-        version: 7.4.2
       phosphor-react:
         specifier: ^1.4.1
         version: 1.4.1(react@19.1.0)
@@ -1727,10 +1721,6 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
-  ky@1.8.1:
-    resolution: {integrity: sha512-7Bp3TpsE+L+TARSnnDpk3xg8Idi8RwSLdj6CMbNWoOARIrGrbuLGusV0dYwbZOm4bB3jHNxSw8Wk/ByDqJEnDw==}
-    engines: {node: '>=18'}
-
   language-subtag-registry@0.3.23:
     resolution: {integrity: sha512-0K65Lea881pHotoGEa5gDlMxt3pctLi2RplBb7Ezh4rRdLEOtgi7n4EwK9lamnUCkKBqaeKRVebTq6BAxSkpXQ==}
 
@@ -1892,10 +1882,6 @@ packages:
     resolution: {integrity: sha512-Ee/R3SyN4BuynXcnTaekmaVdbDAEiNrHqjQIA37mHU8G9pf7aaAD4ZX3XjBLo6rsdcxA/gtkcNYZLt30ACgynw==}
     engines: {node: '>=14.16'}
 
-  notion-client@7.4.2:
-    resolution: {integrity: sha512-cicASuxTL+ZuDe66Uyz90J4/y53EoNUwdrXEePX4KlBbvIkn23wPCfZGdToTmMJfovV2MPRxZuBQJ2UYPcwv2A==}
-    engines: {node: '>=18'}
-
   notion-types@7.4.2:
     resolution: {integrity: sha512-mCFra6z7DUcNXV11ypufmqcZL8poYAfSwSSyPBnuvzauGfH9MLDJ2Uv31H/0MFtn9qqddDdxV5lHkIzY1IRysg==}
     engines: {node: '>=18'}
@@ -1958,10 +1944,6 @@ packages:
   p-locate@5.0.0:
     resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
     engines: {node: '>=10'}
-
-  p-map@7.0.3:
-    resolution: {integrity: sha512-VkndIv2fIB99swvQoA65bm+fsmt6UNdGeIB0oxBs+WhAhdh08QA04JXpI7rbB9r08/nkbysKoya9rtDERYOYMA==}
-    engines: {node: '>=18'}
 
   p-queue@8.1.0:
     resolution: {integrity: sha512-mxLDbbGIBEXTJL0zEx8JIylaj3xQ7Z/7eEVjcF9fJX4DBiH9oqe+oahYnlKKxm0Ci9TlWTyhSHgygxMxjIB2jw==}
@@ -4345,8 +4327,6 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  ky@1.8.1: {}
-
   language-subtag-registry@0.3.23: {}
 
   language-tags@1.0.9:
@@ -4482,13 +4462,6 @@ snapshots:
 
   normalize-url@8.0.2: {}
 
-  notion-client@7.4.2:
-    dependencies:
-      ky: 1.8.1
-      notion-types: 7.4.2
-      notion-utils: 7.4.2
-      p-map: 7.0.3
-
   notion-types@7.4.2: {}
 
   notion-utils@7.4.2:
@@ -4570,8 +4543,6 @@ snapshots:
   p-locate@5.0.0:
     dependencies:
       p-limit: 3.1.0
-
-  p-map@7.0.3: {}
 
   p-queue@8.1.0:
     dependencies:

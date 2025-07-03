@@ -18,7 +18,7 @@ export const LogbookSidebar = ({
   datesWithPosts,
 }: LogbookSidebarProps) => {
   return (
-    <div className="w-full min-w-[310px] max-w-[310px] space-y-6">
+    <div className="w-full min-w-[290px] max-w-[290px] space-y-6">
       <LogbookStatsView stats={stats} />
       {/* <LogbookRecentComments comments={recentComments} /> */}
       <LogbookCalendar datesWithPosts={datesWithPosts} />
