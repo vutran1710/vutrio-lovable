@@ -6,7 +6,7 @@ import {
   LinkedinLogo,
   TiktokLogo,
 } from "phosphor-react";
-import type { LogbookPost, ShootPost, CollectionPreviewItem } from "./types";
+import type { ShootPost, CollectionPreviewItem } from "./types";
 
 export const logbookStats = {
   totalPosts: 24,
@@ -211,31 +211,6 @@ export const shootsContent: ShootPost[] = [
     sourceUrl: "https://tiktok.com/@example/video/example16",
   },
 ];
-
-export const sampleLogbookPost: LogbookPost = {
-  id: "1",
-  slug: "on-the-nature-of-digital-identity",
-  title: "On the Nature of Digital Identity",
-  date: new Date("2024-01-15"),
-  cover: "/placeholder.svg",
-  content: `
-      <p>In our interconnected world, the boundaries between our physical and digital selves continue to blur, creating a fascinating duality that challenges our traditional understanding of identity.</p>
-
-      <h2>The Digital Self</h2>
-      <p>Our digital identity encompasses more than just our social media profiles or online presence. It represents a complex amalgamation of our thoughts, interactions, and digital footprints that collectively form a new dimension of human existence.</p>
-
-      <blockquote>"We are not just users of technology; we are co-creators of a digital reality that shapes and is shaped by our deepest human experiences."</blockquote>
-
-      <h2>Philosophy in the Digital Age</h2>
-      <p>As we navigate this digital landscape, we must ask ourselves: What does it mean to be authentic in a world where our identities can be curated, edited, and presented through carefully chosen pixels and words?</p>
-
-      <p>The answer lies not in rejecting our digital selves, but in understanding how they complement and extend our physical being, creating a more complete picture of who we are in the 21st century.</p>
-    `,
-  tags: ["philosophy", "digital-identity", "technology"],
-  views: 1243,
-  likes: 89,
-  comments: 23,
-};
 
 export const searchLogbookResults = [
   {

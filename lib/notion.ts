@@ -1,4 +1,4 @@
-import { BlockObjectResponse, Client, GetPageResponse } from "@notionhq/client";
+import { BlockObjectResponse, Client } from "@notionhq/client";
 import { LogbookPost, LogbookTag } from "./types";
 
 const LOGBOOK_DB_ID = process.env.LOGBOOK_DB_ID!;
