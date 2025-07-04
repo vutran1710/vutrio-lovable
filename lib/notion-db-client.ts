@@ -1,5 +1,8 @@
 import { Client } from "@notionhq/client";
-import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type {
+  BlockObjectResponse,
+  PageObjectResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 import type { LogbookPost, ShootPost, WorkbenchPost } from "./types";
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN!;
@@ -26,7 +29,6 @@ export class NotionDatabaseClient {
   private constructor() {}
 
   public static getInstance(): NotionDatabaseClient {
-    console.info("Creating NotionDatabaseClient instance", NOTION_TOKEN);
     if (!NotionDatabaseClient.instance) {
       NotionDatabaseClient.instance = new NotionDatabaseClient();
     }
@@ -76,11 +78,36 @@ export class NotionDatabaseClient {
     return counts;
   }
 
+  public async getTagsAndCountByType(
+    type: SourceType,
+  ): Promise<Map<string, number>> {
+    await this.ensureLoaded();
+    const counts = new Map<string, number>();
+    for (const entry of this.cache[type]) {
+      for (const tag of entry.tags || []) {
+        const lowerTag = tag.toLowerCase();
+        counts.set(lowerTag, (counts.get(lowerTag) || 0) + 1);
+      }
+    }
+    return counts;
+  }
+
+  public async getDatesWithPost(type: SourceType): Promise<Date[]> {
+    await this.ensureLoaded();
+    const dates = new Set<Date>();
+    for (const post of this.cache[type]) {
+      if (post.date) {
+        dates.add(new Date(post.date));
+      }
+    }
+    return Array.from(dates).sort((a, b) => a.getTime() - b.getTime());
+  }
+
   public async countBy({
-    postType,
+    recordType,
     tag,
   }: {
-    postType?: SourceType;
+    recordType?: SourceType;
     tag?: string;
   }): Promise<number> {
     await this.ensureLoaded();
@@ -90,16 +117,16 @@ export class NotionDatabaseClient {
       const lowerTag = tag.toLowerCase();
       const entry = this.tagIndex.get(lowerTag);
       if (!entry) return 0;
-      if (postType) {
-        count = entry[postType]?.length || 0;
+      if (recordType) {
+        count = entry[recordType]?.length || 0;
       } else {
         count =
           (entry.logbook?.length || 0) +
           (entry.shoots?.length || 0) +
           (entry.workbench?.length || 0);
       }
-    } else if (postType) {
-      count = this.cache[postType]?.length || 0;
+    } else if (recordType) {
+      count = this.cache[recordType]?.length || 0;
     } else {
       count =
         (this.cache.logbook?.length || 0) +
@@ -111,12 +138,12 @@ export class NotionDatabaseClient {
   }
 
   public async paginateBy({
-    postType,
+    recordType,
     tag,
     offset,
     limit,
   }: {
-    postType?: SourceType;
+    recordType?: SourceType;
     tag?: string;
     offset: number;
     limit: number;
@@ -127,13 +154,13 @@ export class NotionDatabaseClient {
     if (tag) {
       const entry = this.tagIndex.get(tag.toLowerCase());
       if (!entry) return { total: 0, results: [] };
-      if (postType) {
-        pool = entry[postType] || [];
+      if (recordType) {
+        pool = entry[recordType] || [];
       } else {
         pool = [...entry.logbook, ...entry.shoots, ...entry.workbench];
       }
-    } else if (postType) {
-      pool = this.cache[postType] || [];
+    } else if (recordType) {
+      pool = this.cache[recordType] || [];
     } else {
       pool = [
         ...this.cache.logbook,
@@ -200,14 +227,16 @@ export class NotionDatabaseClient {
     const pages = await this.queryAll(SHOOTS_DB_ID);
     this.cache.shoots = pages.map((p) => {
       const props = p.properties as any;
+
       return {
         id: this.hashId(p.id).toString(),
         title: props["Title"]?.title?.[0]?.plain_text ?? "Untitled",
-        description: props["Summary"]?.rich_text?.[0]?.plain_text ?? "",
-        slug: "",
+        description: props["Description"]?.rich_text?.[0]?.plain_text ?? "",
+        slug: props["Slug"]?.rich_text?.[0]?.plain_text ?? "",
         cover: props["Thumbnail"]?.files?.[0]?.file?.url ?? "",
         image: props["Image"]?.files?.[0]?.file?.url,
         sourceUrl: props["Link"]?.url ?? undefined,
+        recordType: "shoots",
         likes: 0,
         date: new Date(p.created_time),
         type: props["Type"]?.select?.name?.toLowerCase() ?? "tiktok",
@@ -226,6 +255,7 @@ export class NotionDatabaseClient {
         description:
           props["Description"]?.rich_text?.[0]?.plain_text ?? "Untitled",
         slug: props["Slug"]?.rich_text?.[0]?.plain_text ?? "",
+        recordType: "logbook",
         // @ts-expect-error type arbitrary
         cover: p.cover?.[p.cover?.type]?.url || "",
         sourceUrl: undefined,
@@ -245,6 +275,7 @@ export class NotionDatabaseClient {
         title: props["Title"]?.title?.[0]?.plain_text ?? "Untitled",
         description: "",
         slug: "",
+        recordType: "workbench",
         cover: props["Cover"]?.files?.[0]?.file?.url ?? "",
         sourceUrl: props["Url"]?.url ?? undefined,
         tags: (props["Tags"]?.multi_select || []).map((t: any) => t.name),
@@ -283,6 +314,31 @@ export class NotionDatabaseClient {
       hash |= 0;
     }
     return Math.abs(hash);
+  }
+
+  async getPageBlocks(pageId: string): Promise<BlockObjectResponse[]> {
+    const blocks: BlockObjectResponse[] = [];
+    let cursor: string | undefined = undefined;
+
+    do {
+      const response = await this.notion.blocks.children.list({
+        block_id: pageId,
+        start_cursor: cursor,
+      });
+
+      blocks.push(...(response.results as BlockObjectResponse[]));
+      cursor = response.has_more ? response.next_cursor! : undefined;
+    } while (cursor);
+
+    return blocks;
+  }
+
+  public async getAboutPageBlocks(): Promise<BlockObjectResponse[]> {
+    const aboutPageId = process.env.ABOUT_PAGE_ID!;
+    if (!aboutPageId) {
+      throw new Error("ABOUT_PAGE_ID environment variable is not set");
+    }
+    return this.getPageBlocks(aboutPageId);
   }
 }
 

@@ -5,8 +5,10 @@ import {
   TopNav,
   Footer,
 } from "@/ui";
-import { notionClient } from "@/lib/notion";
+import { notionDatabaseClient } from "@/lib/notion-db-client";
 import { getPageViews, incrementPageView } from "@/lib/pageViews";
+import { notFound } from "next/navigation";
+import { LogbookPost } from "@/lib/types";
 
 const POSTS_PER_PAGE = 8;
 
@@ -18,20 +20,31 @@ export default async function LogbookPage({
   const { page } = await params;
 
   const currentPage = parseInt(page, 10);
-  const [posts, views, tags, dateWithPosts] = await Promise.all([
-    notionClient.getPaginatedPosts(currentPage, POSTS_PER_PAGE),
+  const data = await notionDatabaseClient.paginateBy({
+    recordType: "logbook",
+    offset: (currentPage - 1) * POSTS_PER_PAGE,
+    limit: POSTS_PER_PAGE,
+  });
+
+  if (!data || !data.results?.length) {
+    return notFound();
+  }
+
+  const [views, tags, dateWithPosts] = await Promise.all([
     getPageViews("logbook"),
-    notionClient.countPostsByTags(),
-    notionClient.getDatesWithPosts(),
+    notionDatabaseClient.getTagsAndCountByType("logbook"),
+    notionDatabaseClient.getDatesWithPost("logbook"),
   ]);
-  const hasNextPage = posts.length === POSTS_PER_PAGE;
+  console.log("--------------", tags);
+
+  const totalPage = Math.ceil(data.total / POSTS_PER_PAGE);
   void incrementPageView("/logbook");
 
   return (
     <PageContainer>
       <TopNav currentPath="/logbook" />
       <LogbookPageBody
-        posts={posts}
+        posts={data.results as LogbookPost[]}
         stats={{
           totalComments: 0,
           totalViews: views || 0, // Fallback to 0 if views are not available
@@ -43,7 +56,7 @@ export default async function LogbookPage({
       <PaginationWrapper
         currentPage={currentPage}
         basePath="/logbook"
-        hasNext={hasNextPage}
+        totalPages={totalPage}
       />
       <Footer currentPath="/logbook" />
     </PageContainer>

@@ -17,17 +17,17 @@ export default async function Home() {
   const [latestLogbookPosts, workbenchProjects, shootPosts] = await Promise.all(
     [
       notionDatabaseClient.paginateBy({
-        postType: "logbook",
+        recordType: "logbook",
         offset: 0,
         limit: 2,
       }),
       notionDatabaseClient.paginateBy({
-        postType: "workbench",
+        recordType: "workbench",
         offset: 0,
         limit: 2,
       }),
       notionDatabaseClient.paginateBy({
-        postType: "shoots",
+        recordType: "shoots",
         offset: 0,
         limit: 2,
       }),

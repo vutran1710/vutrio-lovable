@@ -9,6 +9,7 @@ export interface BaseRecord {
   sourceUrl?: string;
   tags: string[];
   date: Date;
+  recordType: "logbook" | "shoots" | "workbench";
 }
 
 export type LogbookPost = BaseRecord & {
@@ -31,15 +32,6 @@ export type WorkbenchPost = BaseRecord & {
   stars: number;
 };
 
-export interface HomeRecentItem {
-  type: string;
-  title: string;
-  description: string;
-  coverUrl: string;
-  date: Date;
-  itemUrl: string;
-}
-
 export interface CollectionPreviewItem {
   title: string;
   description: string;
@@ -54,11 +46,6 @@ export interface CollectionPreviewItem {
 export interface LogbookStats {
   totalViews: number;
   totalComments: number;
-}
-
-export interface LogbookTag {
-  name: string;
-  count: number;
 }
 
 export interface RecentComment {

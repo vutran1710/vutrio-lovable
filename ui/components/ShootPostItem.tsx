@@ -16,7 +16,7 @@ function extractTikTokVideoId(url: string): string | null {
 
 export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
   const isTikTok = post.type === "tiktok";
-  const videoId = isTikTok ? extractTikTokVideoId(post.sourceUrl) : null;
+  const videoId = isTikTok ? extractTikTokVideoId(post.sourceUrl!) : null;
 
   return (
     <div
@@ -36,8 +36,8 @@ export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
           </div>
         ) : (
           <Image
-            src={post.imageUrl}
-            alt={post.caption}
+            src={post.cover}
+            alt={post.title}
             width={500}
             height={500}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -53,7 +53,7 @@ export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
             className="text-primary hover:text-accent transition-colors"
             onClick={(e) => e.stopPropagation()}
           >
-            {post.type === "instagram" ? (
+            {post.type === "insta" ? (
               <InstagramLogo size={16} />
             ) : (
               <TiktokLogo size={16} />
@@ -64,7 +64,7 @@ export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
 
       <div className="mt-4">
         <p className="font-serif text-foreground mb-2 line-clamp-2">
-          {post.caption}
+          {post.title}
         </p>
         {post.description && (
           <p className="text-sm text-muted-foreground line-clamp-2 h-16">

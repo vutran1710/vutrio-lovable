@@ -24,7 +24,7 @@ export default async function ShootPage({
   if (isNaN(currentPage) || currentPage < 1) return notFound();
 
   const shoots = await notionDatabaseClient.paginateBy({
-    postType: "shoots",
+    recordType: "shoots",
     offset: (currentPage - 1) * SHOOT_PER_PAGE,
     limit: SHOOT_PER_PAGE,
   });

@@ -12,6 +12,17 @@ describe("NotionDatabaseClient (Integration)", () => {
     expect(data.logbook.length).toBeGreaterThan(0);
     expect(data.shoots.length).toBeGreaterThan(0);
     expect(data.workbench.length).toBeGreaterThan(0);
+
+    for (const type of ["logbook", "shoots", "workbench"]) {
+      expect(data[type]).toBeDefined();
+      expect(Array.isArray(data[type])).toBe(true);
+      for (const item of data[type]) {
+        expect(item.id).toBeDefined();
+        expect(item.slug).toBeDefined();
+        expect(item.title).toBeDefined();
+        expect(item.date).toBeInstanceOf(Date);
+      }
+    }
   });
 
   it("builds tag index correctly", async () => {
@@ -71,7 +82,7 @@ describe("NotionDatabaseClient (Integration)", () => {
 
   it("counts with filters correctly", async () => {
     const count = await notionDatabaseClient.countBy({
-      postType: "logbook",
+      recordType: "logbook",
     });
     expect(typeof count).toBe("number");
     expect(count).toBeGreaterThanOrEqual(0);
@@ -79,7 +90,7 @@ describe("NotionDatabaseClient (Integration)", () => {
 
   it("paginates correctly with offset and limit", async () => {
     const { results, total } = await notionDatabaseClient.paginateBy({
-      postType: "shoots",
+      recordType: "shoots",
       offset: 0,
       limit: 3,
     });
