@@ -29,8 +29,12 @@ class GithubClient {
       return cached.data;
     }
 
+    if (!item.sourceUrl) {
+      return item;
+    }
+
     const res = await fetch(
-      item.sourceUrl!.replace("github.com", "api.github.com/repos"),
+      item.sourceUrl.replace("github.com", "api.github.com/repos"),
       {
         headers: this.token ? { Authorization: this.token } : undefined,
         next: { revalidate: 3600 },
