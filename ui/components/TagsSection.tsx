@@ -1,11 +1,10 @@
-"use client";
-
 import Link from "next/link";
-import { tagsSectionTags } from "@/lib/mocks";
 
-export const TagsSection = () => {
-  const tags = tagsSectionTags;
+type TagsSectionProps = {
+  tags: string[];
+};
 
+export const TagsSection = ({ tags }: TagsSectionProps) => {
   return (
     <section className="py-16 px-6 paper-background">
       <div className="max-w-4xl mx-auto">

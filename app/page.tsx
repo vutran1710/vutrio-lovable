@@ -13,8 +13,8 @@ import { LogbookPost, ShootPost, WorkbenchPost } from "@/lib/types";
 
 export default async function Home() {
   await notionDatabaseClient.ensureLoaded();
-  const [latestLogbookPosts, workbenchProjects, shootPosts] = await Promise.all(
-    [
+  const [latestLogbookPosts, workbenchProjects, shootPosts, tags] =
+    await Promise.all([
       notionDatabaseClient.paginateBy({
         recordType: "logbook",
         offset: 0,
@@ -30,8 +30,8 @@ export default async function Home() {
         offset: 0,
         limit: 2,
       }),
-    ],
-  );
+      notionDatabaseClient.popularTags(10),
+    ]);
   void incrementPageView("/");
 
   return (
@@ -43,8 +43,8 @@ export default async function Home() {
           shootPosts={shootPosts.results as ShootPost[]}
           workbenchPost={workbenchProjects.results as WorkbenchPost[]}
         />
-        <ContentGrid />
-        <TagsSection />
+        {/* <ContentGrid /> */}
+        <TagsSection tags={tags} />
         <SocialSection />
       </main>
       <Footer currentPath="/" />
