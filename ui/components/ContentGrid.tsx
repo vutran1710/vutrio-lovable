@@ -1,5 +1,3 @@
-"use client";
-
 import { contentGridSections } from "@/lib/mocks";
 import { Collection } from "./Collection";
 

@@ -1,4 +1,4 @@
-import { PageMain, PageHeader, NotionClientRenderer } from "@/ui";
+import { PageMain, NotionClientRenderer } from "@/ui";
 import { Avatar, AvatarImage, AvatarFallback } from "@/ui/primitives";
 import { BlockObjectResponse } from "@notionhq/client";
 
