@@ -1,9 +1,9 @@
-import { notionClient } from "@/lib/notion";
+import { notionDatabaseClient } from "@/lib/notion-db-client";
 import { incrementPageView } from "@/lib/pageViews";
 import { AboutPageBody, Footer, TopNav, PageContainer } from "@/ui";
 
 export default async function About() {
-  const contentPromise = notionClient.getAboutPage();
+  const contentPromise = notionDatabaseClient.getAboutPageBlocks();
   void incrementPageView("/about");
   const content = await contentPromise;
 

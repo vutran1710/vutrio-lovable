@@ -6,17 +6,12 @@ import {
   PageMain,
   PageHeader,
 } from "@/ui";
-import type {
-  LogbookPost,
-  LogbookStats,
-  LogbookTag,
-  RecentComment,
-} from "@/lib/types";
+import type { LogbookPost, LogbookStats, RecentComment } from "@/lib/types";
 
 export interface LogbookProps {
   posts: LogbookPost[];
   stats: LogbookStats;
-  tags: LogbookTag[];
+  tags: Map<string, number>;
   recentComments: RecentComment[];
   datesWithPosts: Date[];
 }

@@ -1,23 +1,36 @@
-import { notionClient } from "@/lib/notion";
 import {
   TopNav,
   PageContainer,
   Hero,
-  ContentGrid,
   TagsSection,
   SocialSection,
   Footer,
 } from "../ui";
-import { notionWorkbenchClient } from "@/lib/notion-workbench";
-import { cachedFetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
+import { notionDatabaseClient } from "@/lib/notion-db-client";
 import { incrementPageView } from "@/lib/pageViews";
+import { LogbookPost, ShootPost, WorkbenchPost } from "@/lib/types";
 
 export default async function Home() {
-  const [latestLogbookPosts, workbenchProjects, shootPosts] = await Promise.all([
-    notionClient.getLatestPosts(2),
-    notionWorkbenchClient.getWorkbenchPosts(),
-    cachedFetchPhotosByPage(1, 2, PHOTO_FOLDER_NAME),
-  ]);
+  await notionDatabaseClient.ensureLoaded();
+  const [latestLogbookPosts, workbenchProjects, shootPosts, tags] =
+    await Promise.all([
+      notionDatabaseClient.paginateBy({
+        recordType: "logbook",
+        offset: 0,
+        limit: 2,
+      }),
+      notionDatabaseClient.paginateBy({
+        recordType: "workbench",
+        offset: 0,
+        limit: 2,
+      }),
+      notionDatabaseClient.paginateBy({
+        recordType: "shoots",
+        offset: 0,
+        limit: 2,
+      }),
+      notionDatabaseClient.popularTags(10),
+    ]);
   void incrementPageView("/");
 
   return (
@@ -25,12 +38,12 @@ export default async function Home() {
       <TopNav currentPath="/" />
       <main>
         <Hero
-          logbookPosts={latestLogbookPosts}
-          shootPosts={shootPosts}
-          workbenchPost={workbenchProjects.slice(0, 2)}
+          logbookPosts={latestLogbookPosts.results as LogbookPost[]}
+          shootPosts={shootPosts.results as ShootPost[]}
+          workbenchPost={workbenchProjects.results as WorkbenchPost[]}
         />
-        <ContentGrid />
-        <TagsSection />
+        {/* <ContentGrid /> */}
+        <TagsSection tags={tags} />
         <SocialSection />
       </main>
       <Footer currentPath="/" />

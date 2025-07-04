@@ -1,10 +1,12 @@
 "use client";
 import Link from "next/link";
 import { Clock, BookOpen, Camera, Wrench } from "phosphor-react";
-import { HomeRecentItem } from "@/lib/types";
+import { BaseRecord } from "@/lib/types";
 
 interface HomeLatestItemProps {
-  item: HomeRecentItem;
+  item: BaseRecord & {
+    type: "logbook" | "shoots" | "workbench";
+  };
 }
 
 export const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
@@ -36,12 +38,12 @@ export const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
 
   return (
     <Link
-      href={item.itemUrl}
+      href={`/${item.type}/${item.slug}`}
       className="group block sketch-card zine-rotation hover:zine-rotation-alt transition-all duration-300"
     >
       <div className="aspect-[16/9] relative overflow-hidden hidden md:block">
         <img
-          src={item.coverUrl}
+          src={item.cover}
           alt={item.title}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
         />
@@ -59,7 +61,7 @@ export const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
               {getCollectionIcon(item.type)}
               <span className="ml-1 capitalize">{item.type}</span>
             </span>
-            <span className="font-mono text-background/80 text-sm">
+            <span className="font-mono text-background text-sm">
               {getTimeAgo(item.date)}
             </span>
           </div>
@@ -76,7 +78,7 @@ export const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
 
       <div className="aspect-[3/4] relative overflow-hidden md:hidden">
         <img
-          src={item.coverUrl}
+          src={item.cover}
           alt={item.title}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
         />

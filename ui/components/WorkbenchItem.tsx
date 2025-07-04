@@ -12,7 +12,7 @@ export const WorkbenchItem = ({ project }: WorkbenchItemProps) => (
     <div className="bg-card rounded-lg overflow-hidden border border-border transition-colors">
       <div className="bg-gradient-to-br from-secondary to-muted overflow-hidden">
         <img
-          src={project.coverImage}
+          src={project.cover}
           alt={project.title}
           className="w-full aspect-video object-cover transition-transform duration-300 group-hover:scale-105"
         />
@@ -55,7 +55,7 @@ export const WorkbenchItem = ({ project }: WorkbenchItemProps) => (
           </div>
         </div>
         <a
-          href={project.githubUrl}
+          href={project.sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center space-x-2 text-primary hover:text-accent transition-colors"

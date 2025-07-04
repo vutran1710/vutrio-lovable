@@ -16,34 +16,22 @@ function extractTikTokVideoId(url: string): string | null {
 
 export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
   const isTikTok = post.type === "tiktok";
-  const videoId = isTikTok ? extractTikTokVideoId(post.sourceUrl) : null;
+  const videoId = isTikTok ? extractTikTokVideoId(post.sourceUrl!) : null;
 
   return (
-    <div
-      className="group cursor-pointer animate-fade-in border border-transparent hover:border-accent transition-colors rounded-lg p-2"
-      onClick={() => onSelect?.(post)}
-    >
-      <div className="aspect-square bg-gradient-to-br from-secondary to-muted rounded-xl overflow-hidden relative">
-        {isTikTok && videoId ? (
-          <div className="flex items-center justify-center w-full h-full overflow-hidden">
-            <iframe
-              src={`https://www.tiktok.com/embed/v2/${videoId}`}
-              className="w-[100%] h-[100%]"
-              allow="encrypted-media"
-              allowFullScreen
-              title={`TikTok ${videoId}`}
-            />
-          </div>
-        ) : (
-          <Image
-            src={post.imageUrl}
-            alt={post.caption}
-            width={500}
-            height={500}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-          />
-        )}
+    <div className="group cursor-pointer animate-fade-in border border-transparent hover:border-accent transition-colors rounded-lg p-2">
+      <div
+        className="aspect-square bg-gradient-to-br from-secondary to-muted rounded-xl overflow-hidden relative"
+        onClick={() => onSelect?.(post)}
+      >
+        <Image
+          src={post.cover}
+          alt={post.title}
+          width={500}
+          height={500}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
 
         <div className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm rounded-full p-2">
           <a
@@ -53,7 +41,7 @@ export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
             className="text-primary hover:text-accent transition-colors"
             onClick={(e) => e.stopPropagation()}
           >
-            {post.type === "instagram" ? (
+            {post.type === "insta" ? (
               <InstagramLogo size={16} />
             ) : (
               <TiktokLogo size={16} />
@@ -64,7 +52,7 @@ export const ShootPostItem = ({ post, onSelect }: ShootPostItemProps) => {
 
       <div className="mt-4">
         <p className="font-serif text-foreground mb-2 line-clamp-2">
-          {post.caption}
+          {post.title}
         </p>
         {post.description && (
           <p className="text-sm text-muted-foreground line-clamp-2 h-16">

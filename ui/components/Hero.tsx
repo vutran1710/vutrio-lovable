@@ -1,12 +1,7 @@
 "use client";
 
 import { BookOpen, Camera, Wrench } from "phosphor-react";
-import {
-  HomeRecentItem,
-  LogbookPost,
-  ShootPost,
-  WorkbenchPost,
-} from "@/lib/types";
+import { BaseRecord, LogbookPost, ShootPost, WorkbenchPost } from "@/lib/types";
 import { HomeLatestItem, RecentUpdate } from "@/ui";
 import { useState } from "react";
 
@@ -16,62 +11,22 @@ type HeroProps = {
   workbenchPost: WorkbenchPost[];
 };
 
-// Convert to HomeRecentItem format
-/* eslint-disable */
-const getHomeRecentItem = (item: any): HomeRecentItem => {
-  if (item.type === "logbook") {
-    return {
-      type: item.type,
-      title: item.title,
-      description: item.excerpt || "",
-      coverUrl: item.cover,
-      date: item.date,
-      itemUrl: `/logbook/${item.slug}`,
-    };
-  }
-  if (item.type === "shoots") {
-    return {
-      type: item.type,
-      title: item.caption,
-      description: item.description || item.caption,
-      coverUrl: item.imageUrl,
-      date: item.date,
-      itemUrl: `/shoots/${item.id}`,
-    };
-  }
-  if (item.type === "workbench") {
-    return {
-      type: item.type,
-      title: item.title,
-      description: item.description,
-      coverUrl: item.coverImage,
-      date: item.date,
-      itemUrl: `/workbench/${item.id}`,
-    };
-  }
-  return {
-    type: item.type,
-    title: "Untitled",
-    description: "",
-    coverUrl: "/placeholder.svg",
-    date: item.date,
-    itemUrl: "#",
-  };
-};
-
 export const Hero = (props: HeroProps) => {
-  const sortedByTime = [
-    ...props.logbookPosts.map((post) => ({ ...post, type: "logbook" })),
-    ...props.shootPosts.map((post) => ({ ...post, type: "shoots" })),
-    ...props.workbenchPost.map((project) => ({
-      ...project,
-      type: "workbench",
-    })),
-  ].sort((a, b) => {
-    // sort by time, get the latest
-    return b.date.getTime() - a.date.getTime();
-  });
-  const mostRecent = sortedByTime[0];
+  const mostRecent = [
+    props.logbookPosts
+      ? { ...props.logbookPosts[0], type: "logbook" }
+      : undefined,
+    props.shootPosts ? { ...props.shootPosts[0], type: "shoots" } : undefined,
+    props.workbenchPost
+      ? { ...props.workbenchPost[0], type: "workbench" }
+      : undefined,
+  ]
+    .filter((i) => !!i)
+    .sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })[0] as unknown as BaseRecord & {
+    type: "logbook" | "shoots" | "workbench";
+  };
 
   if (!mostRecent) {
     return (
@@ -88,30 +43,7 @@ export const Hero = (props: HeroProps) => {
     );
   }
 
-  const latestItem = getHomeRecentItem(mostRecent);
-  const [activeHomeRecentItem, setActiveHomeRecentItem] = useState(latestItem);
-
-  // Get recent posts for sidebar (2 from each collection)
-  const recentLogbook = props.logbookPosts.map((post) =>
-    getHomeRecentItem({
-      ...post,
-      type: "logbook",
-    }),
-  );
-
-  const recentShoots = props.shootPosts.map((post) =>
-    getHomeRecentItem({
-      ...post,
-      type: "shoots",
-    }),
-  );
-
-  const recentWorkbench = props.workbenchPost.map((project) =>
-    getHomeRecentItem({
-      ...project,
-      type: "workbench",
-    }),
-  );
+  const [activeHomeRecentItem, setActiveHomeRecentItem] = useState(mostRecent);
 
   return (
     <section className="pt-32 pb-20 journal-margins paper-background">
@@ -161,22 +93,28 @@ export const Hero = (props: HeroProps) => {
               <RecentUpdate
                 icon={<BookOpen size={16} className="text-accent" />}
                 title="Logbook"
-                items={recentLogbook}
-                onHover={setActiveHomeRecentItem}
+                items={props.logbookPosts}
+                onHover={(item) =>
+                  setActiveHomeRecentItem({ ...item, type: "logbook" })
+                }
               />
 
               <RecentUpdate
                 icon={<Camera size={16} className="text-accent" />}
                 title="Shoots"
-                items={recentShoots}
-                onHover={(item) => setActiveHomeRecentItem(item)}
+                items={props.shootPosts}
+                onHover={(item) =>
+                  setActiveHomeRecentItem({ ...item, type: "shoots" })
+                }
               />
 
               <RecentUpdate
                 icon={<Wrench size={16} className="text-accent" />}
                 title="Workbench"
-                items={recentWorkbench}
-                onHover={(item) => setActiveHomeRecentItem(item)}
+                items={props.workbenchPost}
+                onHover={(item) =>
+                  setActiveHomeRecentItem({ ...item, type: "workbench" })
+                }
               />
             </div>
           </div>

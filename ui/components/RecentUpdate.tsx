@@ -1,12 +1,13 @@
+import { BaseRecord } from "@/lib/types";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { HomeRecentItem } from "@/lib/types";
 
 interface RecentUpdateProps {
   icon: ReactNode;
   title: string;
-  items: HomeRecentItem[];
-  onHover?: (item: HomeRecentItem) => void;
+  items: BaseRecord[];
+  onHover?: (item: BaseRecord) => void;
+  itemUrlSupport?: boolean;
 }
 
 export const RecentUpdate = ({
@@ -14,7 +15,14 @@ export const RecentUpdate = ({
   title,
   items,
   onHover,
+  itemUrlSupport,
 }: RecentUpdateProps) => {
+  const itemsWithUrls = items.map((item) => ({
+    ...item,
+    itemUrl: itemUrlSupport
+      ? `/${item.recordType}/${item.id}`
+      : `/${item.recordType}`,
+  }));
   return (
     <div className="animate-sketch-in">
       <div className="flex items-center gap-3 mb-3">
@@ -26,9 +34,9 @@ export const RecentUpdate = ({
       </div>
 
       <div className="space-y-1">
-        {items.map((item, index) => (
+        {itemsWithUrls.map((item, index) => (
           <Link
-            key={`${item.type}-${index}`}
+            key={`${item.recordType}-${index}`}
             href={item.itemUrl}
             className="block text-sm text-muted-foreground hover:text-accent transition-colors py-2 border-l-2 border-transparent hover:border-accent pl-4 font-serif leading-relaxed group"
             onMouseEnter={() => onHover?.(item)}
