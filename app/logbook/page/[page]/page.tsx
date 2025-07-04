@@ -18,15 +18,14 @@ export default async function LogbookPage({
   const { page } = await params;
 
   const currentPage = parseInt(page, 10);
-  const posts = await notionClient.getPaginatedPosts(
-    currentPage,
-    POSTS_PER_PAGE,
-  );
+  const [posts, views, tags, dateWithPosts] = await Promise.all([
+    notionClient.getPaginatedPosts(currentPage, POSTS_PER_PAGE),
+    getPageViews("logbook"),
+    notionClient.countPostsByTags(),
+    notionClient.getDatesWithPosts(),
+  ]);
   const hasNextPage = posts.length === POSTS_PER_PAGE;
-  const views = await getPageViews("logbook");
-  const tags = await notionClient.countPostsByTags();
-  const dateWithPosts = await notionClient.getDatesWithPosts();
-  await incrementPageView("/logbook");
+  void incrementPageView("/logbook");
 
   return (
     <PageContainer>

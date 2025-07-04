@@ -16,7 +16,7 @@ interface ShootDialogProps {
 
 export const ShootDialog = ({ post, onOpenChange }: ShootDialogProps) => (
   <Dialog open={!!post} onOpenChange={onOpenChange}>
-    <DialogContent className="max-w-[min(1000px,90vw)] max-h-[90vh] overflow-hidden flex flex-col">
+    <DialogContent className="max-w-[min(550px,90vw)] max-h-[90vh] overflow-hidden flex flex-col">
       {post && (
         <>
           <DialogHeader className="flex-shrink-0">

@@ -17,12 +17,6 @@ export const LogbookStatsView = ({ stats }: LogbookStatsProps) => (
           {stats.totalViews.toLocaleString()}
         </span>
       </div>
-      <div className="flex justify-between items-center">
-        <span className="text-muted-foreground">Comments</span>
-        <span className="font-semibold text-primary">
-          {stats.totalComments}
-        </span>
-      </div>
     </CardContent>
   </Card>
 );

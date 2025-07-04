@@ -3,8 +3,9 @@ import { incrementPageView } from "@/lib/pageViews";
 import { Footer, TopNav, PageContainer, WorkbenchPageBody } from "@/ui";
 
 export default async function Page() {
-  const projects = await notionWorkbenchClient.getWorkbenchPosts();
-  await incrementPageView("/workbench");
+  const projectsPromise = notionWorkbenchClient.getWorkbenchPosts();
+  void incrementPageView("/workbench");
+  const projects = await projectsPromise;
 
   return (
     <PageContainer>
