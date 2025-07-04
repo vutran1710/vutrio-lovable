@@ -19,7 +19,9 @@ export const RecentUpdate = ({
 }: RecentUpdateProps) => {
   const itemsWithUrls = items.map((item) => ({
     ...item,
-    itemUrl: itemUrlSupport ? `/${item.type}/${item.id}` : `${item.type}`,
+    itemUrl: itemUrlSupport
+      ? `/${item.recordType}/${item.id}`
+      : `/${item.recordType}`,
   }));
   return (
     <div className="animate-sketch-in">
@@ -34,7 +36,7 @@ export const RecentUpdate = ({
       <div className="space-y-1">
         {itemsWithUrls.map((item, index) => (
           <Link
-            key={`${item.type}-${index}`}
+            key={`${item.recordType}-${index}`}
             href={item.itemUrl}
             className="block text-sm text-muted-foreground hover:text-accent transition-colors py-2 border-l-2 border-transparent hover:border-accent pl-4 font-serif leading-relaxed group"
             onMouseEnter={() => onHover?.(item)}

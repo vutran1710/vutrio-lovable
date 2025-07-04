@@ -1,4 +1,3 @@
-import { TiktokCollections } from "@/lib/collections";
 import { incrementPageView } from "@/lib/pageViews";
 import {
   Footer,

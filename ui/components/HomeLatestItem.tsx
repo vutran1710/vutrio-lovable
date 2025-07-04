@@ -61,7 +61,7 @@ export const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
               {getCollectionIcon(item.type)}
               <span className="ml-1 capitalize">{item.type}</span>
             </span>
-            <span className="font-mono text-background/80 text-sm">
+            <span className="font-mono text-background text-sm">
               {getTimeAgo(item.date)}
             </span>
           </div>

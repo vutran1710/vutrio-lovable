@@ -35,7 +35,6 @@ export default async function LogbookPage({
     notionDatabaseClient.getTagsAndCountByType("logbook"),
     notionDatabaseClient.getDatesWithPost("logbook"),
   ]);
-  console.log("--------------", tags);
 
   const totalPage = Math.ceil(data.total / POSTS_PER_PAGE);
   void incrementPageView("/logbook");

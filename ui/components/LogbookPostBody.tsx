@@ -14,10 +14,11 @@ import type { LogbookPost } from "@/lib/types";
 type LogbookPostBodyProps = {
   mainPost: LogbookPost;
   relatedPosts: LogbookPost[];
+  views?: number;
 };
 
 export function LogbookPostBody(props: LogbookPostBodyProps) {
-  const { mainPost: post, relatedPosts } = props;
+  const { mainPost: post, relatedPosts, views } = props;
 
   return (
     <PageMain>
@@ -60,11 +61,7 @@ export function LogbookPostBody(props: LogbookPostBodyProps) {
             </div>
             <div className="flex items-center space-x-2">
               <Eye size={16} />
-              <span className="text-sm">{post.views} views</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Heart size={16} />
-              <span className="text-sm">{post.likes} likes</span>
+              <span className="text-sm">{views} views</span>
             </div>
           </div>
 

@@ -33,9 +33,9 @@ export const LogbookPostItem = ({ post }: LogbookPostItemProps) => (
               {post.title}
             </Link>
           </h2>
-          {post.excerpt && (
+          {post.description && (
             <p className="font-serif text-muted-foreground leading-relaxed mb-4">
-              {post.excerpt}
+              {post.description}
             </p>
           )}
           <div className="flex flex-wrap gap-2">

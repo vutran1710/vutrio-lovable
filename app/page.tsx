@@ -1,4 +1,3 @@
-import { notionClient } from "@/lib/notion";
 import {
   TopNav,
   PageContainer,

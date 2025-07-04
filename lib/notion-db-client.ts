@@ -36,15 +36,40 @@ export class NotionDatabaseClient {
   }
 
   public async findPostsByTags(
-    tag: string,
+    tags: string[],
+    sourceType?: SourceType,
   ): Promise<Record<SourceType, CacheEntry[]>> {
     await this.ensureLoaded();
-    const entry = this.tagIndex.get(tag.toLowerCase());
-    return {
-      logbook: entry?.logbook || [],
-      shoots: entry?.shoots || [],
-      workbench: entry?.workbench || [],
+    const results: Record<SourceType, CacheEntry[]> = {
+      logbook: [],
+      shoots: [],
+      workbench: [],
     };
+    const lowerTags = tags.map((tag) => tag.toLowerCase());
+    for (const tag of lowerTags) {
+      const entry = this.tagIndex.get(tag);
+      if (!entry) continue;
+      if (sourceType) {
+        results[sourceType] = results[sourceType].concat(
+          entry[sourceType] || [],
+        );
+      } else {
+        results.logbook = results.logbook.concat(entry.logbook || []);
+        results.shoots = results.shoots.concat(entry.shoots || []);
+        results.workbench = results.workbench.concat(entry.workbench || []);
+      }
+    }
+    // Remove duplicates
+    for (const type of Object.keys(results) as SourceType[]) {
+      const seen = new Set<string>();
+      results[type] = results[type].filter((post) => {
+        const id = post.id.toString();
+        if (seen.has(id)) return false;
+        seen.add(id);
+        return true;
+      });
+    }
+    return results;
   }
 
   public async popularTags(limit: number): Promise<string[]> {
@@ -76,6 +101,20 @@ export class NotionDatabaseClient {
       }
     }
     return counts;
+  }
+
+  public async findPostBySlug(
+    slug: string,
+    type: SourceType,
+  ): Promise<CacheEntry | undefined> {
+    await this.ensureLoaded();
+    const lowerSlug = slug.toLowerCase();
+    for (const post of this.cache[type]) {
+      if ((post as any).slug?.toLowerCase() === lowerSlug) {
+        return post;
+      }
+    }
+    return undefined;
   }
 
   public async getTagsAndCountByType(
@@ -316,7 +355,7 @@ export class NotionDatabaseClient {
     return Math.abs(hash);
   }
 
-  async getPageBlocks(pageId: string): Promise<BlockObjectResponse[]> {
+  public async getPageBlocks(pageId: string): Promise<BlockObjectResponse[]> {
     const blocks: BlockObjectResponse[] = [];
     let cursor: string | undefined = undefined;
 
@@ -329,6 +368,16 @@ export class NotionDatabaseClient {
       blocks.push(...(response.results as BlockObjectResponse[]));
       cursor = response.has_more ? response.next_cursor! : undefined;
     } while (cursor);
+
+    // update to cache
+    if (this.cache.logbook.length) {
+      const post: LogbookPost | undefined = this.cache.logbook.find(
+        (p) => p.id === pageId,
+      );
+      if (post) {
+        post.content = blocks;
+      }
+    }
 
     return blocks;
   }
