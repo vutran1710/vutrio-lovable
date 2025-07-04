@@ -2,7 +2,6 @@ import {
   TopNav,
   PageContainer,
   Hero,
-  ContentGrid,
   TagsSection,
   SocialSection,
   Footer,
