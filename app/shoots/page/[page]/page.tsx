@@ -1,4 +1,3 @@
-import { cachedFetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
 import { TiktokCollections } from "@/lib/collections";
 import { incrementPageView } from "@/lib/pageViews";
 import {
@@ -9,10 +8,10 @@ import {
   ShootsPageBody,
 } from "@/ui";
 import { notFound } from "next/navigation";
+import { notionDatabaseClient } from "@/lib/notion-db-client";
+import { ShootPost } from "@/lib/types";
 
-const PHOTO_POSTS_PER_PAGE = 6;
-const VIDEO_POSTS_PER_PAGE = 3;
-const TOTAL_POSTS_PER_PAGE = PHOTO_POSTS_PER_PAGE + VIDEO_POSTS_PER_PAGE;
+const SHOOT_PER_PAGE = 9;
 
 export default async function ShootPage({
   params,
@@ -24,33 +23,22 @@ export default async function ShootPage({
 
   if (isNaN(currentPage) || currentPage < 1) return notFound();
 
-  const photosPromise = cachedFetchPhotosByPage(
-    currentPage,
-    PHOTO_POSTS_PER_PAGE,
-    PHOTO_FOLDER_NAME,
-  );
+  const shoots = await notionDatabaseClient.paginateBy({
+    postType: "shoots",
+    offset: (currentPage - 1) * SHOOT_PER_PAGE,
+    limit: SHOOT_PER_PAGE,
+  });
 
-  const videos = TiktokCollections.slice(
-    (currentPage - 1) * 3,
-    currentPage * 3,
-  );
-
-  const photos = await photosPromise;
-  const contents = [...photos, ...videos];
-
-  if (contents.length === 0) return notFound();
-
-  const hasNext = contents.length === TOTAL_POSTS_PER_PAGE;
   void incrementPageView("/shoots");
 
   return (
     <PageContainer>
       <TopNav currentPath="/shoots" />
-      <ShootsPageBody content={contents} />
+      <ShootsPageBody content={shoots.results as ShootPost[]} />
       <PaginationWrapper
         currentPage={currentPage}
         basePath="/shoots"
-        hasNext={hasNext}
+        totalPages={shoots.total}
       />
       <Footer currentPath="/shoots" />
     </PageContainer>

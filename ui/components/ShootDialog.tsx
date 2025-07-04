@@ -21,7 +21,7 @@ export const ShootDialog = ({ post, onOpenChange }: ShootDialogProps) => (
         <>
           <DialogHeader className="flex-shrink-0">
             <DialogTitle className="flex items-center gap-2">
-              {post.type === "instagram" ? (
+              {post.type === "insta" ? (
                 <InstagramLogo size={20} />
               ) : (
                 <TiktokLogo size={20} />
@@ -44,15 +44,15 @@ export const ShootDialog = ({ post, onOpenChange }: ShootDialogProps) => (
                 </div>
               ) : (
                 <img
-                  src={post.imageUrl}
-                  alt={post.caption}
+                  src={post.image!}
+                  alt={post.description}
                   className="max-w-full max-h-full object-contain"
                 />
               )}
             </div>
 
             <div className="space-y-3 flex-shrink-0">
-              <p className="font-serif text-foreground">{post.caption}</p>
+              <p className="font-serif text-foreground">{post.title}</p>
 
               {post.description && (
                 <p className="text-muted-foreground text-sm my-2">
@@ -78,7 +78,7 @@ export const ShootDialog = ({ post, onOpenChange }: ShootDialogProps) => (
                   rel="noopener noreferrer"
                   className="text-primary hover:text-accent transition-colors underline"
                 >
-                  View on {post.type === "instagram" ? "Instagram" : "TikTok"}
+                  View on {post.type === "insta" ? "Instagram" : "TikTok"}
                 </a>
               </div>
             </div>

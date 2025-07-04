@@ -1,0 +1,289 @@
+import { Client } from "@notionhq/client";
+import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { LogbookPost, ShootPost, WorkbenchPost } from "./types";
+
+const NOTION_TOKEN = process.env.NOTION_TOKEN!;
+const SHOOTS_DB_ID = process.env.SHOOTS_DB_ID!;
+const LOGBOOK_DB_ID = process.env.LOGBOOK_DB_ID!;
+const WORKBENCH_DB_ID = process.env.WORKBENCH_DB_ID!;
+
+type SourceType = "logbook" | "shoots" | "workbench";
+
+type CacheEntry = LogbookPost | ShootPost | WorkbenchPost;
+
+export class NotionDatabaseClient {
+  private static instance: NotionDatabaseClient;
+  private notion = new Client({ auth: NOTION_TOKEN });
+  private cache: Record<SourceType, CacheEntry[]> = {
+    logbook: [],
+    shoots: [],
+    workbench: [],
+  };
+  private tagIndex: Map<string, Record<SourceType, CacheEntry[]>> = new Map();
+  private fetchedAt = 0;
+  private ttl = 1000 * 60 * 60; // 1 hour
+
+  private constructor() {}
+
+  public static getInstance(): NotionDatabaseClient {
+    console.info("Creating NotionDatabaseClient instance", NOTION_TOKEN);
+    if (!NotionDatabaseClient.instance) {
+      NotionDatabaseClient.instance = new NotionDatabaseClient();
+    }
+    return NotionDatabaseClient.instance;
+  }
+
+  public async findPostsByTags(
+    tag: string,
+  ): Promise<Record<SourceType, CacheEntry[]>> {
+    await this.ensureLoaded();
+    const entry = this.tagIndex.get(tag.toLowerCase());
+    return {
+      logbook: entry?.logbook || [],
+      shoots: entry?.shoots || [],
+      workbench: entry?.workbench || [],
+    };
+  }
+
+  public async popularTags(limit: number): Promise<string[]> {
+    await this.ensureLoaded();
+    const counts = new Map<string, number>();
+    for (const [tag, sources] of this.tagIndex.entries()) {
+      const count =
+        (sources.logbook?.length || 0) +
+        (sources.shoots?.length || 0) +
+        (sources.workbench?.length || 0);
+      counts.set(tag, count);
+    }
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, limit)
+      .map(([tag]) => tag);
+  }
+
+  public async postCountByTags(
+    tags: string[],
+    type: SourceType,
+  ): Promise<Map<string, number>> {
+    await this.ensureLoaded();
+    const counts = new Map<string, number>();
+    for (const tag of tags) {
+      const entry = this.tagIndex.get(tag.toLowerCase());
+      if (entry && entry[type]) {
+        counts.set(tag, entry[type].length);
+      }
+    }
+    return counts;
+  }
+
+  public async countBy({
+    postType,
+    tag,
+  }: {
+    postType?: SourceType;
+    tag?: string;
+  }): Promise<number> {
+    await this.ensureLoaded();
+    let count = 0;
+
+    if (tag) {
+      const lowerTag = tag.toLowerCase();
+      const entry = this.tagIndex.get(lowerTag);
+      if (!entry) return 0;
+      if (postType) {
+        count = entry[postType]?.length || 0;
+      } else {
+        count =
+          (entry.logbook?.length || 0) +
+          (entry.shoots?.length || 0) +
+          (entry.workbench?.length || 0);
+      }
+    } else if (postType) {
+      count = this.cache[postType]?.length || 0;
+    } else {
+      count =
+        (this.cache.logbook?.length || 0) +
+        (this.cache.shoots?.length || 0) +
+        (this.cache.workbench?.length || 0);
+    }
+
+    return count;
+  }
+
+  public async paginateBy({
+    postType,
+    tag,
+    offset,
+    limit,
+  }: {
+    postType?: SourceType;
+    tag?: string;
+    offset: number;
+    limit: number;
+  }): Promise<{ total: number; results: CacheEntry[] }> {
+    await this.ensureLoaded();
+
+    let pool: CacheEntry[] = [];
+    if (tag) {
+      const entry = this.tagIndex.get(tag.toLowerCase());
+      if (!entry) return { total: 0, results: [] };
+      if (postType) {
+        pool = entry[postType] || [];
+      } else {
+        pool = [...entry.logbook, ...entry.shoots, ...entry.workbench];
+      }
+    } else if (postType) {
+      pool = this.cache[postType] || [];
+    } else {
+      pool = [
+        ...this.cache.logbook,
+        ...this.cache.shoots,
+        ...this.cache.workbench,
+      ];
+    }
+
+    return {
+      total: pool.length,
+      results: pool.slice(offset, offset + limit),
+    };
+  }
+
+  public async search(
+    query: string,
+  ): Promise<Record<SourceType, CacheEntry[]>> {
+    await this.ensureLoaded();
+    const q = query.toLowerCase();
+    const result: Record<SourceType, CacheEntry[]> = {
+      logbook: [],
+      shoots: [],
+      workbench: [],
+    };
+
+    for (const type of ["logbook", "shoots", "workbench"] as const) {
+      result[type] = this.cache[type].filter((entry) => {
+        const title = (entry as any).title || (entry as any).caption || "";
+        const slug = (entry as any).slug || "";
+        return (
+          title.toLowerCase().includes(q) || slug.toLowerCase().includes(q)
+        );
+      });
+    }
+
+    return result;
+  }
+
+  public async ensureLoaded() {
+    if (Date.now() - this.fetchedAt < this.ttl && this.cache.logbook.length) {
+      return;
+    }
+    await Promise.all([
+      this.loadLogbook(),
+      this.loadShoots(),
+      this.loadWorkbench(),
+    ]);
+    this.tagIndex.clear();
+    for (const type of ["logbook", "shoots", "workbench"] as const) {
+      for (const post of this.cache[type]) {
+        for (const tag of post.tags || []) {
+          const key = tag.toLowerCase();
+          if (!this.tagIndex.has(key)) {
+            this.tagIndex.set(key, { logbook: [], shoots: [], workbench: [] });
+          }
+          this.tagIndex.get(key)![type].push(post);
+        }
+      }
+    }
+    this.fetchedAt = Date.now();
+  }
+
+  private async loadShoots(): Promise<void> {
+    const pages = await this.queryAll(SHOOTS_DB_ID);
+    this.cache.shoots = pages.map((p) => {
+      const props = p.properties as any;
+      return {
+        id: this.hashId(p.id).toString(),
+        title: props["Title"]?.title?.[0]?.plain_text ?? "Untitled",
+        description: props["Summary"]?.rich_text?.[0]?.plain_text ?? "",
+        slug: "",
+        cover: props["Thumbnail"]?.files?.[0]?.file?.url ?? "",
+        image: props["Image"]?.files?.[0]?.file?.url,
+        sourceUrl: props["Link"]?.url ?? undefined,
+        likes: 0,
+        date: new Date(p.created_time),
+        type: props["Type"]?.select?.name?.toLowerCase() ?? "tiktok",
+        tags: (props["Tags"]?.multi_select || []).map((t: any) => t.name),
+      } satisfies ShootPost;
+    });
+  }
+
+  private async loadLogbook(): Promise<void> {
+    const pages = await this.queryAll(LOGBOOK_DB_ID);
+    this.cache.logbook = pages.map((p) => {
+      const props = p.properties as any;
+      return {
+        id: p.id,
+        title: props["Title"]?.title?.[0]?.plain_text ?? "Untitled",
+        description:
+          props["Description"]?.rich_text?.[0]?.plain_text ?? "Untitled",
+        slug: props["Slug"]?.rich_text?.[0]?.plain_text ?? "",
+        // @ts-expect-error type arbitrary
+        cover: p.cover?.[p.cover?.type]?.url || "",
+        sourceUrl: undefined,
+        tags: (props["Tags"]?.multi_select || []).map((t: any) => t.name),
+        date: new Date(props["Date"]?.date?.start || p.created_time),
+        comments: 0,
+      } satisfies LogbookPost;
+    });
+  }
+
+  private async loadWorkbench(): Promise<void> {
+    const pages = await this.queryAll(WORKBENCH_DB_ID);
+    this.cache.workbench = pages.map((p) => {
+      const props = p.properties as any;
+      return {
+        id: this.hashId(p.id).toString(),
+        title: props["Title"]?.title?.[0]?.plain_text ?? "Untitled",
+        description: "",
+        slug: "",
+        cover: props["Cover"]?.files?.[0]?.file?.url ?? "",
+        sourceUrl: props["Url"]?.url ?? undefined,
+        tags: (props["Tags"]?.multi_select || []).map((t: any) => t.name),
+        techStack: [],
+        stars: 0,
+        date: new Date(p.created_time),
+      } satisfies WorkbenchPost;
+    });
+  }
+
+  private async queryAll(databaseId: string): Promise<PageObjectResponse[]> {
+    let results: PageObjectResponse[] = [];
+    let cursor: string | undefined;
+    do {
+      const response = await this.notion.databases.query({
+        database_id: databaseId,
+        start_cursor: cursor,
+        page_size: 100,
+      });
+      results = results.concat(
+        response.results.filter(
+          (r): r is PageObjectResponse => r.object === "page",
+        ),
+      );
+      cursor = response.has_more
+        ? (response.next_cursor ?? undefined)
+        : undefined;
+    } while (cursor);
+    return results;
+  }
+
+  private hashId(id: string): number {
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) {
+      hash = (hash << 5) - hash + id.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash);
+  }
+}
+
+export const notionDatabaseClient = NotionDatabaseClient.getInstance();

@@ -70,12 +70,11 @@ class NotionClient {
           date: new Date(properties.Date.date?.start || Date.now()),
           // @ts-expect-error type arbitrary
           cover: item.cover?.[item.cover?.type]?.url || "",
-          excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text ?? "",
+          description: properties.Excerpt?.rich_text?.[0]?.plain_text ?? "",
           content: undefined,
           tags:
             properties.Tags?.multi_select?.map((tag: any) => tag.name) ?? [],
-          views: parseInt(properties.Views?.number ?? "0"),
-          likes: parseInt(properties.Likes?.number ?? "0"),
+
           comments: parseInt(properties.Comments?.number ?? "0"),
         });
       }
