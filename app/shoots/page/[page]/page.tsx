@@ -24,7 +24,7 @@ export default async function ShootPage({
 
   if (isNaN(currentPage) || currentPage < 1) return notFound();
 
-  const photos = await cachedFetchPhotosByPage(
+  const photosPromise = cachedFetchPhotosByPage(
     currentPage,
     PHOTO_POSTS_PER_PAGE,
     PHOTO_FOLDER_NAME,
@@ -35,12 +35,13 @@ export default async function ShootPage({
     currentPage * 3,
   );
 
+  const photos = await photosPromise;
   const contents = [...photos, ...videos];
 
   if (contents.length === 0) return notFound();
 
   const hasNext = contents.length === TOTAL_POSTS_PER_PAGE;
-  await incrementPageView("/shoots");
+  void incrementPageView("/shoots");
 
   return (
     <PageContainer>

@@ -11,17 +11,19 @@ export default async function LogbookPostPage({
 }) {
   const { slug } = await params;
   const post = await notionClient.getPostBySlug(slug);
-  const relatedPosts = await notionClient.getPostsByTags(
-    post?.tags || [],
-    5,
-    post?.slug,
-  );
-
   if (!post) {
     return notFound();
   }
 
-  await incrementPageView(`/logbook/${slug}`);
+  const relatedPostsPromise = notionClient.getPostsByTags(
+    post.tags,
+    5,
+    post.slug,
+  );
+
+  const incrementPromise = incrementPageView(`/logbook/${slug}`);
+  const relatedPosts = await relatedPostsPromise;
+  void incrementPromise;
 
   return (
     <PageContainer>

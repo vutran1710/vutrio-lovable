@@ -3,8 +3,9 @@ import { incrementPageView } from "@/lib/pageViews";
 import { AboutPageBody, Footer, TopNav, PageContainer } from "@/ui";
 
 export default async function About() {
-  await incrementPageView("/about");
-  const content = await notionClient.getAboutPage();
+  const contentPromise = notionClient.getAboutPage();
+  void incrementPageView("/about");
+  const content = await contentPromise;
 
   const quote = `
     <blockquote className="font-serif text-2xl text-primary text-center italic">

@@ -13,10 +13,12 @@ import { cachedFetchPhotosByPage, PHOTO_FOLDER_NAME } from "@/lib/cloudinary";
 import { incrementPageView } from "@/lib/pageViews";
 
 export default async function Home() {
-  const latestLogbookPosts = await notionClient.getLatestPosts(2);
-  const workbenchProjects = await notionWorkbenchClient.getWorkbenchPosts();
-  const shootPosts = await cachedFetchPhotosByPage(1, 2, PHOTO_FOLDER_NAME);
-  await incrementPageView("/");
+  const [latestLogbookPosts, workbenchProjects, shootPosts] = await Promise.all([
+    notionClient.getLatestPosts(2),
+    notionWorkbenchClient.getWorkbenchPosts(),
+    cachedFetchPhotosByPage(1, 2, PHOTO_FOLDER_NAME),
+  ]);
+  void incrementPageView("/");
 
   return (
     <PageContainer>
