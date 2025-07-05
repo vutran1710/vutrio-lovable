@@ -17,7 +17,7 @@ export function SearchPageBody({
   return (
     <PageMain>
       <div className="py-12 max-w-4xl mx-auto">
-        <div className="mb-12">
+        <div className="mb-4">
           <h1 className="font-display text-4xl font-bold text-primary mb-4 text-center">
             {searchTitle}
           </h1>
@@ -40,9 +40,9 @@ export function SearchPageBody({
           <div className="text-center py-16">
             <div className="mb-8">
               <img
-                src="/placeholder.svg"
+                src="/search-not-found.jpeg"
                 alt="No content found"
-                className="mx-auto w-64 h-64 opacity-50"
+                className="mx-auto w-96 h-96"
               />
             </div>
             <h2 className="font-display text-2xl font-semibold text-muted-foreground mb-4">
