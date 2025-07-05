@@ -3,7 +3,6 @@ import { incrementPageView } from "@/lib/pageViews";
 import { LogbookPost } from "@/lib/types";
 import { Footer, TopNav, PageContainer, LogbookPostBody } from "@/ui";
 import { notFound } from "next/navigation";
-import "react-notion-x/src/styles.css";
 
 export default async function LogbookPostPage({
   params,

@@ -36,9 +36,12 @@ export const HomeLatestItem = ({ item }: HomeLatestItemProps) => {
     return `${Math.floor(diffInDays / 30)} months ago`;
   };
 
+  const linkToPost =
+    item.recordType === "logbook" ? `/logbook/${item.slug}` : `/${item.type}`;
+
   return (
     <Link
-      href={`/${item.type}/${item.slug}`}
+      href={linkToPost}
       className="group block sketch-card zine-rotation hover:zine-rotation-alt transition-all duration-300"
     >
       <div className="aspect-[16/9] relative overflow-hidden hidden md:block">
