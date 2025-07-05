@@ -19,9 +19,10 @@ export const RecentUpdate = ({
 }: RecentUpdateProps) => {
   const itemsWithUrls = items.map((item) => ({
     ...item,
-    itemUrl: itemUrlSupport
-      ? `/${item.recordType}/${item.id}`
-      : `/${item.recordType}`,
+    itemUrl:
+      item.recordType === "logbook"
+        ? `/${item.recordType}/${item.slug}`
+        : `/${item.recordType}`,
   }));
   return (
     <div className="animate-sketch-in">
