@@ -6,7 +6,7 @@ export interface AboutProps {
   avatarSrc: string;
   name: string;
   content: BlockObjectResponse[];
-  quote: string;
+  quote?: string;
 }
 
 export function AboutPageBody({ avatarSrc, name, content, quote }: AboutProps) {
@@ -37,8 +37,7 @@ export function AboutPageBody({ avatarSrc, name, content, quote }: AboutProps) {
             </div>
 
             <p className="font-serif text-lg text-muted-foreground italic text-center lg:text-center">
-              Through code, I create; through words, I explore; through
-              reflection, I grow
+              Unordered moments of either "Ah-ha!", "Seriously??" or "WTF?!"
             </p>
           </div>
         </div>
@@ -47,12 +46,14 @@ export function AboutPageBody({ avatarSrc, name, content, quote }: AboutProps) {
         <div className="lg:w-3/4">
           <NotionClientRenderer blocks={content} className="max-w-full" />
 
-          <div className="mt-12 p-8 bg-secondary rounded-2xl animate-fade-in">
-            <div
-              className="font-serif text-2xl text-primary text-center italic"
-              dangerouslySetInnerHTML={{ __html: quote }}
-            />
-          </div>
+          {quote && (
+            <div className="mt-12 p-8 bg-secondary rounded-2xl animate-fade-in">
+              <div
+                className="font-serif text-2xl text-primary text-center italic"
+                dangerouslySetInnerHTML={{ __html: quote }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </PageMain>
