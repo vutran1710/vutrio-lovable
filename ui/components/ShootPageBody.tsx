@@ -6,6 +6,7 @@ import { PageHeader } from "./PageHeader";
 import { ShootPostItem } from "./ShootPostItem";
 import { useState } from "react";
 import { ShootDialog } from "./ShootDialog";
+import Image from "next/image";
 
 export interface ShootsPageBodyProps {
   content: ShootPost[];
@@ -20,6 +21,16 @@ export function ShootsPageBody({ content }: ShootsPageBodyProps) {
         <PageHeader
           title="Visual Narratives"
           summary="A mixtape of pixels: part wandering, part wondering, part wailing guitar solo on life’s weird stage"
+          logo={
+            <Image
+              src="/shoots-foto.png"
+              alt="Shoots Logo"
+              className="md:w-32 md:h-32"
+              loading="lazy"
+              width={600}
+              height={600}
+            />
+          }
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

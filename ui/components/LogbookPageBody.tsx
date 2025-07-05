@@ -7,6 +7,7 @@ import {
   PageHeader,
 } from "@/ui";
 import type { LogbookPost, LogbookStats, RecentComment } from "@/lib/types";
+import Image from "next/image";
 
 export interface LogbookProps {
   posts: LogbookPost[];
@@ -28,6 +29,16 @@ export function LogbookPageBody({
       <PageHeader
         title="Logbook"
         summary="Mental spaghetti on digital paper, tangled thoughts sauced in curiosity, served cold with occasional existential meatballs"
+        logo={
+          <Image
+            src="/logbook-foto.png"
+            alt="Shoots Logo"
+            className="md:w-32 md:h-32"
+            loading="lazy"
+            width={600}
+            height={600}
+          />
+        }
       />
 
       {/* Mobile Stats and Tags - Only visible on mobile */}

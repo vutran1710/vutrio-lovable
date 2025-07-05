@@ -1,11 +1,4 @@
-import {
-  TopNav,
-  PageContainer,
-  Hero,
-  TagsSection,
-  SocialSection,
-  Footer,
-} from "../ui";
+import { TopNav, PageContainer, Hero, TagsSection, Footer } from "../ui";
 import { notionDatabaseClient } from "@/lib/notion-db-client";
 import { incrementPageView } from "@/lib/pageViews";
 import { LogbookPost, ShootPost, WorkbenchPost } from "@/lib/types";
@@ -44,7 +37,7 @@ export default async function Home() {
         />
         {/* <ContentGrid /> */}
         <TagsSection tags={tags} />
-        <SocialSection />
+        {/* <SocialSection /> */}
       </main>
       <Footer currentPath="/" />
     </PageContainer>
