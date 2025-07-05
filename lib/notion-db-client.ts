@@ -10,9 +10,9 @@ const SHOOTS_DB_ID = process.env.SHOOTS_DB_ID!;
 const LOGBOOK_DB_ID = process.env.LOGBOOK_DB_ID!;
 const WORKBENCH_DB_ID = process.env.WORKBENCH_DB_ID!;
 
-type SourceType = "logbook" | "shoots" | "workbench";
+export type SourceType = "logbook" | "shoots" | "workbench";
 
-type CacheEntry = LogbookPost | ShootPost | WorkbenchPost;
+export type CacheEntry = LogbookPost | ShootPost | WorkbenchPost;
 
 export class NotionDatabaseClient {
   private static instance: NotionDatabaseClient;

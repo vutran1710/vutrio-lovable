@@ -1,21 +1,13 @@
+import { BaseRecord } from "@/lib/types";
 import Link from "next/link";
 
-interface ResultItem {
-  id: number | string;
-  title: string;
-  excerpt: string;
-  date: string;
-  tags: string[];
-}
-
 interface SearchResultItemProps {
-  item: ResultItem;
-  type: string;
+  item: BaseRecord;
 }
 
-export const SearchResultItem = ({ item, type }: SearchResultItemProps) => (
+export const SearchResultItem = ({ item }: SearchResultItemProps) => (
   <Link
-    href={`/${type}/${item.id}`}
+    href={`/${item.recordType}/${item.slug}`}
     className="block bg-card rounded-lg p-6 cursor-pointer border border-border hover:border-accent transition-colors"
   >
     <div className="flex items-center justify-between mb-3">
@@ -27,14 +19,14 @@ export const SearchResultItem = ({ item, type }: SearchResultItemProps) => (
         })}
       </time>
       <span className="text-xs text-accent uppercase tracking-wide font-medium">
-        {type}
+        {item.recordType}
       </span>
     </div>
     <h3 className="font-display text-xl font-semibold text-primary mb-3 hover:text-accent transition-colors">
       {item.title}
     </h3>
     <p className="font-serif text-muted-foreground leading-relaxed mb-4">
-      {item.excerpt}
+      {item.description}
     </p>
     <div className="flex flex-wrap gap-2">
       {item.tags.map((tag) => (
