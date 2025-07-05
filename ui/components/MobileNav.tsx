@@ -62,7 +62,7 @@ export const MobileNav = ({ currentPath }: { currentPath: string }) => {
 
       {/* Popup Menu */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-sm border-b border-border shadow-lg z-50">
+        <div className="absolute top-full left-0 right-0 bg-background border-b border-border shadow-lg z-50">
           <nav className="py-4">
             {navItems.map((item) => {
               const Icon = item.icon;

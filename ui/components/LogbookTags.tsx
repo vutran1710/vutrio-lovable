@@ -17,7 +17,7 @@ export const LogbookTags = ({ tags }: LogbookTagsProps) => {
           {tagName.map((tag) => (
             <Link
               key={tag}
-              href={`/logbook/tag/${tag}`}
+              href={`/search?tag=${tag}&collection=logbook`}
               className="px-3 py-1 bg-secondary hover:bg-primary hover:text-primary-foreground rounded-full text-sm cursor-pointer transition-all duration-300 border border-border hover:shadow-md"
             >
               #{tag} ({tags.get(tag) ?? 0})
