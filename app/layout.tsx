@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   title: "Fraclog",
   description:
     "Where ideas, photos, and signals collide. A running log of thought experiments and sensory fragments",
+  metadataBase: new URL("https://vutr.io"),
 };
 
 export default function RootLayout({

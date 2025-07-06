@@ -3,6 +3,38 @@ import { incrementPageView } from "@/lib/pageViews";
 import { LogbookPost } from "@/lib/types";
 import { Footer, TopNav, PageContainer, LogbookPostBody } from "@/ui";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = (await notionDatabaseClient.findPostBySlug(slug, "logbook")) as
+    | LogbookPost
+    | undefined;
+
+  if (!post) {
+    // Fallback: hide from robots & show generic title
+    return {
+      title: "Post not found",
+      robots: { index: false },
+    };
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      type: "article",
+      url: `https://vutr.io/logbook/${post.slug}`,
+      title: post.title,
+      description: post.description,
+      images: [post.cover ?? "/og-default.png"],
+    },
+  };
+}
 
 export default async function LogbookPostPage({
   params,
@@ -28,8 +60,10 @@ export default async function LogbookPostPage({
       return result.logbook.filter((p) => p.slug !== slug);
     });
 
-  const viewCount = await incrementPageView(`/logbook/${slug}`);
-  const relatedPosts = await relatedPostsPromise;
+  const [viewCount, relatedPosts] = await Promise.all([
+    incrementPageView(`/logbook/${slug}`),
+    relatedPostsPromise,
+  ]);
 
   return (
     <PageContainer>

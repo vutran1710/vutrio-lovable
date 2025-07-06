@@ -266,7 +266,6 @@ export class NotionDatabaseClient {
     const pages = await this.queryAll(SHOOTS_DB_ID);
     this.cache.shoots = pages.map((p) => {
       const props = p.properties as any;
-      console.log(props);
 
       return {
         id: this.hashId(p.id).toString(),
