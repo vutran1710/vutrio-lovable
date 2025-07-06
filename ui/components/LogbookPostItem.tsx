@@ -14,7 +14,7 @@ export const LogbookPostItem = ({ post }: LogbookPostItemProps) => (
             <img
               src={post.cover}
               alt={post.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-xl"
             />
           </Link>
         </div>
