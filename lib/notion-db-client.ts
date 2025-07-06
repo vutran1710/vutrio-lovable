@@ -266,6 +266,7 @@ export class NotionDatabaseClient {
     const pages = await this.queryAll(SHOOTS_DB_ID);
     this.cache.shoots = pages.map((p) => {
       const props = p.properties as any;
+      console.log(props);
 
       return {
         id: this.hashId(p.id).toString(),
@@ -277,7 +278,7 @@ export class NotionDatabaseClient {
         sourceUrl: props["Link"]?.url ?? undefined,
         recordType: "shoots",
         likes: 0,
-        date: new Date(p.created_time),
+        date: new Date(props["Date"]?.date?.start || p.created_time),
         type: props["Type"]?.select?.name?.toLowerCase() ?? "tiktok",
         tags: (props["Tags"]?.multi_select || []).map((t: any) => t.name),
       } satisfies ShootPost;
