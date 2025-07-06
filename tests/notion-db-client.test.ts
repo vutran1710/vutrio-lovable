@@ -41,7 +41,6 @@ describe("NotionDatabaseClient (Integration)", () => {
     const popular = await notionDatabaseClient.popularTags(5);
     expect(popular.length).toBeLessThanOrEqual(5);
     expect(typeof popular[0]).toBe("string");
-    console.log("Popular tags:", popular);
   });
 
   it("supports findPostsByTags", async () => {

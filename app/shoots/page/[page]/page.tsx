@@ -37,7 +37,7 @@ export default async function ShootPage({
       <PaginationWrapper
         currentPage={currentPage}
         basePath="/shoots"
-        totalPages={shoots.total}
+        totalPages={shoots.total / SHOOT_PER_PAGE}
       />
       <Footer currentPath="/shoots" />
     </PageContainer>
