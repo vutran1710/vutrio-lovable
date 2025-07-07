@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fraclog
 
-## Getting Started
+Fraclog is a personal journal and work showcase built with Next.js and TypeScript. Content is pulled from several Notion databases and rendered using custom React components.
 
-First, run the development server:
+## Features
+
+- **Next.js 15** with React Server Components
+- **TypeScript** and **Tailwind CSS** for styling
+- **Notion API** used as the CMS for logbook posts, photo shoots and workbench projects
+- **GitHub API** integration to enrich workbench projects
+- **Upstash Redis** to store per‑page view counts
+- **Radix UI** primitives for accessible UI components
+- Basic search and tag filtering across all collections
+- Simple API route for retrieving page view statistics
+- Vitest tests for the Notion client
+
+## Setup
+
+1. Install dependencies
+   ```bash
+   pnpm install
+   ```
+2. Provide the following environment variables:
+   - `NOTION_TOKEN`
+   - `SHOOTS_DB_ID`
+   - `LOGBOOK_DB_ID`
+   - `WORKBENCH_DB_ID`
+   - `ABOUT_PAGE_ID`
+   - `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
+   - `GITHUB_TOKEN` (optional, improves GitHub API rate limits)
+
+## Development
+
+Run the local dev server with:
+```bash
+pnpm dev
+```
+Open `http://localhost:3000` in your browser.
+
+## Testing
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm test
 ```
+Tests rely on the Notion and Upstash environment variables listed above.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
