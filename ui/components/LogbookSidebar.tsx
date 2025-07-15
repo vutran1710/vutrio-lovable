@@ -1,5 +1,4 @@
 import type { LogbookStats, RecentComment } from "@/lib/types";
-import { LogbookStatsView } from "./LogbookStatsView";
 import { LogbookCalendar } from "./LogbookCalendar";
 import { LogbookTags } from "./LogbookTags";
 
@@ -18,7 +17,7 @@ export const LogbookSidebar = ({
 }: LogbookSidebarProps) => {
   return (
     <div className="w-full min-w-[290px] max-w-[290px] space-y-6">
-      <LogbookStatsView stats={stats} />
+      {/* <LogbookStatsView stats={stats} /> */}
       {/* <LogbookRecentComments comments={recentComments} /> */}
       <LogbookCalendar datesWithPosts={datesWithPosts} />
       <LogbookTags tags={tags} />
