@@ -10,7 +10,7 @@ import { getPageViews, incrementPageView } from "@/lib/pageViews";
 import { notFound } from "next/navigation";
 import { LogbookPost } from "@/lib/types";
 
-const POSTS_PER_PAGE = 8;
+const POSTS_PER_PAGE = 6;
 
 export default async function LogbookPage({
   params,
